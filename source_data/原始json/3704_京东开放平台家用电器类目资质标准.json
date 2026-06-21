@@ -1,0 +1,58 @@
+{
+  "rule_id": "3704",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=3704",
+  "search": {
+    "title": "京东开放平台家用电器类目资质标准",
+    "summary": "京东开放平台家用电器类目资质标准",
+    "created": "2018-12-05",
+    "modified": "2025-09-23",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=3704&type=0&btype=1"
+  },
+  "detail": {
+    "labelNames": "资质要求规则",
+    "tagExpireTime": "1759236662182",
+    "pv": "1",
+    "endLabelIds": "5811",
+    "endLabelNames": "资质标准",
+    "title": "京东开放平台家用电器类目资质标准",
+    "followRuleId": "3702",
+    "content": "<table class=\"MsoNormalTable\" style=\"margin-left: -.5pt; background: white; border-collapse: collapse;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr style=\"height: 17.5pt;\">\n<td style=\"width: 694.6pt; border: solid windowtext 1.0pt; background: #C00000; padding: 0cm 5.4pt 0cm 5.4pt; height: 17.5pt;\" width=\"926\">\n<p style=\"text-align: center; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"center\"><span style=\"font-size: 10pt;\"><strong><span style=\"font-family: 微软雅黑, sans-serif; color: white;\">行业资质</span></strong></span></p>\n</td>\n</tr>\n<tr style=\"height: 17.5pt;\">\n<td style=\"width: 694.6pt; border: solid windowtext 1.0pt; border-top: none; background: transparent; padding: 0cm 5.4pt 0cm 5.4pt; height: 17.5pt;\" width=\"926\">\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">个护健康类目：经营属于国家医疗器械分类目录中二类、三类医疗器械的，需要提供《医疗器械经营许可证》及网络销售备案信息表图片。</span></p>\n</td>\n</tr>\n<tr style=\"height: 17.5pt;\">\n<td style=\"width: 694.6pt; border: solid windowtext 1.0pt; border-top: none; background: #C00000; padding: 0cm 5.4pt 0cm 5.4pt; height: 17.5pt;\" width=\"926\">\n<p style=\"text-align: center; line-height: 21pt; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"center\"><span style=\"font-size: 10pt;\"><strong><span style=\"font-family: 微软雅黑, sans-serif; color: white;\">特殊资质及要求</span></strong></span></p>\n</td>\n</tr>\n<tr style=\"height: 17.5pt;\">\n<td style=\"width: 694.6pt; border: solid windowtext 1.0pt; border-top: none; background: transparent; padding: 0cm 5.4pt 0cm 5.4pt; height: 17.5pt;\" width=\"926\">\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">TM</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">标入驻开店，TM标注册申请时间至入驻审核时间必须大于3个月，大家电类目TM标申请时间至入驻审核时间必须大于6个月，TM标有效期请填写注册申请时间加2年后的日期。</span></span></p>\n</td>\n</tr>\n<tr>\n<td style=\"width: 694.6pt; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 0cm 0cm 0cm;\" width=\"926\">\n<p style=\"margin: 0cm 0cm 0.0001pt 0.05pt; text-indent: 7pt; line-height: 21pt; background: white; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">旗舰店授权书模板：</span><a href=\"https://helpcenter.jd.com/vender/issue/926-4279.html\"><span style=\"font-family: 微软雅黑, sans-serif; color: blue;\">旗舰店授权书模板</span></a></span></p>\n<p style=\"text-indent: 7pt; line-height: 21pt; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">2. </span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">京东开放平台各类目资费一览表：</span><a href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=638209647311982592&amp;type=0&amp;btype=1\"><span style=\"font-family: 微软雅黑, sans-serif; color: blue;\">京东开放平台类目资费规则</span></a></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt 0.05pt; text-indent: 7pt; line-height: 21pt; background: white; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">3. </span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">店铺命名规则：</span><a href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=2598\" target=\"_blank\" rel=\"noopener\"><span style=\"font-family: 微软雅黑, sans-serif; color: blue;\">https://rule.jd.com/rule/ruleDetail.action?ruleId=2598</span></a></span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p style=\"line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><strong><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">附则：</span></strong></span></p>\n<p style=\"text-align: left; line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">京东商家的行为，发生在本管理规则生效之日以前的，适用当时的规则。发生在本管理规则生效之日以后的，适用本规则。</span></span></p>\n<p style=\"text-align: left; line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">2.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">京东可根据平台运营情况随时调整本管理规则并向商家公示。</span></span></p>\n<p style=\"text-align: left; line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">3.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">商家应遵守国家法律、行政法规、部门规章等规范性文件。对任何涉嫌违反国家法律、行政法规、部门规章等规范性文件的行为，本规则已有规定的，适用于本规则。本规则尚无规定的，京东有权酌情处理。但京东对商家的处理不免除其应承担的法律责任。商家在京东的任何行为，应同时遵守与京东及其关联公司签订的各项协议。</span></span></p>\n<p style=\"text-align: left; line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"color: #000000; font-family: 微软雅黑, sans-serif; font-size: 13.3333px; text-align: left; white-space: normal; background-color: #ffffff; float: none; display: inline;\">4.&nbsp;</span><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; color: #000000; font-family: 微软雅黑, sans-serif; text-align: left; white-space: normal; font-size: 13.3333px; background-color: #ffffff; float: none; display: inline;\">本规则标准于2025年9月15日修订，于2025年9月22日生效。</span></p>",
+    "selectCategoryId": [
+      "373",
+      "393"
+    ],
+    "categoryIdPath": "373,393",
+    "labelIds": "295",
+    "top": "1758631865018",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250923/c17174dbf03b4d00a07e1487992571c9.txt",
+    "pdfFileUrl": "//storage.jd.com/karmavender/file/pdf/20240925/ec05b39afd0a4a0cbeb70391247b2007.pdf",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 2,
+    "id": "3704",
+    "summary": "京东开放平台家用电器类目资质标准",
+    "uv": "1",
+    "solvePin": "延海龙",
+    "changeReason": "取消卖场店（杨树玲）",
+    "preRuleId": "3707",
+    "activeTime": 1758470400000,
+    "multiCategoryId": "",
+    "solveDept": "京东零售-家电家居事业群-经营提升部-体验提升部",
+    "updateUser": "liqi191",
+    "updateTime": 1772650802011,
+    "mediumCode": 5,
+    "keyWord": "京东开放平台家用电器类目资质标准",
+    "allLabelIds": "5809,5810,5811,5789",
+    "preRuleTitle": "京东开放平台农资园艺类目资质标准",
+    "createTime": 1504662081000,
+    "followRuleTitle": "京东开放平台运动户外类目资质标准",
+    "createUser": "zhujun90",
+    "businessType": 1,
+    "isHot": 0,
+    "categoryId": "393",
+    "status": 1
+  }
+}

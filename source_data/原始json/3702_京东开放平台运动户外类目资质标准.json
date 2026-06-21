@@ -1,0 +1,58 @@
+{
+  "rule_id": "3702",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=3702",
+  "search": {
+    "title": "京东开放平台运动户外类目资质标准",
+    "summary": "京东开放平台运动户外类目资质标准",
+    "created": "2020-08-24",
+    "modified": "2025-09-23",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=3702&type=0&btype=1"
+  },
+  "detail": {
+    "labelNames": "资质要求规则",
+    "tagExpireTime": "1759236412019",
+    "pv": "1",
+    "endLabelIds": "5811",
+    "endLabelNames": "资质标准",
+    "title": "京东开放平台运动户外类目资质标准",
+    "followRuleId": "3698",
+    "content": "<table class=\"MsoNormalTable\" style=\"background: white; border-collapse: collapse; border: none;\" border=\"1\" width=\"97%\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr style=\"height: 20.25pt;\">\n<td style=\"width: 9.7%; border: 1pt solid windowtext; background: #c00000; padding: 0cm 5.4pt; height: 20.25pt; text-align: center;\" width=\"9%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线; text-align: center;\"><span style=\"font-size: 12pt;\"><sup><span style=\"color: #ffffff;\"><strong><span style=\"font-family: 微软雅黑, sans-serif;\">一级类目</span></strong></span></sup></span></p>\n</td>\n<td style=\"width: 9.74%; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; border-image: initial; border-left: none; background: #c00000; padding: 0cm 5.4pt; height: 20.25pt; text-align: center;\" width=\"9%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线; text-align: center;\"><span style=\"font-size: 12pt;\"><sup><span style=\"color: #ffffff;\"><strong><span style=\"font-family: 微软雅黑, sans-serif;\">二级类目</span></strong></span></sup></span></p>\n</td>\n<td style=\"width: 12.52%; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; border-image: initial; border-left: none; background: #c00000; padding: 0cm; height: 20.25pt; text-align: center;\" valign=\"top\" width=\"12%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线; text-align: center;\"><span style=\"font-size: 12pt;\"><sup><span style=\"color: #ffffff;\"><strong><span style=\"font-family: 微软雅黑, sans-serif;\">三级类目</span></strong></span></sup></span></p>\n</td>\n<td style=\"width: 68.04%; border-top: 1pt solid windowtext; border-right: 1pt solid windowtext; border-bottom: 1pt solid windowtext; border-image: initial; border-left: none; background: #c00000; padding: 0cm 5.4pt; height: 20.25pt; text-align: center;\" colspan=\"2\" width=\"68%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线; text-align: center;\"><span style=\"font-size: 12pt;\"><sup><span style=\"color: #ffffff;\"><strong><span style=\"font-family: 微软雅黑, sans-serif;\">特殊资质及要求</span></strong></span></sup></span></p>\n</td>\n</tr>\n<tr style=\"height: 22.7pt;\">\n<td style=\"width: 9.7%; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt; height: 22.7pt;\" nowrap=\"nowrap\" width=\"9%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">运动户外</span></sup></span></p>\n</td>\n<td style=\"width: 9.74%; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 22.7pt;\" nowrap=\"nowrap\" width=\"9%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">/</span></sup></span></p>\n</td>\n<td style=\"width: 12.52%; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 0cm 0cm 0cm; height: 22.7pt;\" width=\"12%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">/</span></sup></span></p>\n</td>\n<td style=\"width: 33.32%; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt; height: 22.7pt;\" width=\"33%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">Adidas/</span><span style=\"font-family: 微软雅黑, sans-serif;\">阿迪达斯、NIKE/耐克和NEW BALANCE开设专卖店、专营店、卖场店需有2级以内（包括2级）的完整授权链路。其余品牌开设专卖店、专营店、卖场店需有3级以内（包括3级）的完整授权链路。</span></sup></span></p>\n</td>\n<td style=\"width: 34.74%; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; padding: 0cm 0cm 0cm 0cm; height: 22.7pt;\" width=\"34%\">\n<p style=\"text-align: left; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif;\">入驻旗舰店和卖场店开放TM标入驻且TM标申请时间至入驻审核时间必须大于6个月&nbsp;，专卖店和专营店开放TM标入驻（TM标注册申请时间至提交开店申请审核时间必须大于3个月），TM标有效期请填写申请注册申请日期加2年后的日期，R标有效期按照商标注册证有效日期填写。</span></sup></span></p>\n<p style=\"text-align: left; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">2.&nbsp;&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif;\">委托进口协议（经营进口商品）：若报关单上的收货人和消费使用单位不在授权链上，需提供委托进口协议。</span></sup></span></p>\n<p style=\"text-align: left; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">3.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif;\">报关单（经营进口商品）：近三年内的中华人民共和国海关进口货物报关单，报关单上应展现对应品牌名称及商品名称。</span></sup></span></p>\n</td>\n</tr>\n<tr style=\"height: 16.75pt;\">\n<td style=\"width: 100.0%; border: solid windowtext 1.0pt; border-top: none; padding: 0cm 0cm 0cm 0cm; height: 16.75pt;\" colspan=\"5\" valign=\"top\" width=\"100%\">\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif;\">旗舰店授权书模板：</span><a style=\"color: #467886; text-decoration: underline;\" href=\"https://helpcenter.jd.com/vender/issue/926-4279.html\"><span style=\"font-family: 微软雅黑, sans-serif;\">旗舰店授权书模板</span></a></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">2.</span><span style=\"font-family: 微软雅黑, sans-serif;\">专卖店授权书模板：</span><a style=\"color: #467886; text-decoration: underline;\" href=\"https://helpcenter.jd.com/vender/issue/926-4276.html\"><span style=\"font-family: 微软雅黑, sans-serif;\">专卖店授权模板</span></a></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">3. </span><span style=\"font-family: 微软雅黑, sans-serif;\">京东开放平台各类目资费一览表：</span><a style=\"color: #467886; text-decoration: underline;\" href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=638209647311982592&amp;type=0&amp;btype=1\"><span style=\"font-family: 微软雅黑, sans-serif;\">京东开放平台类目资费规则</span></a></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">4. </span><span style=\"font-family: 微软雅黑, sans-serif;\">店铺命名规则：</span><a style=\"color: #467886; text-decoration: underline;\" href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=2598\" target=\"_blank\" rel=\"noopener\"><span style=\"font-family: 微软雅黑, sans-serif;\">https://rule.jd.com/rule/ruleDetail.action?ruleId=2598</span></a></sup></span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">&nbsp;</span></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><strong><span style=\"font-family: 微软雅黑, sans-serif;\">附则</span></strong></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif;\">京东商家的行为，发生在本管理规则生效之日以前的，适用当时的规则。发生在本管理规则生效之日以后的，适用本规则。</span></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">2.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif;\">京东可根据平台运营情况随时调整本管理规则并以公告的形式向商家公示。</span></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"font-family: 微软雅黑, sans-serif;\">3.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif;\">商家应遵守国家法律、行政法规、部门规章等规范性文件。对任何涉嫌违反国家法律、行政法规、部门规章等规范性文件的行为，本规则已有规定的，适用于本规则。本规则尚无规定的，京东有权酌情处理。但京东对商家的处理不免除其应承担的法律责任。商家在京东的任何行为，应同时遵守与京东及其关联公司签订的各项协议。</span></sup></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 12pt;\"><sup><span style=\"color: #000000; font-family: 微软雅黑, sans-serif; text-align: left; white-space: normal; background-color: #ffffff; float: none; display: inline;\">4.&nbsp;</span><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; color: #000000; font-family: 微软雅黑, sans-serif; text-align: left; white-space: normal; background-color: #ffffff; float: none; display: inline;\">本规则标准于2025年9月15日修订，于2025年9月22日生效。</span> </sup></span></p>",
+    "selectCategoryId": [
+      "373",
+      "393"
+    ],
+    "categoryIdPath": "373,393",
+    "labelIds": "295",
+    "top": "1758631627590",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250923/f69bafae79e847d4b12c56d6f446eb72.txt",
+    "pdfFileUrl": "//storage.jd.com/karmavender/file/pdf/20250423/97f7518ee0b046ab8e71abd68da32deb.pdf",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 2,
+    "id": "3702",
+    "summary": "京东开放平台运动户外类目资质标准",
+    "uv": "1",
+    "solvePin": " 于洋",
+    "changeReason": "取消卖场店（杨树玲）",
+    "preRuleId": "3704",
+    "activeTime": 1758470400000,
+    "multiCategoryId": "",
+    "solveDept": "京东零售-大时尚事业部-经营策略部-假货治理与危机运营组",
+    "updateUser": "liqi191",
+    "updateTime": 1758631575000,
+    "mediumCode": 5,
+    "keyWord": "京东开放平台运动户外类目资质标准",
+    "allLabelIds": "5809,5810,5811,5789",
+    "preRuleTitle": "京东开放平台家用电器类目资质标准",
+    "createTime": 1504601156000,
+    "followRuleTitle": "京东开放平台母婴类目资质标准",
+    "createUser": "zhujun90",
+    "businessType": 1,
+    "isHot": 0,
+    "categoryId": "393",
+    "status": 1
+  }
+}

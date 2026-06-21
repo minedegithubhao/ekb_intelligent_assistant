@@ -1,0 +1,53 @@
+{
+  "rule_id": "1277536936805928960",
+  "scope": [
+    "personal_individual"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1277536936805928960",
+  "search": {
+    "title": "【已失效】关于修订《京东开放平台个人/个体交易管理规则》的公示通知",
+    "summary": "京东开放平台个人/个体交易管理规则",
+    "created": "2025-08-26",
+    "modified": "2026-06-18",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1277536936805928960&btype=12"
+  },
+  "detail": {
+    "tagExpireTime": "1756799757213",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "【已失效】关于修订《京东开放平台个人/个体交易管理规则》的公示通知",
+    "followRuleId": "1257213261586239488",
+    "content": "<p style=\"text-align: left; line-height: 24pt; background: white; word-break: break-all; margin: 0cm; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">尊敬的商家朋友：</span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; word-break: break-all; margin: 0cm; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">您好，为适应业务发展需求，将针对<span style=\"text-decoration: underline; color: #2100ff;\"><a style=\"color: #2100ff; text-decoration: underline;\" href=\"https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1090224406216708096\" target=\"_blank\" rel=\"noopener\">《京东开放平台个人/个体交易管理规则》</a></span>进行调整。现进行规则公示，公示期：2025年8月26日- 2025年9月1日，规则预计于 2025年9月2日生效，公示期满平台将另行发布正式生效规则。</span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; word-break: break-all; margin: 0cm; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">核心调整点：更新咚咚平均响应时长指标计算口径</span><span style=\"font-size: 12.0pt; font-family: 宋体; color: black;\">。</span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; word-break: break-all; margin: 0cm; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">修订具体内容如下：</span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; word-break: break-all; margin: 0cm; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">【修订前】</span></strong></p>\n<p style=\"text-align: left; line-height: 200%; background: white; word-break: break-all; margin: 0cm; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">第六条 咚咚平均响应时长指客服人工回复的消息与用户消息之间时间差的平均值，咚咚平均响应时长将影响店铺综合体验排名率，具体考核标准参见《京东开放平台个人个体店铺管理规则》。</span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; word-break: break-all; margin: 0cm; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">【修订后】</span></strong></p>\n<p style=\"line-height: 200%; margin: 0cm; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">第六条 咚咚平均响应时长指客服人工回复的消息与用户消息之间时间差的平均值，</span><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: red;\">如客户发消息后至会话结束前客服均未响应，本通会话的响应时长记为600秒（10分钟无新消息则会话自动结束），咚咚平均响应时长将影响店铺星级。</span></p>",
+    "selectCategoryId": [
+      "991293270908866560",
+      "1208686693864050688"
+    ],
+    "categoryIdPath": "991293270908866560,1208686693864050688",
+    "top": "0",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250903/3f5f5144ec744ea889891ccf20701327.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 1,
+    "id": "1277536936805928960",
+    "summary": "京东开放平台个人/个体交易管理规则",
+    "solvePin": "gaoxu92",
+    "changeReason": "",
+    "preRuleId": "1216727103068835840",
+    "activeTime": 1756742400000,
+    "multiCategoryId": "",
+    "solveDept": "平台生态部-平台服务部-智能服务运营部",
+    "updateUser": "gushuaizu.1",
+    "updateTime": 1781796011860,
+    "keyWord": "京东开放平台个人/个体交易管理规则",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "createTime": 1756194941000,
+    "followRuleTitle": "关于修订《京东开放平台个人/个体开店管理规则》的公示通知",
+    "createUser": "lishuang32",
+    "businessType": 12,
+    "categoryId": "1208686693864050688",
+    "status": 1
+  }
+}

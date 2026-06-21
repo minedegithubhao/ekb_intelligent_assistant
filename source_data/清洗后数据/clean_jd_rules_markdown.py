@@ -28,6 +28,7 @@ MARKDOWN_LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)]+)\)")
 LOCAL_ANCHOR_LINK_RE = re.compile(r"\[([^\]]+)\]\(#[^)]+\)")
 IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
 RULE_META_RE = re.compile(r"^-\s+(rule_id|source_url|label_names|active_time|update_time):\s*(.*)$")
+HTML_TABLE_LINE_RE = re.compile(r"^\s*</?(table|tr|td|th)\b", re.IGNORECASE)
 
 
 def normalize_heading(line: str) -> str:
@@ -64,12 +65,18 @@ def clean_image(match: re.Match[str]) -> str:
 
 
 def clean_line(line: str) -> str | None:
-    line = html.unescape(line).replace("\u00a0", " ")
+    is_html_table_line = bool(HTML_TABLE_LINE_RE.match(line))
+    if is_html_table_line:
+        line = line.replace("\u00a0", " ")
+    else:
+        line = html.unescape(line).replace("\u00a0", " ")
     line = line.replace("\ufeff", "")
     line = re.sub(r"\s+", " ", line).strip()
 
     if not line:
         return ""
+    if is_html_table_line:
+        return line
     if TOC_LINK_RE.match(line):
         return None
     if re.fullmatch(r"\|+", line):

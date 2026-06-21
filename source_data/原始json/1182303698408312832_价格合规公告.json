@@ -1,0 +1,53 @@
+{
+  "rule_id": "1182303698408312832",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1182303698408312832",
+  "search": {
+    "title": "价格合规公告",
+    "summary": "价格合规公告",
+    "created": "2024-12-06",
+    "modified": "2024-12-06",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1182303698408312832&type=0&btype=1"
+  },
+  "detail": {
+    "pv": "1",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "价格合规公告",
+    "followRuleId": "1181881286806081536",
+    "content": "<p class=\"sl-paragraph\"><span style=\"color: #1b1b1b;\">尊敬的各位商家： 为保障消费者购物体验及合规经营商家的合法利益，近期将针对价格违规问题进行专项治理。</span></p>\n<p class=\"sl-paragraph\"><span style=\"color: #1b1b1b;\">根据法律法规、协议规则，店铺在经营中应注意避免发生包括但不限于价格虚高、提价促销、低价倾销、违背价格承诺、运费虚高、低价高邮、价格异常波动、宣传价与实际不符等价格违规情形。</span></p>\n<p class=\"sl-paragraph\"><span style=\"color: #1b1b1b;\">请各位商家自查自检全店商品价格，合理定价避免违规，若经巡检或经消费者投诉发现价格违规行为的，京东有权依据法律法规、协议规则等进行处理，并有权视违规程度采取包括但不限于预警、下架违规商品、限制营销活动、限制广告活动、降低店铺综合体验分、扣收违约金、搜推屏蔽/降权、店铺关停清退等处理措施。</span></p>",
+    "selectCategoryId": [
+      "620",
+      "637"
+    ],
+    "categoryIdPath": "620,637",
+    "top": "0",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20241206/d6e770fec6244482af483e8da7df04a1.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "id": "1182303698408312832",
+    "summary": "价格合规公告",
+    "uv": "1",
+    "solvePin": "佟显亮",
+    "changeReason": "",
+    "preRuleId": "1183599694840991744",
+    "activeTime": 1733414400000,
+    "multiCategoryId": "",
+    "solveDept": "平台生态部-平台规则与策略部-价格规则与策略部",
+    "updateUser": "pengbo100",
+    "updateTime": 1733489567000,
+    "keyWord": "价格合规公告",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "【修订】发货管理规则（2024年12月）",
+    "createTime": 1733489567000,
+    "followRuleTitle": "【修订】买贵双倍赔服务规则",
+    "createUser": "pengbo100",
+    "businessType": 1,
+    "categoryId": "637",
+    "status": 1
+  }
+}

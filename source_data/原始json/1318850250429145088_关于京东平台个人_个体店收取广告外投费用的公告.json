@@ -1,0 +1,50 @@
+{
+  "rule_id": "1318850250429145088",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1318850250429145088",
+  "search": {
+    "title": "关于京东平台个人/个体店收取广告外投费用的公告",
+    "summary": "关于京东平台个人、个体店收取广告外投费用的公告",
+    "created": "2025-12-18",
+    "modified": "2025-12-18",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1318850250429145088&type=0&btype=1"
+  },
+  "detail": {
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "关于京东平台个人/个体店收取广告外投费用的公告",
+    "followRuleId": "1314134770087206912",
+    "content": "<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">尊敬的京东商家您好：</span></strong></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">&nbsp; &nbsp; &nbsp; &nbsp; 京东平台个人、个体店商家与外部广告投放平台合作（非京东）时，在外部CID服务商广告投放产生的订单，简称''CID订单''。为促进业务合规发展，京东平台将对CID订单，按照订单金额的0.4%比例收取费用。即：商家通过外部CID投放，产生的每一笔CID订单，随单增收0.4%比例的服务费用，具体费用以系统账单展示为准。</span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">&nbsp; &nbsp; &nbsp; &nbsp; 本规则于2025年12月18日公示通知，将于2025年12月25日正式生效。&nbsp;&nbsp;&nbsp; </span></p>\n<p style=\"text-align: right; margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\" align=\"right\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">京东</span></strong></p>\n<p style=\"text-align: right; margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\" align=\"right\"><strong><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2025</span><span style=\"font-family: 微软雅黑, sans-serif;\">年12月18日</span></span></strong></p>",
+    "selectCategoryId": [
+      "620",
+      "637"
+    ],
+    "categoryIdPath": "620,637",
+    "top": "0",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "id": "1318850250429145088",
+    "summary": "关于京东平台个人、个体店收取广告外投费用的公告",
+    "solvePin": "陈阳",
+    "changeReason": "",
+    "preRuleId": "1331946494090002432",
+    "activeTime": 1766592000000,
+    "multiCategoryId": "",
+    "solveDept": " 京东集团-京东零售-京喜事业部-品类策略部-供应链提升部",
+    "updateUser": "zhouxinai",
+    "updateTime": 1766044802757,
+    "keyWord": "关于京东平台个人、个体店收取广告外投费用的公告",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "2026年春节期间延迟结算公告",
+    "createTime": 1766044802757,
+    "followRuleTitle": "关于数藏兑换码/直充、灵稀数藏类目账期调整公告",
+    "createUser": "zhouxinai",
+    "businessType": 1,
+    "categoryId": "637",
+    "status": 1
+  }
+}

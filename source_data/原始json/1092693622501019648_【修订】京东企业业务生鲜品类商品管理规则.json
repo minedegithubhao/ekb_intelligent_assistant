@@ -1,0 +1,53 @@
+{
+  "rule_id": "1092693622501019648",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1092693622501019648",
+  "search": {
+    "title": "【修订】京东企业业务生鲜品类商品管理规则",
+    "summary": "【修订】京东企业业务生鲜品类商品管理规则",
+    "created": "2024-04-03",
+    "modified": "2024-09-03",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1092693622501019648&type=0&btype=1"
+  },
+  "detail": {
+    "pv": "1",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "【修订】京东企业业务生鲜品类商品管理规则",
+    "followRuleId": "1092657394208608256",
+    "content": "<p><a style=\"margin: 0px; padding: 0px; box-sizing: border-box; color: #2299ff; outline-style: none; outline-width: 0px; border-width: 0px; border-style: none; text-decoration-line: underline; word-break: break-all; font-family: 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', Helvetica, 'Hiragino Sans GB', SimSun, sans-serif; font-size: 16px; white-space: normal; background-color: #ffffff;\" href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=841263780221554688&amp;btype=6\" target=\"_blank\" rel=\"noopener\"><img style=\"margin: 0px; padding: 0px; box-sizing: border-box; border-width: 0px; vertical-align: baseline; max-width: 100%; outline-width: 0px; font-size: 16px;\" src=\"https://img30.360buyimg.com/popXue/jfs/t1/235947/5/14399/144356/660cf444F5b6b34f9/17bd51ce9c9f86c5.dpg\" alt=\"\" /></a></p>",
+    "selectCategoryId": [
+      "620",
+      "637"
+    ],
+    "categoryIdPath": "620,637",
+    "top": "0",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20240903/e02f34cbe6474015821fbf1d7b1f4d8d.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "id": "1092693622501019648",
+    "summary": "【修订】京东企业业务生鲜品类商品管理规则",
+    "uv": "1",
+    "solvePin": "李朦",
+    "changeReason": "",
+    "preRuleId": "1092754487585673216",
+    "activeTime": 1712073600000,
+    "multiCategoryId": "",
+    "solveDept": "规则",
+    "updateUser": "wuzhilin13",
+    "updateTime": 1721730337000,
+    "keyWord": "【修订】京东企业业务生鲜品类商品管理规则",
+    "coverImgUrl": "//img30.360buyimg.com/venderrule//jfs/t1/217725/12/35620/29660/660cf3afFed82c809/5a276ebdc0d4f53f.jpg",
+    "allLabelIds": "",
+    "preRuleTitle": "2024年4月京东开放平台智能相关类目迁移调整公告",
+    "createTime": 1712124860000,
+    "followRuleTitle": "【修订】京东开放平台送货上门服务规则",
+    "createUser": "limeng370",
+    "businessType": 1,
+    "categoryId": "637",
+    "status": 1
+  }
+}

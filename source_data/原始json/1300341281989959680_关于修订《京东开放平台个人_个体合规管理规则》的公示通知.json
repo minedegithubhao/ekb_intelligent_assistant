@@ -1,0 +1,53 @@
+{
+  "rule_id": "1300341281989959680",
+  "scope": [
+    "personal_individual"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1300341281989959680",
+  "search": {
+    "title": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "summary": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "created": "2025-10-28",
+    "modified": "2025-10-28",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1300341281989959680&btype=12"
+  },
+  "detail": {
+    "tagExpireTime": "1762236741668",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "followRuleId": "1297844072060919808",
+    "content": "<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0cm; padding: 0px; font-size: 10.5pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; line-height: 28px; text-align: justify; font-family: 等线;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; line-height: 26.6667px; font-family: 微软雅黑, sans-serif;\">尊敬的商家朋友：</span></p>\n<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0cm; padding: 0px; font-size: 10.5pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; line-height: 28px; text-align: justify; font-family: 等线;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; line-height: 26.6667px; font-family: 微软雅黑, sans-serif;\">&nbsp; &nbsp; &nbsp; &nbsp;</span><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; line-height: 26.6667px; font-family: 微软雅黑, sans-serif;\">您好，为适应业务发展需求，将修订《<a style=\"scrollbar-color: auto; scrollbar-width: thin; text-decoration-line: none; color: #3768fa; word-break: break-all; max-width: 100%;\" href=\"https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=923540006109319168#heading-4\" target=\"_blank\" rel=\"noopener\">京东开放平台个人/个体合规管理规则</a>》，现进行规则公示，公示期：2025年10月28日- 2025年11月3日，规则预计于 2025年11月4日生效，公示期满平台将另行发布正式生效规则。</span></p>\n<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0cm; padding: 0px; font-size: 10.5pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; line-height: 28px; text-align: justify; font-family: 等线;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; line-height: 26.6667px; font-family: 微软雅黑, sans-serif;\"><strong style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%;\">核心调整点：</strong></span></p>\n<p style=\"line-height: 200%; background: white; word-break: break-all; margin: 0cm; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><img class=\"wscnph\" src=\"//img30.360buyimg.com/venderrule//jfs/t1/342499/12/18111/85554/69005e99Fb4fe3d82/9232e457ef3026ce.png\" width=\"800\" /></p>",
+    "selectCategoryId": [
+      "1274923521054740480",
+      "1274924899860877312"
+    ],
+    "categoryIdPath": "1274923521054740480,1274924899860877312",
+    "top": "1761631944255",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20251028/f36989e2809a4d62bafe425d2e8068c6.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 1,
+    "id": "1300341281989959680",
+    "summary": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "solvePin": "场景",
+    "changeReason": "",
+    "preRuleId": "1308037443300376576",
+    "activeTime": 1762185600000,
+    "multiCategoryId": "",
+    "solveDept": "保护",
+    "updateUser": "pengbo100",
+    "updateTime": 1761632059000,
+    "keyWord": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "createTime": 1761631920000,
+    "followRuleTitle": "关于修订《京东开放平台个人/个体经营类目商品阈值明细表》的公示通知",
+    "createUser": "pengbo100",
+    "businessType": 12,
+    "categoryId": "1274924899860877312",
+    "status": 1
+  }
+}

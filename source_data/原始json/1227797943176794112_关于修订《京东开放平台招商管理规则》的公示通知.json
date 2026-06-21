@@ -1,0 +1,55 @@
+{
+  "rule_id": "1227797943176794112",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1227797943176794112",
+  "search": {
+    "title": "关于修订《京东开放平台招商管理规则》的公示通知",
+    "summary": "京东开放平台招商管理规则",
+    "created": "2025-04-11",
+    "modified": "2025-04-11",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1227797943176794112&type=0&btype=1"
+  },
+  "detail": {
+    "tagExpireTime": "1746928258396",
+    "pv": "1",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "关于修订《京东开放平台招商管理规则》的公示通知",
+    "followRuleId": "1226731001624006656",
+    "content": "<p class=\"sl-paragraph sl-indent1\" style=\"text-indent: 4em; line-height: 2;\"><span style=\"font-size: 10pt; color: #000000;\">尊敬的商家朋友：</span></p>\n<p class=\"sl-paragraph sl-indent1\" style=\"text-indent: 4em; line-height: 2;\"><span style=\"font-size: 10pt; color: #000000;\">您好，为适应业务发展需求，将针对《京东开放平台招商管理规则》进行调整。现进行规则公示，公示期：2025年4月11日- 2025年4月17日，规则预计于 2025年4月18日生效，公示期满平台将另行发布正式生效规则。</span></p>\n<p class=\"sl-paragraph sl-indent1\" style=\"text-indent: 4em; line-height: 2;\"><span style=\"font-size: 10pt; color: #000000;\">核心调整点：品牌关于旗舰店开店数量的规定。</span></p>\n<p class=\"sl-paragraph sl-indent1\" style=\"text-indent: 4em; line-height: 2;\">&nbsp;</p>\n<p class=\"sl-paragraph sl-indent1\" style=\"text-indent: 4em; line-height: 2;\"><span style=\"font-size: 10pt; color: #000000;\">修订具体内容如下：</span></p>\n<p class=\"sl-paragraph sl-indent1\" style=\"text-indent: 4em; line-height: 2;\"><span style=\"font-size: 10pt; color: #7e8c8d;\"><span style=\"font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, Arial, sans-serif; font-size: 14px; white-space: pre-wrap; background-color: #ffffff; float: none; display: inline;\">1、新增：&ldquo;品牌可以根据自身发展需要，在不同的类目下开设旗舰店，同时基于经营表现或用户体验，京东对品牌开设旗舰店的数量会进行动态评估，具体以类目实际情况为准。&rdquo;</span></span></p>\n<p class=\"sl-paragraph sl-indent1\" style=\"text-indent: 4em; line-height: 2;\"><span style=\"font-size: 10pt; color: #7e8c8d;\"><span style=\"font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, Arial, sans-serif; font-size: 14px; white-space: pre-wrap; background-color: #ffffff; float: none; display: inline;\"> 2、删除：&ldquo;知名品牌、趋势品牌可开设旗舰店。&rdquo;及&ldquo;同一品牌在同一个二级类目下只能经营一家旗舰店。&rdquo;</span> </span></p>",
+    "selectCategoryId": [
+      "1208614779573374976",
+      "1208615152623161344"
+    ],
+    "categoryIdPath": "1208614779573374976,1208615152623161344",
+    "top": "0",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250411/6fcac2c942274531b235afd2864e9e15.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 1,
+    "id": "1227797943176794112",
+    "summary": "京东开放平台招商管理规则",
+    "uv": "1",
+    "solvePin": "yangshuling3",
+    "changeReason": "",
+    "preRuleId": "1227811979650011136",
+    "activeTime": 1744905600000,
+    "multiCategoryId": "",
+    "solveDept": " 京东集团-京东零售-平台生态部-商家策略与运营部-招商规则与运营部",
+    "updateUser": "zhouxinai",
+    "updateTime": 1744338391000,
+    "keyWord": "京东开放平台招商管理规则",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "关于修订《 京东开放平台质保期服务规则》的公示通知",
+    "createTime": 1744336241000,
+    "followRuleTitle": "关于修订《京东开放平台发货管理规则》及相关规则的公示通知",
+    "createUser": "zhouxinai",
+    "businessType": 1,
+    "categoryId": "1208615152623161344",
+    "status": 1
+  }
+}

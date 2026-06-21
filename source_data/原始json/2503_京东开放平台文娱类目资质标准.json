@@ -1,0 +1,58 @@
+{
+  "rule_id": "2503",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=2503",
+  "search": {
+    "title": "京东开放平台文娱类目资质标准",
+    "summary": "京东开放平台文娱类目资质标准",
+    "created": "2018-12-05",
+    "modified": "2025-09-22",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=2503&type=0&btype=1"
+  },
+  "detail": {
+    "labelNames": "资质要求规则",
+    "tagExpireTime": "1759131869454",
+    "pv": "1",
+    "endLabelIds": "5811",
+    "endLabelNames": "资质标准",
+    "title": "京东开放平台文娱类目资质标准",
+    "followRuleId": "2457",
+    "content": "<table class=\"MsoNormalTable\" style=\"width: 100.0%; border-collapse: collapse;\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td style=\"width: 100.0%; border: solid windowtext 1.0pt; background: #C00000; padding: 0cm 5.4pt 0cm 5.4pt;\" width=\"100%\">\n<p style=\"text-align: center; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"center\"><span style=\"font-size: 10pt;\"><strong><span style=\"font-family: 微软雅黑, sans-serif; color: white;\">行业/特殊资质及要求</span></strong></span></p>\n</td>\n</tr>\n<tr>\n<td style=\"width: 100.0%; border-top: none; border-left: solid windowtext 1.0pt; border-bottom: solid windowtext 1.0pt; border-right: solid black 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt;\" width=\"100%\">\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">销售音像制品商品，营业执照经营范围需包含&ldquo;音像制品零售/批发&rdquo;等项目；销售数字藏品类目商品，营业执照经营范围需包含版权服务相关项目（版权代理、知识产权服务、数字文化创意内容应用服务、数字内容制作服务等，至少满足一项）。</span></span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">2.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">经营进口CD，需提供进出口公司的销售协议，如中间存在经销商，可逐层授权。</span></span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">3.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">经营数字藏品，需签署承诺函。附：</span><a href=\"http://box.jd.com/sharedInfo/32F8AAA97C8A3E3FEEC946AFBC5707A7\"><span style=\"font-family: 微软雅黑, sans-serif; color: blue;\">承诺函模板</span></a><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">，访问密码: 7a9byz；发品前需提交版权权利证明及授权书（商品维度资质）。</span></span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">4.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">经营国产音像类，需提供《出版物经营许可证》，《出版物经营许可证》的公司基础信息需与营业执照一致。</span></span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">5.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">经营进口音像类，需提供《出版物经营许可证》，以及委托进出口公司的《出版物经营许可证》，《出版物经营许可证》经营范围需包含&ldquo;进出口音像&rdquo;、&ldquo;音像零售&rdquo;、&ldquo;出版物零售&rdquo;等。</span></span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">6.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">经营游戏&mdash;非光盘类，如为游戏发行方，需提供广电总局出具的《关于同意出版运营国产网络游戏〈XXXX〉的批复》或《关于同意进口网络游戏〈XXXX〉的批复》或广电总局出具的《网络游戏出版物号核发单》；如为代理方，需提供《网络文化经营许可证》或《增值电信业务经营许可证》，以及游戏版权方的授权资质。</span></span></p>\n<p style=\"text-align: left; line-height: 24pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">7. IP</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">在线服务为定向经营类目，在新增经营类目时需经审核后方可运营。</span></span></p>\n</td>\n</tr>\n<tr>\n<td style=\"width: 100.0%; border-top: none; border-left: solid windowtext 1.0pt; border-bottom: solid windowtext 1.0pt; border-right: solid black 1.0pt; padding: 0cm 5.4pt 0cm 5.4pt;\" width=\"100%\">\n<p style=\"margin: 0cm 0cm 0.0001pt 0.05pt; text-indent: -0.05pt; line-height: 21pt; background: white; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">旗舰店授权书模板：</span><a href=\"https://helpcenter.jd.com/vender/issue/926-4279.html\"><span style=\"font-family: 微软雅黑, sans-serif; color: blue;\">旗舰店授权书模板</span></a></span></p>\n<p style=\"text-indent: -0.05pt; line-height: 21pt; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">2. </span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">京东开放平台各类目资费一览表：</span><a href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=638209647311982592&amp;type=0&amp;btype=1\"><span style=\"font-family: 微软雅黑, sans-serif; color: blue;\">京东开放平台类目资费规则</span></a></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt 0.05pt; text-indent: -0.05pt; line-height: 21pt; background: white; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">3. </span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">店铺命</span><span style=\"font-family: 微软雅黑, sans-serif;\">名规则：</span><a href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=2598\" target=\"_blank\" rel=\"noopener\"><span style=\"font-family: 微软雅黑, sans-serif; color: blue;\">https://rule.jd.com/rule/ruleDetail.action?ruleId=2598</span></a></span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p style=\"line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><strong><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">附则</span></strong></span></p>\n<p style=\"line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">1.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">京东商家的行为，发生在本管理标准生效之日以前的，适用当时的标准。发生在本管理标准生效之日以后的，适用本标准。</span></span></p>\n<p style=\"line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">2.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">京东可根据平台运营情况随时调整本管理标准并向商家公示。</span></span></p>\n<p style=\"line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10pt;\"><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">3.&nbsp;</span><span style=\"font-family: 微软雅黑, sans-serif; color: black;\">商家应遵守国家法律、行政法规、部门规章等规范性文件。对任何涉嫌违反国家法律、行政法规、部门规章等规范性文件的行为，本标准已有规定的，适用于本标准。本标准尚无规定的，京东有权酌情处理。但京东对商家的处理不免除其应承担的法律责任。商家在京东的任何行为，应同时遵守与京东及其关联公司签订的各项协议。</span></span></p>\n<p style=\"line-height: 2; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; color: black; text-align: left; white-space: normal; font-size: 10pt; line-height: 26.6667px; font-family: 微软雅黑, sans-serif;\">4.&nbsp;</span><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; color: black; text-align: left; white-space: normal; font-size: 10pt; line-height: 26.6667px; font-family: 微软雅黑, sans-serif;\">本规则标准于2025年9月15日修订，于2025年9月22日生效。</span></p>",
+    "selectCategoryId": [
+      "373",
+      "393"
+    ],
+    "categoryIdPath": "373,393",
+    "labelIds": "295",
+    "top": "1758527058558",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250922/672665926fe04160bca53a9c57815662.txt",
+    "pdfFileUrl": "//storage.jd.com/karmavender/file/pdf/20240104/f599c32a6c9645f887a82862a3bb122b.pdf",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 2,
+    "id": "2503",
+    "summary": "京东开放平台文娱类目资质标准",
+    "uv": "1",
+    "solvePin": "刘艳",
+    "changeReason": "取消卖场店（杨树玲）",
+    "preRuleId": "2506",
+    "activeTime": 1758470400000,
+    "multiCategoryId": "",
+    "solveDept": "京东零售-V事业群-图书文教业务部-POP图书业务部",
+    "updateUser": "liqi191",
+    "updateTime": 1758527033000,
+    "mediumCode": 5,
+    "keyWord": "京东开放平台文娱类目资质标准",
+    "allLabelIds": "5809,5810,5811,5789",
+    "preRuleTitle": "京东开放平台数码类目资质标准",
+    "createTime": 1483775383000,
+    "followRuleTitle": "京东开放平台家装建材/五金/工具/灯饰照明/厨房卫浴类目资质标准",
+    "createUser": "wangjiaxing10",
+    "businessType": 1,
+    "isHot": 0,
+    "categoryId": "393",
+    "status": 1
+  }
+}

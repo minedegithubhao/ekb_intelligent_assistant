@@ -1,0 +1,53 @@
+{
+  "rule_id": "1051386092487577600",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1051386092487577600",
+  "search": {
+    "title": "京东开放平台过期退/随时退服务规则",
+    "summary": "京东开放平台过期退/随时退服务规则",
+    "created": "2023-12-11",
+    "modified": "2024-09-04",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1051386092487577600&type=0&btype=1"
+  },
+  "detail": {
+    "pv": "2",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "京东开放平台过期退/随时退服务规则",
+    "followRuleId": "1034773490236002304",
+    "content": "<p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第一章 概述</span></strong></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第一条</span></strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\"> &ldquo;</span><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">过期退/随时退&rdquo;服务是指当消费者购买带有&ldquo;过期退/随时退&rdquo;服务标签的LOC</span><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">商品后，在消费码（即订单详情页展示的二维码）有效期内消费者可以随时申请退款且无需商家审核，在消费码过期时系统会自动退款，无需消费者手动申请。</span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第二条</span></strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\"> 本规则适用于京东开放平台开通LOC服务的商家及其LOC订单。LOC服务是指消费者在线上购买LOC商家发布的LOC商品后，凭消费码到店可以兑换商品。</span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第二章 服务细则</span></strong></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第三条 服务开通与关闭</span></strong></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">（一）服务开通</span></strong></p><p style=\"text-align: left; text-indent: 20pt; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">开通LOC服务的商家默认开通&ldquo;过期退/随时退&rdquo;服务，无需商家手动申请。开通&ldquo;过期退/随时退&rdquo;服务后，在商家发布的LOC商品详情页会露出&ldquo;过期退/随时退&rdquo;服务标签，生效时间以系统更改生效且商品详情页&ldquo;过期退/随时退&rdquo;标签展示的时间为准。</span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">（二）服务关闭</span></strong></p><p style=\"text-align: left; text-indent: 20pt; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">&ldquo;</span><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">过期退/随时退&rdquo;服务是非必须开通的服务，如果商家需要关闭该服务，可联系店铺运营支持人员申请关闭，处理时长预计为1-2个工作日。关闭操作完成后商家对应商品详情页将不再展示&ldquo;过期退/随时退&rdquo;服务标签，关闭生效时间以系统更改生效且商品详情页标签下线的时间为准。关闭后，如商家想再次开通，可以联系店铺运营支持人员申请开通，处理时长预计为1-2个工作日。</span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第四条 服务保障范围明细</span></strong></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">（一）</span></strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">商家开通（系统开通及前台出现对应标签）&ldquo;过期退/随时退&rdquo;服务之日前3日直到服务关闭当日过期的LOC订单都可享受该服务。如商家于某月15号开通，则当月12号及之后过期的订单可享受该服务。</span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">（二）</span></strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">商家关闭（系统关闭及前台不再展示对应标签）&ldquo;过期退/随时退&rdquo;服务当日过期的LOC订单不再享受该服务。&nbsp; </span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第三章 特殊情况处理</span></strong></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第五条 特殊情况处理</span></strong></p><p style=\"text-align: left; text-indent: 20pt; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">商家在履行&ldquo;过期退/随时退&rdquo;服务期间，应该积极为消费者提供服务体验保障。如收到消费者无法随时退款、无法过期自动退款等问题反馈，可以联系店铺运营支持人员帮忙处理。不以为消费者提供服务体验保障为目的使用或不当使用等造成京东权益损失的，京东将有权立即停止商家的该项服务，由此产生的所有责任和损失由商家承担。</span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第四章 附则</span></strong></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第六条</span></strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\"> 京东可根据平台运营情况随时调整本规则并向商家公示。</span></p><p style=\"text-align: left; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">第七条</span></strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\"> 商家应遵守国家法律、行政法规、部门规章等规范性文件。对任何涉嫌违反国家法律、行政法规、部门规章等规范性文件的行为，本规则已有约定的，适用于本规则，本规则尚无约定的，依照法律法规处理。商家依据相关规则承担的相关责任并不免除其应承担的法律责任。商家在京东的任何行为，应同时遵守与京东及其关联公司签订的各项协议。协议与平台规则对于违约责任、违约金等约定不一致的，两者以高者为准。</span></p><p style=\"text-align: left; text-indent: 20pt; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif;\">本规则于2023年12月11日发布，于2023年12月18日生效。 </span></p><p style=\"text-align: left; text-indent: 20pt; line-height: 2; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black; background: white;\">欢迎每位商家为我们提供建议，可邮件至guize@jd.com，谢谢。</span></p>",
+    "selectCategoryId": [
+      "385",
+      "544"
+    ],
+    "categoryIdPath": "385,544",
+    "top": "0",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20240904/7a536a4fd5f948e6829d82b3f74ff33f.txt",
+    "pdfFileUrl": "//storage.jd.com/karmavender/file/pdf/20231211/09905b6ad71e4f84b04f3f324f9e62ce.pdf",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "id": "1051386092487577600",
+    "summary": "京东开放平台过期退/随时退服务规则",
+    "uv": "1",
+    "solvePin": " 周萌萌",
+    "changeReason": "",
+    "preRuleId": "1051400066130120704",
+    "activeTime": 1702828800000,
+    "multiCategoryId": "",
+    "solveDept": "京东零售-生态服务部-平台服务部-售后体验运营部",
+    "updateUser": "machuyue1",
+    "updateTime": 1702276409000,
+    "keyWord": "京东开放平台过期退/随时退服务规则",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "京东开放平台品质溯源服务规则",
+    "createTime": 1702276378000,
+    "followRuleTitle": "京东开放平台送装拆旧服务规则",
+    "createUser": "machuyue1",
+    "businessType": 1,
+    "categoryId": "544",
+    "status": 1
+  }
+}

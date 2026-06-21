@@ -1,0 +1,53 @@
+{
+  "rule_id": "1257213261586239488",
+  "scope": [
+    "personal_individual"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1257213261586239488",
+  "search": {
+    "title": "关于修订《京东开放平台个人/个体开店管理规则》的公示通知",
+    "summary": "京东开放平台个人/个体开店管理规则",
+    "created": "2025-07-01",
+    "modified": "2025-07-01",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1257213261586239488&btype=12"
+  },
+  "detail": {
+    "pv": "2",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "关于修订《京东开放平台个人/个体开店管理规则》的公示通知",
+    "followRuleId": "1234788793198972928",
+    "content": "<p style=\"margin: 0px 0cm; padding: 0px; color: #000000; white-space: normal; background-color: #ffffff; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"margin: 0px; padding: 0px; font-size: 10pt; font-family: 微软雅黑, sans-serif;\">尊敬的商家朋友：</span></p>\n<p style=\"margin: 0px 0cm; padding: 0px; color: #000000; white-space: normal; background-color: #ffffff; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"margin: 0px; padding: 0px; font-size: 10pt; font-family: 微软雅黑, sans-serif;\">您好，为适应业务发展需求，将针对《京东开放平台个人/个体开店管理规则》进行调整。现进行规则公示，公示期：2025年7月1日- 2025年7月7日，规则预计于 2025年7月8日生效，公示期满平台将另行发布正式生效规则。</span></p>\n<p style=\"margin: 0px 0cm; padding: 0px; color: #000000; white-space: normal; background-color: #ffffff; font-size: 12pt; font-family: 宋体; line-height: 2;\">&nbsp;</p>\n<p style=\"margin: 0px 0cm; padding: 0px; color: #000000; white-space: normal; background-color: #ffffff; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"margin: 0px; padding: 0px; font-size: 10pt; font-family: 微软雅黑, sans-serif;\">修订具体内容如下：</span></p>\n<p style=\"margin: 0px 0cm; padding: 0px; color: #000000; white-space: normal; background-color: #ffffff; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"margin: 0px; padding: 0px; font-size: 10pt; font-family: 微软雅黑, sans-serif;\">在原第十八条后，新增第十九条：&ldquo;发票开票事宜，参考<span style=\"text-decoration: underline;\"><span style=\"color: #4e30f9; text-decoration: underline;\"><a style=\"color: #4e30f9; text-decoration: underline;\" href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=1257186485493436416&amp;btype=1\" target=\"_blank\" rel=\"noopener\">《京东开放平台开票规则》</a></span></span> 。&rdquo;</span></strong></p>\n<p style=\"margin: 0px 0cm; padding: 0px; color: #000000; white-space: normal; background-color: #ffffff; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"margin: 0px; padding: 0px; font-size: 10pt; font-family: 微软雅黑, sans-serif;\">原第十九条及之后的数字序号，相应顺延。</span></p>",
+    "selectCategoryId": [
+      "991293270908866560",
+      "1208686693864050688"
+    ],
+    "categoryIdPath": "991293270908866560,1208686693864050688",
+    "top": "0",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250701/11e68ab9a9d4499aa9a93ea634bbac48.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "id": "1257213261586239488",
+    "summary": "京东开放平台个人/个体开店管理规则",
+    "uv": "1",
+    "solvePin": "lichong87",
+    "changeReason": "",
+    "preRuleId": "1277536936805928960",
+    "activeTime": 1751904000000,
+    "multiCategoryId": "",
+    "solveDept": "京东集团-京东零售-平台生态部-平台与自营规则部-平台资费与结算规则部",
+    "updateUser": "zhouxinai",
+    "updateTime": 1751349418000,
+    "keyWord": "京东开放平台个人/个体开店管理规则",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "【已失效】关于修订《京东开放平台个人/个体交易管理规则》的公示通知",
+    "createTime": 1751349399000,
+    "followRuleTitle": "关于修订《京东开放平台个人/个体经营类目商品阈值明细表》的公示通知",
+    "createUser": "zhouxinai",
+    "businessType": 12,
+    "categoryId": "1208686693864050688",
+    "status": 1
+  }
+}

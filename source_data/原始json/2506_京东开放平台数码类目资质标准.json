@@ -1,0 +1,58 @@
+{
+  "rule_id": "2506",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=2506",
+  "search": {
+    "title": "京东开放平台数码类目资质标准",
+    "summary": "京东开放平台数码类目资质标准",
+    "created": "2018-12-05",
+    "modified": "2025-12-12",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=2506&type=0&btype=1"
+  },
+  "detail": {
+    "labelNames": "资质要求规则",
+    "tagExpireTime": "1759132654565",
+    "pv": "1",
+    "endLabelIds": "5811",
+    "endLabelNames": "资质标准",
+    "title": "京东开放平台数码类目资质标准",
+    "followRuleId": "2503",
+    "content": "<table class=\"MsoNormalTable\" style=\"margin-left: -.5pt; background: white; border-collapse: collapse; border: none;\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr style=\"height: 17.5pt;\">\n<td style=\"border: solid windowtext 1.0pt; background: transparent; padding: 0cm 5.4pt 0cm 5.4pt; height: 17.5pt;\">\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; font-size: 12pt; font-family: 宋体;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">招商说明：</span></strong></p>\n<p style=\"text-align: left; line-height: 21pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">1. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">非中国大陆企业入驻开店的请选择京东国际。</span></p>\n<p style=\"text-align: left; line-height: 21pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black; background: white;\">申请入驻开店时请先选择经营一个三级类目，店铺开通后，可按要求申请增加其他类目。</span></p>\n</td>\n</tr>\n<tr style=\"height: 17.5pt;\">\n<td style=\"border: solid windowtext 1.0pt; border-top: none; background: #C00000; padding: 0cm 5.4pt 0cm 5.4pt; height: 17.5pt;\">\n<p style=\"text-align: center; line-height: 200%; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"center\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: white;\">行业/特殊资质及要求</span></strong></p>\n</td>\n</tr>\n<tr>\n<td style=\"border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt;\" nowrap=\"nowrap\">\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">1. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black; background: white;\">经营体感车、存储卡类目商品必须提供一般纳税人资格证明图片</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">（含增值税一般纳税人通知书、增值税一般纳税人资格登记表）、近1年内的增值税发票图片（商家开具）或税务局官网一般纳税人资格截图（须加盖开店公司红章）。</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">成品检测报告内容需包含品牌名称、产品名称、产品型号和各类产品所必须的各类检测项，必要检测项要求如下：</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">① 儿童定位智能手表：CCC国家强制性产品认证（以下简称3C认证）、电信设备进网许可证、无线电发射设备型号核准证；</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">② 锂电池：检测项目必须包括：放电性能、自由跌落、过充电保护、短路测试；</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">③ 移动电源：检测项目必须包括：有效输出容量、转换效率、输出电压、材料阻燃、自由跌落、限用物质的限量；标准号为GB/T35590-2017。</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">3. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">若经营的商品需通过国家强制性产品认证，则必须提供该产品对应的3C认证，进口产品仍需经过3C认证。</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">蓝牙设备则需要有无线电发射设备型号核准证。</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">4. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">其他说明：带电源适配器的产品，需出具电源适配器的3C认证。</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">3C</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">认证详情请查询：</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\"><a href=\"https://www.cqc.com.cn/www/chinese/zscx/\" target=\"_blank\" rel=\"noopener\"><span style=\"color: blue;\">https://www.cqc.com.cn/www/chinese/zscx/</span></a></span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt; line-height: 21pt; background: white; font-size: 12pt; font-family: 宋体;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">3C</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">认证范围查询：</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\"><a href=\"https://www.cqc.com.cn/www/chinese/cprz/CCCcprz/rzfw/\" target=\"_blank\" rel=\"noopener\"><span style=\"color: blue;\">https://www.cqc.com.cn/www/chinese/cprz/CCCcprz/rzfw/</span></a></span></p>\n</td>\n</tr>\n<tr>\n<td style=\"border: solid windowtext 1.0pt; border-top: none; padding: 0cm 5.4pt 0cm 5.4pt;\" nowrap=\"nowrap\">\n<p style=\"line-height: 21pt; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">1.&nbsp;</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">旗舰店授权书模板：</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\"><a style=\"color: blue; text-decoration: underline;\" href=\"https://helpcenter.jd.com/vender/issue/926-4279.html\">旗舰店授权书模板</a></span></p>\n<p style=\"line-height: 21pt; background: white; margin: 0cm 0cm 0.0001pt; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">京东开放平台各类目资费一览表：</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\"><a style=\"color: blue; text-decoration: underline;\" href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=638209647311982592&amp;type=0&amp;btype=1\">京东开放平台类目资费规则</a></span></p>\n<p style=\"text-align: left; line-height: 21pt; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">3. </span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">店铺命</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">名规则：</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\"><a style=\"color: blue; text-decoration: underline;\" href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=2598\" target=\"_blank\" rel=\"noopener\">https://rule.jd.com/rule/ruleDetail.action?ruleId=2598</a></span></p>\n</td>\n</tr>\n</tbody>\n</table>\n<p style=\"margin: 0cm 0cm 0.0001pt 7.05pt; line-height: 200%; background: white; text-align: justify; font-size: 10.5pt; font-family: 等线;\"><strong><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">附则</span></strong></p>\n<p style=\"margin: 0cm 0cm 0.0001pt 7.05pt; text-align: left; line-height: 200%; background: white; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">1. </span><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">京东商家的行为，发生在本管理规则生效之日以前的，适用当时的规则。发生在本管理规则生效之日以后的，适用本规则。</span></p>\n<p style=\"text-align: left; text-indent: 7.1pt; line-height: 200%; background: white; margin: 0cm 0cm 0.0001pt; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">2. </span><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">京东可根据平台运营情况随时调整本管理规则并以公告的形式向商家公示。</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt 7.05pt; text-align: left; line-height: 200%; background: white; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">3. </span><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">商家应遵守国家法律、行政法规、部门规章等规范性文件。对任何涉嫌违反国家法律、行政法规、部门规章等规范性文件的行为，本规则已有规定的，适用于本规则。本规则尚无规定的，京东有权酌情处理。但京东对商家的处理不免除其应承担的法律责任。商家在京东的任何行为，应同时遵守与京东及其关联公司签订的各项协议。</span></p>\n<p style=\"margin: 0cm 0cm 0.0001pt 7.05pt; text-align: left; line-height: 200%; background: white; font-size: 10.5pt; font-family: 等线;\" align=\"left\"><span style=\"font-size: 10.0pt; line-height: 200%; font-family: 微软雅黑, sans-serif; color: black;\">4. <span style=\"color: #000000; font-family: 微软雅黑, sans-serif; font-size: 13.3333px; text-align: left; white-space: normal; background-color: #ffffff; float: none; display: inline;\">本规则标准于2025年12月08日修订，于2025年12月15日生效。</span> </span></p>",
+    "selectCategoryId": [
+      "373",
+      "393"
+    ],
+    "categoryIdPath": "373,393",
+    "labelIds": "295",
+    "top": "1758527840558",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250922/c0156bcabcba4c72b6368ee8d886e186.txt",
+    "pdfFileUrl": "//storage.jd.com/karmavender/file/pdf/20240426/c65ab907d108487ba6a370d95d838ccf.pdf",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 2,
+    "id": "2506",
+    "summary": "京东开放平台数码类目资质标准",
+    "uv": "1",
+    "solvePin": " 程亚亚",
+    "changeReason": "取消卖场店（杨树玲）",
+    "preRuleId": "2511",
+    "activeTime": 1758470400000,
+    "multiCategoryId": "",
+    "solveDept": "京东零售-3C数码事业群-经营提升部-体验提升部",
+    "updateUser": "jingyuxiu",
+    "updateTime": 1781809201283,
+    "mediumCode": 5,
+    "keyWord": "京东开放平台数码类目资质标准",
+    "allLabelIds": "5809,5810,5811,5789",
+    "preRuleTitle": "京东开放平台酒类类目资质标准",
+    "createTime": 1483775566000,
+    "followRuleTitle": "京东开放平台文娱类目资质标准",
+    "createUser": "wangjiaxing10",
+    "businessType": 1,
+    "isHot": 0,
+    "categoryId": "393",
+    "status": 1
+  }
+}

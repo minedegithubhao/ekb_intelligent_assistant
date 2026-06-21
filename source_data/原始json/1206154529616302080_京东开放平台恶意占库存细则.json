@@ -1,0 +1,55 @@
+{
+  "rule_id": "1206154529616302080",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1206154529616302080",
+  "search": {
+    "title": "京东开放平台恶意占库存细则",
+    "summary": "京东开放平台恶意占库存细则",
+    "created": "2025-02-10",
+    "modified": "2025-08-29",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1206154529616302080&type=0&btype=1"
+  },
+  "detail": {
+    "tagExpireTime": "1757065440268",
+    "pv": "2",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "京东开放平台恶意占库存细则",
+    "followRuleId": "3393",
+    "content": "<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">1.</span></strong><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">【违规定义】</span></strong></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">1.1</span></strong><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">恶意占库存：</span></strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\"><span style=\"color: #000000;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; white-space: normal; background-color: #ffffff; font-size: 10pt; line-height: 15.3333px; font-family: 微软雅黑, sans-serif;\">商家在平台多次或多量超出非自用需求下单但不付款或不收货的形式干扰消费者购物权益或其他商家权益，损害平台正常经营秩序的行为。</span> </span></span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2.</span></strong><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">【处理措施】</span></strong></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">2.1</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">违规程度轻微：警告；</span></p>\n<p style=\"margin: 0cm; line-height: 2; font-size: 11pt; font-family: 等线;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2.2</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">违规程度一般：视店铺违规情形以及涉事商品 销售历史</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">，<span style=\"color: black;\">扣除占库存金额2～5倍（1000元起）的违约金；</span></span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2.3</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">违规程度严重：视店铺违规情形以及涉事商品销售历史</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">，<span style=\"color: black;\">扣除占库存金额5～8倍（1000元起）的违约金；</span></span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2.4</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">违规程度极其严重：视店铺违规情形以及涉事商品销售历史</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\">，<span style=\"color: black;\">扣除占库存金额8～10倍（1000元起）的违约金或扣收商家在平台上的近一年内收入。</span></span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2.5</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">除上述处理措施外，京东有权视商家违规程度且不基于违规次数，对涉事商家、店铺及关联店铺采取包括但不限于违规商品下架、禁止发布新商品、禁止上架待售商品、禁止投放或提报活动、禁止投放或播放广告、品牌停用和限制申请品牌、类目停用和限制开通类目、搜索降权、推荐降权、全店商品下架、降低店铺星级、屏蔽降权、账户止付、定额冻结、扣收保证金、扣收违约金、提高涉事店铺应缴保证金金额、延长结算周期、执行店铺清退等措施，同时，不基于违规次数，京东有权对商家的关联方或关联店铺采取一项或多项的管控措施，具体管控措施详见</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif;\"><a style=\"color: blue; text-decoration: underline;\" href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=4680&amp;type=0&amp;btype=1\"><span style=\"color: black;\">《京东开放平台关联店铺管理规则》</span></a></span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">。</span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">【规则解读】</span></strong></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">商家恶意占库存，包括哪些情形？</span></strong></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">商家恶意占库存包括但不限于以下情形：</span></p>\n<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0px 0cm; padding: 0px; font-size: 12pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; line-height: 2; font-family: 宋体;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; font-family: 微软雅黑, sans-serif; color: #000000;\">（1）商家涉嫌使用其账号、相关联账号、所控制账号或者雇佣他人进行占库存行为；</span></p>\n<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0px 0cm; padding: 0px; font-size: 12pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; line-height: 2; font-family: 宋体;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; font-family: 微软雅黑, sans-serif; color: #000000;\">（2）通过一次性大量下单或多次下单累计商品数量较多，并通过不支付、取消订单、拒收或延迟收货等手段恶意占库存的行为。</span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><strong><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">附则：</span></strong></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">1.</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">商家的行为，发生在本规则生效之日以前的，适用当时的规则。发生在本规则生效之日以后的，适用本规则。</span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">2.</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">京东可根据运营情况随时调整本规则并以公告的形式向商家公示。</span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">3.</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">商家应遵守国家法律、行政法规、部门规章等规范性文件。对任何涉嫌违反国家法律、行政法规、部门规章等规范性文件的行为，本规则已有约定的，适用于本规则。本规则尚无约定的，京东有权酌情处理。但京东对商家的处理不免除其应承担的法律责任。商家在京东的任何行为，应同时遵守与京东及其关联公司签订的各项协议；若商家服务协议约定的违约金金额高于规则约定的，京东有权适用协议约定。</span></p>\n<p style=\"margin-right: 0cm; margin-left: 0cm; font-size: 12pt; font-family: 宋体; line-height: 2;\"><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">4.</span><span style=\"font-size: 10.0pt; font-family: 微软雅黑, sans-serif; color: black;\">本规则于2025年8月22日修订，于2025年8月29日生效。</span></p>",
+    "selectCategoryId": [
+      "372",
+      "541"
+    ],
+    "categoryIdPath": "372,541",
+    "top": "1739176131530",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20250829/9ca021d5676e4d1aa268293b6a5f6abc.txt",
+    "pdfFileUrl": "//storage.jd.com/karmavender/file/pdf/20250210/7d8e47c007ea40d1bc9cd931216649e5.pdf",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 2,
+    "id": "1206154529616302080",
+    "summary": "京东开放平台恶意占库存细则",
+    "uv": "1",
+    "solvePin": "武甜",
+    "changeReason": "",
+    "preRuleId": "1234418199919988736",
+    "activeTime": 1756396800000,
+    "multiCategoryId": "",
+    "solveDept": "京东零售-平台生态部-风控部-交易风控部",
+    "updateUser": "pengbo100",
+    "updateTime": 1756460469000,
+    "keyWord": "京东开放平台恶意占库存细则",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "京东开放平台发布违禁商品及信息管理规范-药品实施细则",
+    "createTime": 1739176049000,
+    "followRuleTitle": "京东开放平台出售假冒商品细则",
+    "createUser": "pengbo100",
+    "businessType": 1,
+    "categoryId": "541",
+    "status": 1
+  }
+}

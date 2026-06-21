@@ -1,0 +1,53 @@
+{
+  "rule_id": "1308037443300376576",
+  "scope": [
+    "personal_individual"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1308037443300376576",
+  "search": {
+    "title": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "summary": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "created": "2025-11-18",
+    "modified": "2025-11-18",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1308037443300376576&btype=12"
+  },
+  "detail": {
+    "tagExpireTime": "1764071650321",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "followRuleId": "1300341281989959680",
+    "content": "<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0cm; padding: 0px; font-size: 10.5pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; text-align: left; line-height: 2; font-family: 等线;\" align=\"left\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; line-height: 20px; font-family: 微软雅黑, sans-serif; color: black;\">尊敬的商家朋友：</span></p>\n<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0cm; padding: 0px; font-size: 10.5pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; text-align: left; line-height: 2; font-family: 等线;\" align=\"left\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt; line-height: 20px; font-family: 微软雅黑, sans-serif; color: black;\">您好，为适应业务发展需求，将修订<a style=\"scrollbar-color: auto; scrollbar-width: thin; text-decoration-line: none; color: #3768fa; word-break: break-all; max-width: 100%;\" href=\"https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=923540006109319168\" target=\"_blank\" rel=\"noopener\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; text-decoration-line: underline;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; color: #3598db; text-decoration-line: underline;\">《京东开放平台个人/个体合规管理规则》</span></span></a>，现进行规则公示，公示期：2025年11月18日- 2025年11月24日，规则预计于2025年11月25日生效，公示期满平台将另行发布正式生效规则。</span></p>\n<p style=\"scrollbar-color: auto; scrollbar-width: thin; margin: 0cm; padding: 0px; font-size: 10.5pt; word-break: break-all; max-width: 100%; color: #000000; white-space: normal; background-color: #ffffff; text-align: left; line-height: 2; font-family: 等线;\" align=\"left\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; font-size: 10pt;\"><strong style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%;\"><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; line-height: 20px; font-family: 微软雅黑, sans-serif; color: black;\">核心调整点：</span></strong><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; line-height: 20px; font-family: 微软雅黑, sans-serif; color: black;\">为便于商家区分违规场景，避免与&rdquo;发布混淆信息&ldquo;违规场景混淆，</span><span style=\"scrollbar-color: auto; scrollbar-width: thin; word-break: break-all; max-width: 100%; line-height: 20px; font-family: 微软雅黑, sans-serif; color: black;\">将【品牌词混淆】表述更改为【品牌信息不一致】。</span></span></p>",
+    "selectCategoryId": [
+      "1274923521054740480",
+      "1274924899860877312"
+    ],
+    "categoryIdPath": "1274923521054740480,1274924899860877312",
+    "top": "1763466852488",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20251118/84006deee93746f48181629de325138f.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "propertyTagId": 1,
+    "id": "1308037443300376576",
+    "summary": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "solvePin": "李晓",
+    "changeReason": "",
+    "preRuleId": "1323564833215586304",
+    "activeTime": 1764000000000,
+    "multiCategoryId": "",
+    "solveDept": "京东零售-平台生态部-平台保护部-假货治理部",
+    "updateUser": "pengbo100",
+    "updateTime": 1763466828000,
+    "keyWord": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "coverImgUrl": "",
+    "allLabelIds": "",
+    "preRuleTitle": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "createTime": 1763466828000,
+    "followRuleTitle": "关于修订《京东开放平台个人/个体合规管理规则》的公示通知",
+    "createUser": "pengbo100",
+    "businessType": 12,
+    "categoryId": "1274924899860877312",
+    "status": 1
+  }
+}

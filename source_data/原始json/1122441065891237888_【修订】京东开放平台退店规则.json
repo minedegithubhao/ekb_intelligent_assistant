@@ -1,0 +1,53 @@
+{
+  "rule_id": "1122441065891237888",
+  "scope": [
+    "enterprise"
+  ],
+  "source_url": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1122441065891237888",
+  "search": {
+    "title": "【修订】京东开放平台退店规则",
+    "summary": "【修订】京东开放平台退店规则",
+    "created": "2024-06-24",
+    "modified": "2024-09-03",
+    "url": "https://rule.jd.com/rule/ruleDetail.action?ruleId=1122441065891237888&type=0&btype=1"
+  },
+  "detail": {
+    "pv": "2",
+    "endLabelIds": "",
+    "endLabelNames": "",
+    "title": "【修订】京东开放平台退店规则",
+    "followRuleId": "1122349412698427392",
+    "content": "<p><a href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=3007&amp;btype=1\" target=\"_blank\" rel=\"noopener\"><img class=\"wscnph\" src=\"//img30.360buyimg.com/venderrule//jfs/t1/233058/16/19763/196765/66792bcaF4a10ca4f/f5e46c2447d6afd4.jpg\" /></a><a href=\"https://rule.jd.com/rule/ruleDetail.action?ruleId=1090233883129155584&amp;btype=12\" target=\"_blank\" rel=\"noopener\"><img class=\"wscnph\" src=\"//img30.360buyimg.com/venderrule//jfs/t1/249222/22/12788/18245/66792bceFa35f05ad/5b401b4ed26998ca.jpg\" /></a></p>",
+    "selectCategoryId": [
+      "620",
+      "637"
+    ],
+    "categoryIdPath": "620,637",
+    "top": "0",
+    "jfsContentUrl": "//storage.jd.com/karmavender/file/scene/20240903/7543f33ada7e4b19b42c207b874d5b6f.txt",
+    "pdfFileUrl": "",
+    "showCollect": false,
+    "hideCollectButton": true,
+    "id": "1122441065891237888",
+    "summary": "【修订】京东开放平台退店规则",
+    "uv": "1",
+    "solvePin": "胡常果",
+    "changeReason": "",
+    "preRuleId": "1123182888418938880",
+    "activeTime": 1719763200000,
+    "multiCategoryId": "",
+    "solveDept": "结算入驻治理公线",
+    "updateUser": "wuzhilin13",
+    "updateTime": 1721787930000,
+    "keyWord": "【修订】京东开放平台退店规则",
+    "coverImgUrl": "//img30.360buyimg.com/venderrule//jfs/t1/184161/27/45611/18752/66792bc1Fd4169eda/9b26dc767716ab9c.jpg",
+    "allLabelIds": "",
+    "preRuleTitle": "【修订】侵权违规细则",
+    "createTime": 1719217204000,
+    "followRuleTitle": "【修订】京东开放平台包邮规则",
+    "createUser": "gaoxinwen",
+    "businessType": 1,
+    "categoryId": "637",
+    "status": 1
+  }
+}
