@@ -36,27 +36,27 @@ security:
 
 database:
   mysql:
-    host: 127.0.0.1
-    port: 3306
-    database: knowforge_rag
-    user: knowforge
-    password: ${KNOWFORGE_MYSQL_PASSWORD:knowforge_mysql_2026}
+    host: ${KNOWFORGE_MYSQL_HOST:192.168.11.23}
+    port: ${KNOWFORGE_MYSQL_PORT:3306}
+    database: ${KNOWFORGE_MYSQL_DATABASE:knowforge_rag}
+    user: ${KNOWFORGE_MYSQL_USER:root}
+    password: ${KNOWFORGE_MYSQL_PASSWORD:root123}
     echo: false
     pool_size: 5
     max_overflow: 10
     pool_recycle_seconds: 1800
 
 redis:
-  host: 127.0.0.1
-  port: 6379
-  db: 0
-  password: ${KNOWFORGE_REDIS_PASSWORD:knowforge_redis_2026}
+  host: ${KNOWFORGE_REDIS_HOST:192.168.11.23}
+  port: ${KNOWFORGE_REDIS_PORT:6379}
+  db: ${KNOWFORGE_REDIS_DB:0}
+  password: null
   socket_timeout_seconds: 5
 
 milvus:
   alias: default
-  host: 127.0.0.1
-  port: 19530
+  host: ${KNOWFORGE_MILVUS_HOST:192.168.11.23}
+  port: ${KNOWFORGE_MILVUS_PORT:19530}
   collection_prefix: knowforge
 
 models:
