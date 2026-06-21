@@ -1,0 +1,48 @@
+model: qwen-plus
+embedding_model: bge-m3
+embedding_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-m3
+sparse_retrieval: Milvus BM25
+rerank_model: bge-reranker-v2-m3
+rerank_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-reranker-large
+
+variant_generation_enabled: true
+rerank_enabled: true
+rule_variant_count: 1
+llm_variant_count: 1
+query_variant_total: 3
+
+faq_exact_match_max_length: 48
+follow_up_max_length: 10
+recent_message_keep_count: 8
+history_summary_boundary_round: 8
+history_summary_max_chars: 800
+
+faq_dense_top_k_exact: 3
+faq_sparse_top_k_exact: 3
+faq_fetch_k: 20
+faq_k: 20
+doc_fetch_k: 50
+doc_k: 20
+rerank_top_k: 8
+faq_rerank_top_k: 3
+doc_rerank_top_k: 5
+final_evidence_top_k: 6
+
+faq_dense_weight: 0.5
+faq_sparse_weight: 0.5
+doc_dense_weight: 0.7
+doc_sparse_weight: 0.3
+
+faq_high_conf_threshold: 0.85
+faq_middle_conf_threshold: 0.65
+doc_evidence_threshold: 0.55
+
+rule_hit_priority:
+  - human_transfer
+  - out_of_scope
+  - greeting
+  - faq_fast_retrieval
+
+faq_exact_match_policy: normalized_exact_match
+standby_keep_days: 30
+standby_min_keep_versions: 1

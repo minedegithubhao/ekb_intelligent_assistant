@@ -1,0 +1,58 @@
+# IDE
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.venv/
+venv/
+env/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+deploy/wsl-docker/.env
+
+# Logs and runtime files
+*.log
+logs/
+tmp/
+temp/
+*.pid
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local service data and backups
+data/
+volumes/
+backups/
+*.dump
+*.bak.sql
+*.dump.sql
+*.tar
+*.tar.gz
+
+# Keep migration/initialization SQL scripts versioned.
+!scripts/
+!scripts/sql/
+!scripts/sql/*.sql

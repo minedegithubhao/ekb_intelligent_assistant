@@ -1,0 +1,66 @@
+app:
+  name: KnowForge RAG Backend
+  env: ${KNOWFORGE_APP_ENV:local}
+  debug: true
+  api_prefix: /api
+
+server:
+  host: 0.0.0.0
+  port: 8000
+
+cors:
+  allow_origins:
+    - http://localhost:5173
+    - http://127.0.0.1:5173
+    - http://localhost:8080
+    - http://127.0.0.1:8080
+  allow_credentials: true
+  allow_methods:
+    - "*"
+  allow_headers:
+    - "*"
+
+logging:
+  level: INFO
+  dir: logs
+  app_file: app.log
+  error_file: error.log
+  max_bytes: 10485760
+  backup_count: 5
+
+security:
+  secret_key: ${KNOWFORGE_SECRET_KEY:knowforge-local-dev-secret}
+  algorithm: HS256
+  access_token_expire_minutes: 120
+  password_hash_iterations: 260000
+
+database:
+  mysql:
+    host: 127.0.0.1
+    port: 3306
+    database: knowforge_rag
+    user: knowforge
+    password: ${KNOWFORGE_MYSQL_PASSWORD:knowforge_mysql_2026}
+    echo: false
+    pool_size: 5
+    max_overflow: 10
+    pool_recycle_seconds: 1800
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  db: 0
+  password: ${KNOWFORGE_REDIS_PASSWORD:knowforge_redis_2026}
+  socket_timeout_seconds: 5
+
+milvus:
+  alias: default
+  host: 127.0.0.1
+  port: 19530
+  collection_prefix: knowforge
+
+models:
+  base_dir: E:/Heima-AI/knowforge-rag-platform/models
+  embedding_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-m3
+  rerank_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-reranker-large
+  query_classifier_path: E:/Heima-AI/knowforge-rag-platform/models/bert_query_classifier
