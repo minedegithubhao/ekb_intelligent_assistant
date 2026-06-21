@@ -116,14 +116,16 @@ class AppConfig(BaseModel):
 
 
 class RetrievalConfig(BaseModel):
-    model_config = ConfigDict(extra="allow")
+    """Static retrieval settings kept in YAML because they rebuild resources."""
+
+    model_config = ConfigDict(extra="forbid")
 
     model: str
     embedding_model: str
+    embedding_model_path: str
     sparse_retrieval: str
     rerank_model: str
-    variant_generation_enabled: bool
-    rerank_enabled: bool
+    rerank_model_path: str
 
 
 class KeywordRule(BaseModel):
