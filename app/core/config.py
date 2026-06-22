@@ -118,7 +118,7 @@ class AppConfig(BaseModel):
 class RetrievalConfig(BaseModel):
     """Static retrieval settings kept in YAML because they rebuild resources."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="allow")
 
     model: str
     embedding_model: str

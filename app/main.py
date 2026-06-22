@@ -48,9 +48,27 @@ def create_app() -> FastAPI:
 
     register_exception_handlers(app)
     app.include_router(api_router, prefix=runtime_config.app.app.api_prefix)
+    register_startup_hooks(app)
     return app
 
-# 添加一行注释
+
+def register_startup_hooks(app: FastAPI) -> None:
+    """Startup tasks that should not make app imports depend on external services."""
+
+    logger = logging.getLogger("app.startup")
+
+    @app.on_event("startup")
+    def load_effective_config() -> None:
+        try:
+            from app.db.mysql import SessionLocal
+            from app.services.config_versions import refresh_effective_retrieval_cache
+
+            with SessionLocal() as db:
+                refresh_effective_retrieval_cache(db)
+        except Exception as exc:  # noqa: BLE001 - startup should still expose health diagnostics.
+            logger.warning("effective retrieval config was not loaded from mysql: %s", exc)
+
+
 def register_exception_handlers(app: FastAPI) -> None:
     """Converts all API errors to the agreed response shape."""
 
