@@ -6,8 +6,7 @@
 
 当前状态：
 
-- 已实现：登录鉴权、当前用户信息、登出、管理员校验、管理员用户管理、仪表台参数配置、配置版本管理、健康检查。
-- 已预留：用户端聊天会话、历史消息、提问接口、RAGService 调用边界。
+- 已实现：登录鉴权、当前用户信息、登出、管理员校验、管理员用户管理、仪表台参数配置、配置版本管理、用户端聊天会话、历史消息、提问占位接口、健康检查。
 - 暂不包含：真实 RAG 检索、向量库入库、文档切分、实时语音识别接口。
 
 ## 2. 通用约定
@@ -520,13 +519,11 @@ POST /api/admin/config/versions/{version_id}/activate
 
 ## 7. 用户端聊天与历史消息接口
 
-当前为预留接口，前端已有 API 封装，后端真实接口尚未实现。
+当前已实现会话、历史消息保存和提问占位接口。
 
-这些接口后续由后端负责保存会话、历史消息，并调用 `RAGService` 获取回答。
+这些接口当前负责保存会话、历史消息；`POST /messages` 暂返回占位回答，后续替换为真实 `RAGService`。
 
 ### 7.1 查询会话列表
-
-预留。
 
 ```http
 GET /api/conversations?knowledge_base_type=enterprise
@@ -538,14 +535,15 @@ GET /api/conversations?knowledge_base_type=enterprise
 Authorization: Bearer <token>
 ```
 
-响应 `data` 建议：
+响应 `data`：
 
 ```json
 [
   {
-    "conversation_id": "conv_001",
+    "conversation_id": 1,
     "title": "企业店入驻规则",
     "knowledge_base_type": "enterprise",
+    "last_message_at": "2026-06-22T10:10:00",
     "created_at": "2026-06-22T10:00:00",
     "updated_at": "2026-06-22T10:10:00"
   }
@@ -553,8 +551,6 @@ Authorization: Bearer <token>
 ```
 
 ### 7.2 新增会话
-
-预留。
 
 ```http
 POST /api/conversations
@@ -564,7 +560,8 @@ POST /api/conversations
 
 ```json
 {
-  "knowledge_base_type": "enterprise"
+  "knowledge_base_type": "enterprise",
+  "title": "新会话"
 }
 ```
 
@@ -572,43 +569,47 @@ POST /api/conversations
 
 ```json
 {
-  "conversation_id": "conv_001",
+  "conversation_id": 1,
   "title": "新会话",
-  "knowledge_base_type": "enterprise"
+  "knowledge_base_type": "enterprise",
+  "last_message_at": null,
+  "created_at": "2026-06-22T10:00:00",
+  "updated_at": "2026-06-22T10:00:00"
 }
 ```
 
 ### 7.3 查询指定会话历史消息
 
-预留。
-
 ```http
 GET /api/conversations/{conversation_id}/messages?knowledge_base_type=enterprise
 ```
 
-响应 `data` 建议：
+响应 `data`：
 
 ```json
 [
   {
-    "message_id": "msg_001",
+    "message_id": 1,
+    "conversation_id": 1,
     "role": "user",
     "content": "企业店保证金怎么收取？",
+    "sources": [],
+    "metadata": {},
     "created_at": "2026-06-22T10:00:00"
   },
   {
-    "message_id": "msg_002",
+    "message_id": 2,
+    "conversation_id": 1,
     "role": "assistant",
     "content": "根据企业店相关规则，保证金标准需要结合类目资费规则确认。",
     "sources": [],
+    "metadata": {},
     "created_at": "2026-06-22T10:00:05"
   }
 ]
 ```
 
 ### 7.4 删除会话
-
-预留。
 
 ```http
 DELETE /api/conversations/{conversation_id}
@@ -629,8 +630,6 @@ DELETE /api/conversations/{conversation_id}
 
 ### 7.5 发送问题
 
-预留。
-
 ```http
 POST /api/conversations/{conversation_id}/messages
 ```
@@ -648,19 +647,12 @@ POST /api/conversations/{conversation_id}/messages
 
 ```json
 {
-  "message_id": "msg_002",
-  "conversation_id": "conv_001",
-  "answer": "根据企业店相关规则，保证金标准需要结合类目资费规则确认。",
+  "message_id": 2,
+  "conversation_id": 1,
+  "answer": "当前 RAGService 尚未接入，已先保存你的问题。后续接入检索服务后会返回正式回答。",
   "knowledge_base_type": "enterprise",
-  "sources": [
-    {
-      "doc_id": "638209647311982592",
-      "title": "京东开放平台类目资费规则",
-      "chunk_id": "chunk_001",
-      "score": 0.82
-    }
-  ],
-  "hit_type": "doc",
+  "sources": [],
+  "hit_type": "none",
   "need_human_transfer": false,
   "created_at": "2026-06-22T10:00:05"
 }
@@ -676,7 +668,7 @@ POST /api/conversations/{conversation_id}/messages
 {
   "user_id": 1,
   "username": "alice",
-  "conversation_id": "conv_001",
+  "conversation_id": 1,
   "question": "企业店保证金怎么收取？",
   "knowledge_base_type": "enterprise",
   "user_category": "merchant",
@@ -784,12 +776,12 @@ GET /api/health/dependencies
 | `src/api/auth.js` | 登录、当前用户、登出 |
 | `src/api/adminUsers.js` | 管理员用户管理 |
 | `src/api/adminConfig.js` | 仪表台参数和配置版本 |
-| `src/api/conversation.js` | 用户端聊天和历史消息预留接口 |
+| `src/api/conversation.js` | 用户端聊天和历史消息接口 |
 
 ## 11. 对接注意事项
 
 - 管理员接口必须携带管理员 token，否则返回 403。
 - 普通用户登录后，前端根据 `user.category` 决定 `knowledge_base_type`。
-- 当前聊天接口只是前端预留，后端尚未实现真实路由。
+- 当前聊天接口已实现真实路由，提问回答仍是占位内容，后续替换为真实 RAGService。
 - 仪表台保存参数时，建议提交完整配置对象，不要只提交单个字段。
 - 重建表 SQL 仅保存在本地开发使用，不作为当前接口对接要求。
