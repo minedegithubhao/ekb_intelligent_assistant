@@ -1,21 +1,81 @@
-"""Admin configuration version service."""
+"""Admin retrieval hot configuration service.
+
+仪表台参数当前只维护 retrieval_hot_configs 里的热参数。
+模型名称、模型路径等静态参数仍从 config/retrieval.yaml 读取，只用于展示和兜底。
+"""
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
 from typing import Any
 
-from sqlalchemy import func, select, update
+from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
 from app.core.config import ConfigManager, RetrievalConfig
 from app.core.exceptions import BadRequestException, NotFoundException
-from app.db.models.config import ConfigVersion
-from app.schemas.config import ConfigVersionInfo
+from app.db.models.retrieval_config import RetrievalHotConfig
 
-CONFIG_KEY_RETRIEVAL = "retrieval"
+DEFAULT_CONFIG_NAME = "default"
+
+HOT_CONFIG_FIELDS = (
+    "variant_generation_enabled",
+    "rerank_enabled",
+    "rule_variant_count",
+    "llm_variant_count",
+    "query_variant_total",
+    "faq_exact_match_max_length",
+    "follow_up_max_length",
+    "recent_message_keep_count",
+    "history_summary_boundary_round",
+    "history_summary_max_chars",
+    "faq_dense_top_k_exact",
+    "faq_sparse_top_k_exact",
+    "faq_fetch_k",
+    "faq_k",
+    "doc_fetch_k",
+    "doc_k",
+    "rerank_top_k",
+    "faq_rerank_top_k",
+    "doc_rerank_top_k",
+    "final_evidence_top_k",
+    "faq_dense_weight",
+    "faq_sparse_weight",
+    "doc_dense_weight",
+    "doc_sparse_weight",
+    "faq_high_conf_threshold",
+    "faq_middle_conf_threshold",
+    "doc_evidence_threshold",
+    "rule_hit_priority",
+    "faq_exact_match_policy",
+    "standby_keep_days",
+    "standby_min_keep_versions",
+)
 
 _effective_retrieval_cache: dict[str, Any] | None = None
+
+
+def load_yaml_retrieval_config() -> dict[str, Any]:
+    return ConfigManager().read_config_file("retrieval.yaml")
+
+
+def _hot_config_to_dict(config: RetrievalHotConfig) -> dict[str, Any]:
+    return {field: getattr(config, field) for field in HOT_CONFIG_FIELDS}
+
+
+def _extract_hot_config(config: dict[str, Any]) -> dict[str, Any]:
+    hot_config = {field: config[field] for field in HOT_CONFIG_FIELDS if field in config}
+    missing = [field for field in HOT_CONFIG_FIELDS if field not in hot_config]
+    if missing:
+        raise BadRequestException(f"missing hot config fields: {', '.join(missing)}")
+    _validate_weight_pair(hot_config, "faq_dense_weight", "faq_sparse_weight", "FAQ")
+    _validate_weight_pair(hot_config, "doc_dense_weight", "doc_sparse_weight", "Doc")
+    return hot_config
+
+
+def _validate_weight_pair(config: dict[str, Any], dense_key: str, sparse_key: str, label: str) -> None:
+    total = float(config[dense_key]) + float(config[sparse_key])
+    if abs(total - 1.0) > 0.000001:
+        raise BadRequestException(f"{label} dense and sparse weights must sum to 1")
 
 
 def _validate_retrieval_config(config: dict[str, Any]) -> dict[str, Any]:
@@ -26,33 +86,30 @@ def _validate_retrieval_config(config: dict[str, Any]) -> dict[str, Any]:
     return config
 
 
-def load_yaml_retrieval_config() -> dict[str, Any]:
-    # 当 MySQL 没有 active 配置版本时，回退读取本地 YAML 默认配置。
-    return ConfigManager().read_config_file("retrieval.yaml")
-
-
-def get_active_config_version(db: Session) -> ConfigVersion | None:
-    # 从 MySQL 读取唯一生效的仪表台/检索配置。
-    # 管理端接口和项目启动加载配置都会依赖这个查询。
+def get_active_hot_config(db: Session, config_name: str = DEFAULT_CONFIG_NAME) -> RetrievalHotConfig | None:
     return db.execute(
-        select(ConfigVersion).where(
-            ConfigVersion.config_key == CONFIG_KEY_RETRIEVAL,
-            ConfigVersion.status == "active",
-            ConfigVersion.is_deleted.is_(False),
+        select(RetrievalHotConfig)
+        .where(
+            RetrievalHotConfig.config_name == config_name,
+            RetrievalHotConfig.is_enabled.is_(True),
         )
-    ).scalar_one_or_none()
+        .order_by(RetrievalHotConfig.created_at.desc(), RetrievalHotConfig.id.desc())
+    ).scalars().first()
 
 
-def get_effective_retrieval_config(db: Session) -> tuple[dict[str, Any], ConfigVersion | None, str]:
-    # 优先使用 MySQL active 版本；YAML 只作为首次启动或未初始化时的兜底来源。
-    active = get_active_config_version(db)
-    if active:
-        return dict(active.config_json), active, "mysql"
-    return load_yaml_retrieval_config(), None, "yaml"
+def get_effective_retrieval_config(
+    db: Session,
+    config_name: str = DEFAULT_CONFIG_NAME,
+) -> tuple[dict[str, Any], RetrievalHotConfig | None, str]:
+    yaml_config = load_yaml_retrieval_config()
+    active_hot_config = get_active_hot_config(db, config_name=config_name)
+    if active_hot_config:
+        merged = {**yaml_config, **_hot_config_to_dict(active_hot_config)}
+        return _validate_retrieval_config(merged), active_hot_config, "retrieval_hot_configs"
+    return _validate_retrieval_config(yaml_config), None, "yaml"
 
 
 def refresh_effective_retrieval_cache(db: Session) -> dict[str, Any]:
-    # 刷新进程内缓存，后续检索逻辑可以低成本读取当前生效配置。
     global _effective_retrieval_cache
     config, _, _ = get_effective_retrieval_config(db)
     _effective_retrieval_cache = config
@@ -63,11 +120,15 @@ def get_effective_retrieval_cache() -> dict[str, Any] | None:
     return _effective_retrieval_cache
 
 
-def build_dashboard_payload(config: dict[str, Any], version: ConfigVersion | None, source: str) -> dict[str, Any]:
-    # 返回前端易展示的摘要字段，同时在 raw 中保留完整原始配置。
+def build_dashboard_payload(
+    config: dict[str, Any],
+    hot_config: RetrievalHotConfig | None,
+    source: str,
+) -> dict[str, Any]:
     return {
         "source": source,
-        "version": _version_to_info(version).model_dump(mode="json") if version else None,
+        "version": _hot_config_to_info(hot_config) if hot_config else None,
+        "hot_config": _hot_config_to_info(hot_config) if hot_config else None,
         "model": config.get("model"),
         "embedding_model": config.get("embedding_model"),
         "sparse_retrieval": config.get("sparse_retrieval"),
@@ -92,83 +153,80 @@ def build_dashboard_payload(config: dict[str, Any], version: ConfigVersion | Non
             "doc_sparse": config.get("doc_sparse_weight"),
         },
         "raw": config,
+        "editable_fields": list(HOT_CONFIG_FIELDS),
     }
 
 
-def list_config_versions(db: Session) -> list[ConfigVersionInfo]:
-    versions = db.execute(
-        select(ConfigVersion)
-        .where(ConfigVersion.config_key == CONFIG_KEY_RETRIEVAL, ConfigVersion.is_deleted.is_(False))
-        .order_by(ConfigVersion.version_no.desc())
+def list_hot_configs(db: Session, config_name: str = DEFAULT_CONFIG_NAME) -> list[dict[str, Any]]:
+    rows = db.execute(
+        select(RetrievalHotConfig)
+        .where(RetrievalHotConfig.config_name == config_name)
+        .order_by(RetrievalHotConfig.created_at.desc(), RetrievalHotConfig.id.desc())
     ).scalars()
-    return [_version_to_info(item) for item in versions]
+    return [_hot_config_to_info(row) for row in rows]
 
 
-def create_config_version(
+def save_hot_config(
     db: Session,
     config: dict[str, Any],
     created_by: int,
-    description: str | None = None,
-    activate: bool = False,
-) -> ConfigVersion:
-    validated = _validate_retrieval_config(config)
-    # 同一个 config_key 下版本号递增，旧版本保留用于查询和回滚参考。
-    latest = db.execute(
-        select(func.max(ConfigVersion.version_no)).where(ConfigVersion.config_key == CONFIG_KEY_RETRIEVAL)
-    ).scalar()
-    version = ConfigVersion(
-        config_key=CONFIG_KEY_RETRIEVAL,
-        version_no=int(latest or 0) + 1,
-        status="draft",
-        config_json=validated,
-        description=description,
-        created_by=created_by,
-    )
-    db.add(version)
-    db.flush()
-    if activate:
-        activate_config_version(db, version.id, activated_by=created_by)
-        db.refresh(version)
-    return version
+    config_name: str = DEFAULT_CONFIG_NAME,
+) -> RetrievalHotConfig:
+    yaml_config = load_yaml_retrieval_config()
+    hot_config = _extract_hot_config(config)
+    _validate_retrieval_config({**yaml_config, **hot_config})
 
-
-def activate_config_version(db: Session, version_id: int, activated_by: int) -> ConfigVersion:
-    version = db.get(ConfigVersion, version_id)
-    if not version or version.is_deleted:
-        raise NotFoundException("config version not found")
-    if version.config_key != CONFIG_KEY_RETRIEVAL:
-        raise BadRequestException("unsupported config key")
-
-    _validate_retrieval_config(dict(version.config_json))
-    # 同一时间只允许一个 active 检索配置；旧 active 版本统一归档。
     db.execute(
-        update(ConfigVersion)
+        update(RetrievalHotConfig)
         .where(
-            ConfigVersion.config_key == CONFIG_KEY_RETRIEVAL,
-            ConfigVersion.status == "active",
-            ConfigVersion.id != version.id,
+            RetrievalHotConfig.config_name == config_name,
+            RetrievalHotConfig.is_enabled.is_(True),
         )
-        .values(status="archived")
+        .values(is_enabled=False)
     )
-    version.status = "active"
-    version.activated_by = activated_by
-    version.activated_at = datetime.now(UTC)
+    row = RetrievalHotConfig(
+        config_name=config_name,
+        is_enabled=True,
+        created_by=created_by,
+        **hot_config,
+    )
+    db.add(row)
     db.flush()
-    # 切换 active 版本后，立即刷新内存中的生效配置。
     refresh_effective_retrieval_cache(db)
-    return version
+    return row
 
 
-def _version_to_info(version: ConfigVersion) -> ConfigVersionInfo:
-    return ConfigVersionInfo(
-        id=version.id,
-        config_key=version.config_key,
-        version_no=version.version_no,
-        status=version.status,
-        description=version.description,
-        created_by=version.created_by,
-        activated_by=version.activated_by,
-        activated_at=version.activated_at,
-        created_at=version.created_at,
-        updated_at=version.updated_at,
+def activate_hot_config(db: Session, config_id: int, activated_by: int) -> RetrievalHotConfig:
+    row = db.get(RetrievalHotConfig, config_id)
+    if not row:
+        raise NotFoundException("hot config not found")
+
+    yaml_config = load_yaml_retrieval_config()
+    _validate_retrieval_config({**yaml_config, **_hot_config_to_dict(row)})
+
+    db.execute(
+        update(RetrievalHotConfig)
+        .where(
+            RetrievalHotConfig.config_name == row.config_name,
+            RetrievalHotConfig.id != row.id,
+            RetrievalHotConfig.is_enabled.is_(True),
+        )
+        .values(is_enabled=False)
     )
+    row.is_enabled = True
+    row.created_by = activated_by
+    db.flush()
+    refresh_effective_retrieval_cache(db)
+    return row
+
+
+def _hot_config_to_info(config: RetrievalHotConfig) -> dict[str, Any]:
+    return {
+        "id": config.id,
+        "config_name": config.config_name,
+        "is_enabled": config.is_enabled,
+        "status": "active" if config.is_enabled else "standby",
+        "version_no": config.id,
+        "created_by": config.created_by,
+        "created_at": config.created_at,
+    }
