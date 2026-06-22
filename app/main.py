@@ -50,7 +50,7 @@ def create_app() -> FastAPI:
     app.include_router(api_router, prefix=runtime_config.app.app.api_prefix)
     return app
 
-
+# 添加一行注释
 def register_exception_handlers(app: FastAPI) -> None:
     """Converts all API errors to the agreed response shape."""
 
