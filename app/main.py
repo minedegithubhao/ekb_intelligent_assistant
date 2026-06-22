@@ -14,7 +14,8 @@ from app.core.config import get_runtime_config
 from app.core.exceptions import AppException
 from app.core.logging import RequestLoggingMiddleware, setup_logging
 from app.core.response import error_response
-
+def abc():
+    pass
 
 def create_app() -> FastAPI:
     runtime_config = get_runtime_config()
