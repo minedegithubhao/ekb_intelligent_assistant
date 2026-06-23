@@ -54,7 +54,7 @@ redis:
   socket_timeout_seconds: 5
 
 milvus:
-  alias: default
+  alias: knowforge_rag
   host: ${KNOWFORGE_MILVUS_HOST:192.168.11.23}
   port: ${KNOWFORGE_MILVUS_PORT:19530}
   collection_prefix: knowforge
