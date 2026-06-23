@@ -285,6 +285,7 @@ def update_keyword_rule_keywords(
     *,
     rule_code: str,
     keywords: list[str],
+    response_text: str | None,
     updated_by: int | None,
 ) -> RetrievalKeywordRule:
     normalized_code = _clean_code(rule_code)
@@ -299,6 +300,7 @@ def update_keyword_rule_keywords(
     if not row:
         raise NotFoundException("keyword rule not found")
     row.keywords_json = _clean_terms(keywords, field_name="keywords")
+    row.response_text = _clean_optional_text(response_text)
     row.updated_by = updated_by
     db.flush()
     return row
@@ -477,6 +479,13 @@ def _clean_required_text(value: str, field_name: str) -> str:
     if not cleaned:
         raise BadRequestException(f"{field_name} cannot be empty")
     return cleaned
+
+
+def _clean_optional_text(value: str | None) -> str | None:
+    if value is None:
+        return None
+    cleaned = value.strip()
+    return cleaned or None
 
 
 def _clean_terms(values: list[str], *, field_name: str) -> list[str]:

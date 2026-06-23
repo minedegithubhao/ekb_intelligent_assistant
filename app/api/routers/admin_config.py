@@ -123,6 +123,7 @@ def update_keywords(
         db,
         rule_code=rule_code,
         keywords=payload.keywords,
+        response_text=payload.response_text,
         updated_by=current_user.id,
     )
     return success_response(keyword_rule_to_info(row))

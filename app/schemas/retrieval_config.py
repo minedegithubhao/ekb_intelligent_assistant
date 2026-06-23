@@ -76,6 +76,7 @@ class RetrievalKeywordRuleSave(BaseModel):
 
 class RetrievalKeywordRuleKeywordsUpdate(BaseModel):
     keywords: list[str] = Field(min_length=1)
+    response_text: str | None = Field(default=None, max_length=1000)
 
 
 class RetrievalKeywordRuleInfo(RetrievalKeywordRuleSave):
