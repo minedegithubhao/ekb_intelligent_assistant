@@ -73,8 +73,10 @@ def _get_user(db: Session, user_id: int) -> User:
     return user
 
 
-def _sync_question_categories(user: User, category: str) -> None:
+def _sync_question_categories(user: User, category: str, db: Session | None = None) -> None:
     user.question_categories.clear()
+    if db is not None and user.id:
+        db.flush()
     if category == "admin":
         entries = ADMIN_QUESTION_CATEGORIES
     else:
@@ -185,7 +187,7 @@ def update_admin_user(db: Session, user_id: int, payload: AdminUserUpdate, curre
     user.category = category
     user.user_type = role_code
     user.roles = [_get_role(db, role_code)]
-    _sync_question_categories(user, category)
+    _sync_question_categories(user, category, db)
     db.flush()
     db.refresh(user)
     return user_to_admin_info(_get_user(db, user.id))

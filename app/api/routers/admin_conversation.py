@@ -11,6 +11,7 @@ from app.db.mysql import get_db
 from app.services.admin_conversation import (
     delete_admin_conversation,
     get_admin_stats,
+    list_admin_conversation_users,
     list_admin_conversation_messages,
     list_admin_conversations,
 )
@@ -41,6 +42,15 @@ def get_admin_conversations(
         page=page,
         page_size=page_size,
     )
+
+
+@router.get("/users")
+def get_admin_conversation_users(
+    keyword: str | None = Query(default=None, max_length=128),
+    db: Session = Depends(get_db),
+) -> dict:
+    users = list_admin_conversation_users(db, keyword=keyword)
+    return success_response([item.model_dump(mode="json") for item in users])
 
 
 @router.get("/stats")

@@ -27,6 +27,14 @@ class AdminConversationStats(BaseModel):
     data_source: str = "演示数据"
 
 
+class AdminConversationUserItem(BaseModel):
+    user_id: int
+    username: str
+    display_name: str
+    name: str | None = None
+    conversation_count: int
+
+
 class AdminConversationMessageItem(BaseModel):
     message_id: int
     conversation_id: int

@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import re
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+
+
+USERNAME_PATTERN = re.compile(r"^[A-Za-z0-9]+$")
 
 
 class AdminUserCreate(BaseModel):
@@ -17,6 +21,13 @@ class AdminUserCreate(BaseModel):
     role: str = Field(default="user", max_length=32)
     status: str = Field(default="enabled", max_length=32)
     category: str = Field(default="merchant", max_length=64)
+
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value: str) -> str:
+        if not USERNAME_PATTERN.fullmatch(value):
+            raise ValueError("username can only contain English letters and numbers")
+        return value
 
 
 class AdminUserUpdate(BaseModel):

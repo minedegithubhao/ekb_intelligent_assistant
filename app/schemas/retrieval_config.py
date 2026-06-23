@@ -74,6 +74,10 @@ class RetrievalKeywordRuleSave(BaseModel):
     is_enabled: bool = True
 
 
+class RetrievalKeywordRuleKeywordsUpdate(BaseModel):
+    keywords: list[str] = Field(min_length=1)
+
+
 class RetrievalKeywordRuleInfo(RetrievalKeywordRuleSave):
     id: int
     rule_code: str
@@ -86,7 +90,6 @@ class RetrievalKeywordRuleInfo(RetrievalKeywordRuleSave):
 class RetrievalTermNormalizationCreate(BaseModel):
     canonical_term: str = Field(min_length=1, max_length=128)
     aliases: list[str] = Field(min_length=1)
-    match_type: str = Field(default="contains", max_length=32)
     description: str | None = Field(default=None, max_length=500)
     is_enabled: bool = True
 
@@ -94,7 +97,6 @@ class RetrievalTermNormalizationCreate(BaseModel):
 class RetrievalTermNormalizationUpdate(BaseModel):
     canonical_term: str | None = Field(default=None, min_length=1, max_length=128)
     aliases: list[str] | None = Field(default=None, min_length=1)
-    match_type: str | None = Field(default=None, max_length=32)
     description: str | None = Field(default=None, max_length=500)
     is_enabled: bool | None = None
 

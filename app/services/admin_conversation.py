@@ -13,6 +13,7 @@ from app.schemas.admin_conversation import (
     AdminConversationItem,
     AdminConversationMessageItem,
     AdminConversationStats,
+    AdminConversationUserItem,
 )
 
 
@@ -113,6 +114,48 @@ def list_admin_conversations(
             )
         )
     return items, int(total)
+
+
+def list_admin_conversation_users(
+    db: Session,
+    *,
+    keyword: str | None = None,
+) -> list[AdminConversationUserItem]:
+    filters = [Conversation.is_deleted.is_(False), User.is_deleted.is_(False)]
+    if keyword:
+        like_kw = f"%{keyword}%"
+        filters.append(
+            or_(
+                User.username.like(like_kw),
+                User.display_name.like(like_kw),
+                User.name.like(like_kw),
+            )
+        )
+
+    rows = db.execute(
+        select(
+            User.id,
+            User.username,
+            User.display_name,
+            User.name,
+            func.count(Conversation.id).label("conversation_count"),
+        )
+        .join(Conversation, Conversation.user_id == User.id)
+        .where(*filters)
+        .group_by(User.id, User.username, User.display_name, User.name)
+        .order_by(User.id.desc())
+    ).all()
+
+    return [
+        AdminConversationUserItem(
+            user_id=row.id,
+            username=row.username,
+            display_name=row.display_name or row.username,
+            name=row.name,
+            conversation_count=int(row.conversation_count or 0),
+        )
+        for row in rows
+    ]
 
 
 def get_admin_stats(db: Session) -> AdminConversationStats:

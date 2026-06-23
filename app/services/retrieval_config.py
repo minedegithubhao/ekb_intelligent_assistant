@@ -63,6 +63,7 @@ DEFAULT_KEYWORD_RULES: tuple[dict[str, Any], ...] = (
         "match_order": 40,
     },
 )
+FIXED_KEYWORD_RULE_CODES = {item["rule_code"] for item in DEFAULT_KEYWORD_RULES}
 
 DEFAULT_TERM_NORMALIZATIONS: tuple[dict[str, Any], ...] = (
     {"canonical_term": "笔记本电脑", "aliases": ["laptop", "lap top", "笔记型电脑"]},
@@ -279,6 +280,30 @@ def save_keyword_rule(
     return row
 
 
+def update_keyword_rule_keywords(
+    db: Session,
+    *,
+    rule_code: str,
+    keywords: list[str],
+    updated_by: int | None,
+) -> RetrievalKeywordRule:
+    normalized_code = _clean_code(rule_code)
+    if normalized_code not in FIXED_KEYWORD_RULE_CODES:
+        raise BadRequestException("keyword rule is not editable")
+    row = db.execute(
+        select(RetrievalKeywordRule).where(
+            RetrievalKeywordRule.rule_code == normalized_code,
+            RetrievalKeywordRule.is_deleted.is_(False),
+        )
+    ).scalar_one_or_none()
+    if not row:
+        raise NotFoundException("keyword rule not found")
+    row.keywords_json = _clean_terms(keywords, field_name="keywords")
+    row.updated_by = updated_by
+    db.flush()
+    return row
+
+
 def list_term_normalizations(db: Session, *, include_disabled: bool = True) -> list[dict[str, Any]]:
     filters = [RetrievalTermNormalization.is_deleted.is_(False)]
     if not include_disabled:
@@ -297,11 +322,10 @@ def create_term_normalization(
     payload: RetrievalTermNormalizationCreate,
     created_by: int | None,
 ) -> RetrievalTermNormalization:
-    _validate_match_type(payload.match_type)
     row = RetrievalTermNormalization(
         canonical_term=_clean_required_text(payload.canonical_term, "canonical_term"),
         aliases_json=_clean_terms(payload.aliases, field_name="aliases"),
-        match_type=payload.match_type,
+        match_type="contains",
         description=payload.description,
         is_enabled=payload.is_enabled,
         created_by=created_by,
@@ -328,9 +352,6 @@ def update_term_normalization(
         row.canonical_term = _clean_required_text(data["canonical_term"], "canonical_term")
     if "aliases" in data and data["aliases"] is not None:
         row.aliases_json = _clean_terms(data["aliases"], field_name="aliases")
-    if "match_type" in data and data["match_type"] is not None:
-        _validate_match_type(data["match_type"])
-        row.match_type = data["match_type"]
     if "description" in data:
         row.description = data["description"]
     if "is_enabled" in data and data["is_enabled"] is not None:
