@@ -1,0 +1,66 @@
+{
+  "dataset_id": "personal_temp_chunks",
+  "user_type": "personal",
+  "document_metrics_mode": "simulated",
+  "expected_document_count": 3,
+  "actual_document_count": 3,
+  "parent_chunk_size": 500,
+  "chunks": [
+    {
+      "chunk_id": "personal_doc_001_chunk_001",
+      "document_id": "personal_doc_001",
+      "title": "京东开放平台个人/个体开店管理规则",
+      "chunk_type": "text",
+      "text": "个人/个体店铺入驻时，应按照平台要求提交真实、准确、完整的主体身份信息、联系人信息和经营类目信息。平台会根据类目准入规则、资质要求和风险情况进行审核。"
+    },
+    {
+      "chunk_id": "personal_doc_001_chunk_002",
+      "document_id": "personal_doc_001",
+      "title": "京东开放平台个人/个体开店管理规则",
+      "chunk_type": "text",
+      "text": "开店申请通过后，商家应持续维护主体信息和店铺经营信息。如主体资料、联系方式、经营类目发生变化，应按照平台流程及时更新。"
+    },
+    {
+      "chunk_id": "personal_doc_002_chunk_001",
+      "document_id": "personal_doc_002",
+      "title": "京东开放平台个人/个体交易管理规则",
+      "chunk_type": "text",
+      "text": "个人/个体店铺应遵守交易管理要求，不得通过虚假交易、恶意占库存、异常退款等方式扰乱平台经营秩序。平台可结合订单行为、物流轨迹和消费者反馈判断交易风险。"
+    },
+    {
+      "chunk_id": "personal_doc_002_chunk_002",
+      "document_id": "personal_doc_002",
+      "title": "京东开放平台个人/个体交易管理规则",
+      "chunk_type": "text",
+      "text": "个人/个体店铺应遵守交易管理要求，不得通过虚假交易、恶意占库存、异常退款等方式扰乱平台经营秩序。平台可结合订单行为、物流轨迹和消费者反馈判断交易风险。"
+    },
+    {
+      "chunk_id": "personal_doc_002_chunk_003",
+      "document_id": "personal_doc_002",
+      "title": "京东开放平台个人/个体交易管理规则",
+      "chunk_type": "text",
+      "text": "主体变更。"
+    },
+    {
+      "chunk_id": "personal_doc_003_chunk_001",
+      "document_id": "personal_doc_003",
+      "title": "京东开放平台个人/个体合规管理规则",
+      "chunk_type": "text",
+      "text": "      "
+    },
+    {
+      "chunk_id": "personal_doc_003_chunk_002",
+      "document_id": "personal_doc_003",
+      "title": "京东开放平台个人/个体合规管理规则",
+      "chunk_type": "text",
+      "text": "个人/个体商家发布商品时，应确保标题、主图、详情页、属性和售后说明真实一致，不得使用夸大宣传、虚假承诺、混淆信息或侵犯他人合法权益的内容。"
+    },
+    {
+      "chunk_id": "personal_doc_003_chunk_003",
+      "document_id": "personal_doc_003",
+      "title": "京东开放平台个人/个体经营类目商品阈值明细表",
+      "chunk_type": "table",
+      "text": "类目 | 商品数量阈值 | 说明\n手机配件 | 500 | 超出阈值需补充经营能力证明\n宠物生活 | 300 | 按平台提示完成资质维护"
+    }
+  ]
+}

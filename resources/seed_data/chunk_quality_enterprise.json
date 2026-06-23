@@ -1,0 +1,66 @@
+{
+  "dataset_id": "enterprise_temp_chunks",
+  "user_type": "enterprise",
+  "document_metrics_mode": "simulated",
+  "expected_document_count": 4,
+  "actual_document_count": 3,
+  "parent_chunk_size": 500,
+  "chunks": [
+    {
+      "chunk_id": "enterprise_doc_001_chunk_001",
+      "document_id": "enterprise_doc_001",
+      "title": "京东开放平台店铺星级规则",
+      "chunk_type": "text",
+      "text": "京东开放平台店铺星级是基于商家经营能力、服务体验、履约表现和合规情况形成的综合评价结果。商家应持续关注店铺星级变化，并根据平台提示优化商品发布、订单履约和售后服务。"
+    },
+    {
+      "chunk_id": "enterprise_doc_001_chunk_002",
+      "document_id": "enterprise_doc_001",
+      "title": "京东开放平台店铺星级规则",
+      "chunk_type": "text",
+      "text": "店铺星级会影响商家在部分经营场景中的权益展示。商家如发现指标异常，应优先核对订单履约、消费者评价、售后处理时效和平台违规记录。"
+    },
+    {
+      "chunk_id": "enterprise_doc_002_chunk_001",
+      "document_id": "enterprise_doc_002",
+      "title": "京东开放平台发货管理规则",
+      "chunk_type": "text",
+      "text": ""
+    },
+    {
+      "chunk_id": "enterprise_doc_002_chunk_002",
+      "document_id": "enterprise_doc_002",
+      "title": "京东开放平台发货管理规则",
+      "chunk_type": "text",
+      "text": "发货时效。"
+    },
+    {
+      "chunk_id": "enterprise_doc_002_chunk_003",
+      "document_id": "enterprise_doc_002",
+      "title": "京东开放平台发货管理规则",
+      "chunk_type": "text",
+      "text": "商家应按照商品页面承诺、订单约定和平台规则要求及时发货，并保证物流单号真实有效。若因不可抗力、系统异常或消费者主动要求延迟发货导致履约变化，商家应保留完整沟通记录和相关证明材料。"
+    },
+    {
+      "chunk_id": "enterprise_doc_002_chunk_004",
+      "document_id": "enterprise_doc_002",
+      "title": "京东开放平台发货管理规则",
+      "chunk_type": "text",
+      "text": "商家应按照商品页面承诺、订单约定和平台规则要求及时发货，并保证物流单号真实有效。若因不可抗力、系统异常或消费者主动要求延迟发货导致履约变化，商家应保留完整沟通记录和相关证明材料。"
+    },
+    {
+      "chunk_id": "enterprise_doc_003_chunk_001",
+      "document_id": "enterprise_doc_003",
+      "title": "京东开放平台商品信息合规规范",
+      "chunk_type": "text",
+      "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "chunk_id": "enterprise_doc_003_chunk_002",
+      "document_id": "enterprise_doc_003",
+      "title": "京东开放平台经营类目资质标准",
+      "chunk_type": "table",
+      "text": "类目 | 资质要求 | 备注\n食品饮料 | 食品经营许可证 | 证照需在有效期内\n医疗器械 | 医疗器械经营许可证 | 按类目准入要求提交"
+    }
+  ]
+}
