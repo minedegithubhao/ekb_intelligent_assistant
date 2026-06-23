@@ -187,6 +187,14 @@ def add_question_message(
         user_id=user_id,
         knowledge_base_type=normalized_type,
     )
+    existing_user_message_count = db.execute(
+        select(func.count(ConversationMessage.id)).where(
+            ConversationMessage.conversation_id == conversation.id,
+            ConversationMessage.user_id == user_id,
+            ConversationMessage.role == "user",
+            ConversationMessage.is_deleted.is_(False),
+        )
+    ).scalar_one()
     now = datetime.now(UTC)
     user_message = ConversationMessage(
         conversation_id=conversation.id,
@@ -209,7 +217,7 @@ def add_question_message(
     )
     db.add(assistant_message)
 
-    if _clean_title(conversation.title) == DEFAULT_CONVERSATION_TITLE:
+    if existing_user_message_count == 0:
         conversation.title = _title_from_question(cleaned_question)
     conversation.last_message_at = now
     db.flush()
