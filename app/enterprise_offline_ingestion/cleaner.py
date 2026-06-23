@@ -54,7 +54,13 @@ class MarkdownCleaner:
         keys = "|".join(re.escape(key) for key in settings.rule_metadata_filter_keys)
         self.rule_meta_re = re.compile(rf"^\s*[-*]\s*({keys})\s*:\s*(.*)\s*$")
 
-    def clean(self, path: Path, index_record: IndexRecord | None = None) -> CleanedDocument:
+    def clean(
+        self,
+        path: Path,
+        index_record: IndexRecord | None = None,
+        *,
+        kb_version: str = "",
+    ) -> CleanedDocument:
         """清洗单个 Markdown 文件。
 
         处理顺序：
@@ -83,14 +89,21 @@ class MarkdownCleaner:
             if stripped and not stripped.startswith("#"):
                 leading_area = False
 
-        metadata = self._build_metadata(path, extracted, index_record)
+        metadata = self._build_metadata(path, extracted, index_record, kb_version=kb_version)
         return CleanedDocument(
             path=path,
             content=self._collapse_blank_lines(body_lines),
             metadata=metadata,
         )
 
-    def _build_metadata(self, path: Path, extracted: Metadata, index_record: IndexRecord | None) -> Metadata:
+    def _build_metadata(
+        self,
+        path: Path,
+        extracted: Metadata,
+        index_record: IndexRecord | None,
+        *,
+        kb_version: str = "",
+    ) -> Metadata:
         """合并文档头部元信息和 index.csv 元数据。"""
 
         metadata: Metadata = dict(extracted)
@@ -120,6 +133,7 @@ class MarkdownCleaner:
         metadata["file_name"] = path.name
         metadata["label_list"] = split_delimited_text(str(metadata.get("label_names", "")))
         metadata["record_type"] = "document_chunk"
+        metadata["kb_version"] = kb_version
         return metadata
 
     @staticmethod
@@ -153,7 +167,7 @@ class FAQCleaner:
     def __init__(self, reference_required: bool = True) -> None:
         self.reference_required = reference_required
 
-    def load(self, path: Path) -> list[FAQRecord]:
+    def load(self, path: Path, *, kb_version: str = "") -> list[FAQRecord]:
         """读取并清洗 FAQ CSV。"""
 
         with path.open("r", encoding="utf-8-sig", newline="") as file:
@@ -182,7 +196,11 @@ class FAQCleaner:
                         category=self._clean_cell(row.get("category", "")),
                         tags=self._clean_cell(row.get("tags", "")),
                         doc_refs=self._clean_cell(row.get("doc_refs", "")),
-                        metadata={"file_name": path.name, "row_number": row_number},
+                        metadata={
+                            "file_name": path.name,
+                            "row_number": row_number,
+                            "kb_version": kb_version,
+                        },
                     )
                 )
             return records

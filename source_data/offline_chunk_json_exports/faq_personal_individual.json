@@ -4,7 +4,6 @@
     "text": "个人/个体店商家是否适用《京东开放平台个人/个体交易管理规则》？",
     "dense": [],
     "dynamic_fields": {
-      "kb_version": "",
       "faq_id": "faq-dev-001",
       "answer": "适用。本规则适用于京东开放平台运营京东个人/个体店的商家。",
       "source": "离线调试样本",
@@ -23,7 +22,8 @@
       "scope_name": "个人/个体",
       "record_type": "faq",
       "file_name": "dev_sample_faq.csv",
-      "row_number": 1
+      "row_number": 1,
+      "kb_version": "kb_20260623223133"
     }
   },
   {
@@ -31,7 +31,6 @@
     "text": "商家发货时效由什么决定？",
     "dense": [],
     "dynamic_fields": {
-      "kb_version": "",
       "faq_id": "faq-dev-002",
       "answer": "商家需按照订单最晚发货时效完成发货，实际执行以京麦系统订单列表页展示的最晚发货时间为准。",
       "source": "离线调试样本",
@@ -50,7 +49,8 @@
       "scope_name": "个人/个体",
       "record_type": "faq",
       "file_name": "dev_sample_faq.csv",
-      "row_number": 2
+      "row_number": 2,
+      "kb_version": "kb_20260623223133"
     }
   }
 ]

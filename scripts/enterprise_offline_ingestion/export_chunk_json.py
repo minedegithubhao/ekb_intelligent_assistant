@@ -60,7 +60,6 @@ def export_doc_chunks(
 def doc_chunk_to_json(chunk: ChildChunk) -> dict[str, Any]:
     metadata = dict(chunk.metadata)
     dynamic_fields = {
-        "kb_version": "",
         **metadata,
         "child_chunk_id": chunk.child_chunk_id,
         "parent_id": chunk.parent_id,
@@ -92,7 +91,6 @@ def export_faq_records(
         scope = infer_faq_scope(record, index_records)
         scope_name = settings.scope_enum[scope]
         dynamic_fields = {
-            "kb_version": "",
             "faq_id": record.faq_id,
             "answer": record.answer,
             "source": record.source,
@@ -160,7 +158,7 @@ def main() -> None:
     faq_records: list[FAQRecord] = []
     faq_cleaner = FAQCleaner(reference_required=settings.faq_reference_required)
     for faq_path in build_faq_paths():
-        faq_records.extend(faq_cleaner.load(faq_path))
+        faq_records.extend(faq_cleaner.load(faq_path, kb_version=pipeline.kb_version))
     faq_rows = export_faq_records(faq_records, index_records=index_records, settings=settings)
 
     write_json(output_dir / "doc_enterprise.json", enterprise_doc_rows)

@@ -14,6 +14,7 @@ from app.enterprise_offline_ingestion.models import IngestionBatch
 from app.enterprise_offline_ingestion.settings import IngestionSettings
 from app.enterprise_offline_ingestion.splitter import MarkdownSplitter
 from app.enterprise_offline_ingestion.vectorization import VectorizationService
+from app.kb_version.service import generate_kb_version
 
 
 class OfflineIngestionPipeline:
@@ -25,6 +26,7 @@ class OfflineIngestionPipeline:
         *,
         vectorization_service: VectorizationService | None = None,
         writer: object | None = None,
+        kb_version: str | None = None,
     ) -> None:
         settings.validate()
         self.settings = settings
@@ -34,6 +36,7 @@ class OfflineIngestionPipeline:
         self.splitter = MarkdownSplitter(settings)
         self.vectorization_service = vectorization_service
         self.writer = writer
+        self.kb_version = kb_version or generate_kb_version()
 
     def prepare(
         self,
@@ -62,7 +65,7 @@ class OfflineIngestionPipeline:
             index_record = index_records.get(rule_id)
             if index_record is None and self.settings.strict_index_match:
                 raise ValueError(f"Markdown 文件 {path.name} 未在 index.csv 中找到 rule_id={rule_id!r} 的记录")
-            document = self.markdown_cleaner.clean(path, index_record)
+            document = self.markdown_cleaner.clean(path, index_record, kb_version=self.kb_version)
             doc_parents, doc_children = self.splitter.split(document)
             documents.append(document)
             parents.extend(doc_parents)
@@ -70,7 +73,7 @@ class OfflineIngestionPipeline:
 
         faq_records = []
         for path in faq_paths or []:
-            faq_records.extend(self.faq_cleaner.load(path))
+            faq_records.extend(self.faq_cleaner.load(path, kb_version=self.kb_version))
 
         return IngestionBatch(
             documents=documents,

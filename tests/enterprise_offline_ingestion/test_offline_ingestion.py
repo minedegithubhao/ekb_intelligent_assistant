@@ -159,6 +159,7 @@ def test_vectorization_service_batches_requests() -> None:
 
 
 def test_ingest_deletes_existing_rows_before_writing(tmp_path: Path) -> None:
+    kb_version = "kb_20260623235959"
     settings = IngestionSettings(
         source_data_root=tmp_path,
         strict_index_match=True,
@@ -169,7 +170,12 @@ def test_ingest_deletes_existing_rows_before_writing(tmp_path: Path) -> None:
         batch_size=2,
     )
     writer = RecordingWriter()
-    pipeline = OfflineIngestionPipeline(settings, vectorization_service=vectorization, writer=writer)
+    pipeline = OfflineIngestionPipeline(
+        settings,
+        vectorization_service=vectorization,
+        writer=writer,
+        kb_version=kb_version,
+    )
 
     markdown_path = tmp_path / "rule_001_doc.md"
     markdown_path.write_text("# 标题\n这是一段正文。\n", encoding="utf-8")
@@ -199,6 +205,8 @@ def test_ingest_deletes_existing_rows_before_writing(tmp_path: Path) -> None:
     assert writer.deleted_faq_ids == ["faq-1"]
     assert len(writer.document_rows) == len(batch.child_chunks)
     assert len(writer.faq_rows) == 1
+    assert all(chunk.metadata["kb_version"] == kb_version for chunk in batch.child_chunks)
+    assert all(record.metadata["kb_version"] == kb_version for record in batch.faq_records)
 
 
 def test_milvus_writer_ensures_dense_index() -> None:
