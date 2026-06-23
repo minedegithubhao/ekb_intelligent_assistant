@@ -81,6 +81,10 @@ def build_markdown_paths() -> list[Path]:
     return markdown_paths
 
 
+def batches(items: list[Path], size: int) -> list[list[Path]]:
+    return [items[start : start + size] for start in range(0, len(items), size)]
+
+
 def drop_collection_if_exists(name: str) -> None:
     runtime = get_runtime_config().app.milvus
     connections.connect(
@@ -142,17 +146,40 @@ def main() -> None:
     )
 
     drop_collection_if_exists(settings.doc_collection_name)
-    batch = pipeline.ingest(
-        markdown_paths=markdown_paths,
-        faq_paths=[],
-        index_csv_path=index_csv_path,
-    )
+
+    markdown_batch_size = 12
+    total_documents = 0
+    total_parent_chunks = 0
+    total_child_chunks = 0
+
+    for batch_no, markdown_batch in enumerate(batches(markdown_paths, markdown_batch_size), start=1):
+        batch = pipeline.ingest(
+            markdown_paths=markdown_batch,
+            faq_paths=[],
+            index_csv_path=index_csv_path,
+        )
+        total_documents += len(batch.documents)
+        total_parent_chunks += len(batch.parent_chunks)
+        total_child_chunks += len(batch.child_chunks)
+        print(
+            {
+                "stage": "documents",
+                "batch_no": batch_no,
+                "batch_documents": len(batch.documents),
+                "batch_parent_chunks": len(batch.parent_chunks),
+                "batch_child_chunks": len(batch.child_chunks),
+                "total_documents": total_documents,
+                "total_parent_chunks": total_parent_chunks,
+                "total_child_chunks": total_child_chunks,
+                "last_file": markdown_batch[-1].name,
+            }
+        )
 
     print(
         {
-            "documents": len(batch.documents),
-            "parent_chunks": len(batch.parent_chunks),
-            "child_chunks": len(batch.child_chunks),
+            "documents": total_documents,
+            "parent_chunks": total_parent_chunks,
+            "child_chunks": total_child_chunks,
             "doc_collection": settings.doc_collection_name,
         }
     )
