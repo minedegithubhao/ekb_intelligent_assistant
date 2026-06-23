@@ -33,44 +33,6 @@ STATIC_RETRIEVAL_FIELDS = {
 DEFAULT_HOT_CONFIG = RetrievalHotConfigValues().model_dump()
 MATCH_TYPES = {"contains", "exact"}
 
-DEFAULT_KEYWORD_RULES: tuple[dict[str, Any], ...] = (
-    {
-        "rule_code": "human_transfer",
-        "rule_name": "转人工关键词集合",
-        "keywords": ["转人工", "人工客服", "人工坐席客服"],
-        "response_text": "现在为您转接人工客服，请稍后...",
-        "match_order": 10,
-    },
-    {
-        "rule_code": "out_of_scope",
-        "rule_name": "越界关键词集合",
-        "keywords": ["吃什么", "喝什么", "天气如何"],
-        "response_text": "很抱歉，我是知识库 AI，您可以向我提问当前知识库相关的问题。",
-        "match_order": 20,
-    },
-    {
-        "rule_code": "greeting",
-        "rule_name": "打招呼关键词集合",
-        "keywords": ["你好", "嗨", "hello", "请问", "告诉我", "问一下"],
-        "response_text": "你好，我是知识库 AI，有什么可以帮您？",
-        "match_order": 30,
-    },
-    {
-        "rule_code": "faq_fast_retrieval",
-        "rule_name": "FAQ 检索关键词集合",
-        "keywords": ["退款流程", "重置密码", "发票开错了"],
-        "response_text": None,
-        "match_order": 40,
-    },
-)
-FIXED_KEYWORD_RULE_CODES = {item["rule_code"] for item in DEFAULT_KEYWORD_RULES}
-
-DEFAULT_TERM_NORMALIZATIONS: tuple[dict[str, Any], ...] = (
-    {"canonical_term": "笔记本电脑", "aliases": ["laptop", "lap top", "笔记型电脑"]},
-    {"canonical_term": "CPU", "aliases": ["CPU", "中央处理器", "中央处理单元"]},
-    {"canonical_term": "Wi-Fi", "aliases": ["Wi-Fi", "WIFI", "无线网络"]},
-)
-
 _effective_retrieval_cache: dict[str, Any] | None = None
 
 
@@ -289,8 +251,6 @@ def update_keyword_rule_keywords(
     updated_by: int | None,
 ) -> RetrievalKeywordRule:
     normalized_code = _clean_code(rule_code)
-    if normalized_code not in FIXED_KEYWORD_RULE_CODES:
-        raise BadRequestException("keyword rule is not editable")
     row = db.execute(
         select(RetrievalKeywordRule).where(
             RetrievalKeywordRule.rule_code == normalized_code,
