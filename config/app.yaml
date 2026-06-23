@@ -57,10 +57,11 @@ milvus:
   alias: knowforge_rag
   host: ${KNOWFORGE_MILVUS_HOST:192.168.11.23}
   port: ${KNOWFORGE_MILVUS_PORT:19530}
+  database: ${KNOWFORGE_MILVUS_DATABASE:knowforge_rag}
   collection_prefix: knowforge
 
 models:
-  base_dir: E:/Heima-AI/knowforge-rag-platform/models
-  embedding_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-m3
-  rerank_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-reranker-large
-  query_classifier_path: E:/Heima-AI/knowforge-rag-platform/models/bert_query_classifier
+  base_dir: E:/llmpython/knowforge-rag-platform/models
+  embedding_model_path: E:/llmpython/knowforge-rag-platform/models/bge-m3
+  rerank_model_path: E:/llmpython/knowforge-rag-platform/models/bge-reranker-large
+  query_classifier_path: E:/llmpython/knowforge-rag-platform/models/bert_query_classifier

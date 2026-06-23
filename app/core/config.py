@@ -91,6 +91,7 @@ class MilvusConfig(BaseModel):
     alias: str = "default"
     host: str
     port: int = 19530
+    database: str = "knowforge_rag"
     collection_prefix: str = "knowforge"
 
 

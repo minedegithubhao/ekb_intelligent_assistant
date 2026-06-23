@@ -9,3 +9,7 @@ redis==7.1.0
 pymilvus==2.5.18
 langchain==1.2.13
 langchain-milvus==0.2.2
+FlagEmbedding
+torch
+transformers
+sentencepiece

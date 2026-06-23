@@ -1,0 +1,4 @@
+faq_id,question,answer,source,reference_source,category,tags,doc_refs
+faq-dev-001,个人/个体店商家是否适用《京东开放平台个人/个体交易管理规则》？,适用。本规则适用于京东开放平台运营京东个人/个体店的商家。,离线调试样本,https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1090224406216708096,规则适用范围,"个体,交易规则",1090224406216708096
+faq-dev-002,商家发货时效由什么决定？,商家需按照订单最晚发货时效完成发货，实际执行以京麦系统订单列表页展示的最晚发货时间为准。,离线调试样本,https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1090224406216708096,发货管理,"个体,发货时效",1090224406216708096
+faq-dev-003,商业空间类目的经营类型包括哪些？,商业空间装饰装修服务分为全包、半包、清包，其中全包和半包包括商品和服务，清包仅涉及服务。,离线调试样本,https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1011532864321359872,经营类型,"企业,商业空间",1011532864321359872
