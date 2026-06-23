@@ -95,6 +95,17 @@ class MilvusConfig(BaseModel):
     collection_prefix: str = "knowforge"
 
 
+class LLMConfig(BaseModel):
+    provider: str = "aliyun_dashscope"
+    model: str = "qwen-max"
+    api_key: str | None = None
+    base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    timeout_seconds: int = Field(default=60, ge=1)
+    max_retries: int = Field(default=2, ge=0)
+    temperature: float = Field(default=0.2, ge=0, le=2)
+    max_tokens: int = Field(default=2048, ge=1)
+
+
 class ModelPathConfig(BaseModel):
     base_dir: str
     embedding_model_path: str
@@ -113,6 +124,7 @@ class AppConfig(BaseModel):
     database: DatabaseConfig
     redis: RedisConfig
     milvus: MilvusConfig
+    llm: LLMConfig = Field(default_factory=LLMConfig)
     models: ModelPathConfig
 
 

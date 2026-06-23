@@ -60,6 +60,16 @@ milvus:
   database: ${KNOWFORGE_MILVUS_DATABASE:knowforge_rag}
   collection_prefix: knowforge
 
+llm:
+  provider: aliyun_dashscope
+  model: ${KNOWFORGE_LLM_MODEL:qwen-max}
+  api_key: ${KNOWFORGE_LLM_API_KEY:}
+  base_url: ${KNOWFORGE_LLM_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+  timeout_seconds: ${KNOWFORGE_LLM_TIMEOUT_SECONDS:60}
+  max_retries: ${KNOWFORGE_LLM_MAX_RETRIES:2}
+  temperature: ${KNOWFORGE_LLM_TEMPERATURE:0.2}
+  max_tokens: ${KNOWFORGE_LLM_MAX_TOKENS:2048}
+
 models:
   base_dir: E:/llmpython/knowforge-rag-platform/models
   embedding_model_path: E:/llmpython/knowforge-rag-platform/models/bge-m3
