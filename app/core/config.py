@@ -128,15 +128,9 @@ class RetrievalConfig(BaseModel):
     rerank_model_path: str
 
 
-class KeywordRule(BaseModel):
-    name: str
-    keywords: list[str]
-
-
 class RuntimeConfig(BaseModel):
     app: AppConfig
     retrieval: RetrievalConfig
-    keyword_rules: dict[str, KeywordRule]
 
 
 def _interpolate_env(value: Any) -> Any:
@@ -178,11 +172,7 @@ class ConfigManager:
         try:
             app = AppConfig.model_validate(load_yaml(self.config_dir / "app.yaml"))
             retrieval = RetrievalConfig.model_validate(load_yaml(self.config_dir / "retrieval.yaml"))
-            keyword_rules = {
-                key: KeywordRule.model_validate(value)
-                for key, value in load_yaml(self.config_dir / "keyword_rules.yaml").items()
-            }
-            return RuntimeConfig(app=app, retrieval=retrieval, keyword_rules=keyword_rules)
+            return RuntimeConfig(app=app, retrieval=retrieval)
         except ValidationError as exc:
             raise ConfigException(f"invalid config: {exc}") from exc
 
