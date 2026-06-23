@@ -91,7 +91,7 @@ def list_admin_conversations(
             isouter=True,
         )
         .where(*filters)
-        .order_by(Conversation.last_message_at.desc().nullslast())
+        .order_by(func.coalesce(Conversation.last_message_at, Conversation.created_at).desc())
         .offset((page - 1) * page_size)
         .limit(page_size)
     ).all()
