@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import yaml
@@ -89,8 +89,9 @@ class KbVersionService:
         """创建 staged 版本；版本号由服务端统一生成。"""
 
         embedding_model = payload.embedding_model or load_default_embedding_model()
-        for _ in range(3):
-            kb_version = generate_kb_version()
+        for attempt in range(3):
+            # 同一秒内连续创建版本时，唯一键可能冲突；重试时顺延秒数但保持 kb_时间戳 格式。
+            kb_version = generate_kb_version(datetime.now() + timedelta(seconds=attempt))
             try:
                 self.repo.insert_version(
                     kb_version=kb_version,
