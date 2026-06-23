@@ -1,0 +1,29 @@
+[
+  {
+    "pk": "faq-dev-003",
+    "text": "商业空间类目的经营类型包括哪些？",
+    "dense": [],
+    "dynamic_fields": {
+      "kb_version": "",
+      "faq_id": "faq-dev-003",
+      "answer": "商业空间装饰装修服务分为全包、半包、清包，其中全包和半包包括商品和服务，清包仅涉及服务。",
+      "source": "离线调试样本",
+      "reference_source": "https://learn-jdm.jd.com/knowledge/rule/detail?ruleId=1011532864321359872",
+      "category": "经营类型",
+      "tags": "企业,商业空间",
+      "tag_list": [
+        "企业",
+        "商业空间"
+      ],
+      "doc_refs": "1011532864321359872",
+      "doc_ref_ids": [
+        "1011532864321359872"
+      ],
+      "scope": "enterprise",
+      "scope_name": "企业",
+      "record_type": "faq",
+      "file_name": "dev_sample_faq.csv",
+      "row_number": 3
+    }
+  }
+]

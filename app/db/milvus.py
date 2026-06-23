@@ -6,7 +6,7 @@ import logging
 import re
 from collections.abc import Sequence
 
-from pymilvus import Collection, CollectionSchema, FieldSchema, connections, utility
+from pymilvus import Collection, CollectionSchema, FieldSchema, connections, db, utility
 
 from app.core.config import get_runtime_config
 from app.core.exceptions import ServiceUnavailableException
@@ -21,7 +21,13 @@ class MilvusClient:
         self.config = get_runtime_config().app.milvus
 
     def connect(self) -> None:
-        connections.connect(alias=self.config.alias, host=self.config.host, port=str(self.config.port))
+        connections.connect(
+            alias=self.config.alias,
+            host=self.config.host,
+            port=str(self.config.port),
+            db_name=self.config.database,
+        )
+        db.using_database(self.config.database, using=self.config.alias)
 
     def disconnect(self) -> None:
         connections.disconnect(self.config.alias)
