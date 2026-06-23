@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import Any
 
 from sqlalchemy import select, update
+from sqlalchemy.exc import OperationalError, ProgrammingError
 from sqlalchemy.orm import Session
 
 from app.core.config import ConfigManager, RetrievalConfig
@@ -87,14 +88,20 @@ def _validate_retrieval_config(config: dict[str, Any]) -> dict[str, Any]:
 
 
 def get_active_hot_config(db: Session, config_name: str = DEFAULT_CONFIG_NAME) -> RetrievalHotConfig | None:
-    return db.execute(
-        select(RetrievalHotConfig)
-        .where(
-            RetrievalHotConfig.config_name == config_name,
-            RetrievalHotConfig.is_enabled.is_(True),
-        )
-        .order_by(RetrievalHotConfig.created_at.desc(), RetrievalHotConfig.id.desc())
-    ).scalars().first()
+    try:
+        return db.execute(
+            select(RetrievalHotConfig)
+            .where(
+                RetrievalHotConfig.config_name == config_name,
+                RetrievalHotConfig.is_enabled.is_(True),
+            )
+            .order_by(RetrievalHotConfig.created_at.desc(), RetrievalHotConfig.id.desc())
+        ).scalars().first()
+    except (OperationalError, ProgrammingError) as exc:
+        if "retrieval_hot_configs" in str(exc):
+            db.rollback()
+            return None
+        raise
 
 
 def get_effective_retrieval_config(
