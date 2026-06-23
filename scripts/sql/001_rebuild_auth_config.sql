@@ -10,7 +10,6 @@ CREATE DATABASE IF NOT EXISTS knowforge_rag
 USE knowforge_rag;
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS config_versions;
 DROP TABLE IF EXISTS user_question_categories;
 DROP TABLE IF EXISTS user_sessions;
 DROP TABLE IF EXISTS user_roles;
@@ -96,27 +95,6 @@ CREATE TABLE user_question_categories (
   CONSTRAINT fk_user_question_categories_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE config_versions (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  config_key VARCHAR(64) NOT NULL DEFAULT 'retrieval',
-  version_no INT NOT NULL,
-  status VARCHAR(32) NOT NULL DEFAULT 'draft',
-  config_json JSON NOT NULL,
-  description TEXT NULL,
-  created_by BIGINT NULL,
-  activated_by BIGINT NULL,
-  activated_at DATETIME NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  is_deleted TINYINT(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (id),
-  UNIQUE KEY uq_config_version_key_no (config_key, version_no),
-  KEY ix_config_versions_config_key (config_key),
-  KEY ix_config_versions_status (status),
-  CONSTRAINT fk_config_versions_created_by FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE SET NULL,
-  CONSTRAINT fk_config_versions_activated_by FOREIGN KEY (activated_by) REFERENCES users (id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 INSERT INTO roles (code, name, description, is_system)
 VALUES
   ('admin', '管理员', '系统管理员，可访问管理端接口', 1),
@@ -170,61 +148,3 @@ SELECT id, 'enterprise_shop', '企业店规则', '企业店相关规则问题' F
 INSERT INTO user_question_categories (user_id, category_code, category_name, description)
 SELECT id, 'individual_shop', '个人个体店规则', '个人/个体店相关规则问题' FROM users WHERE username IN ('admin', 'bob');
 
-INSERT INTO config_versions (
-  config_key,
-  version_no,
-  status,
-  config_json,
-  description,
-  created_by,
-  activated_by,
-  activated_at
-)
-SELECT
-  'retrieval',
-  1,
-  'active',
-  JSON_OBJECT(
-    'model', 'qwen-plus',
-    'embedding_model', 'bge-m3',
-    'embedding_model_path', 'E:/Heima-AI/knowforge-rag-platform/models/bge-m3',
-    'sparse_retrieval', 'Milvus BM25',
-    'rerank_model', 'bge-reranker-v2-m3',
-    'rerank_model_path', 'E:/Heima-AI/knowforge-rag-platform/models/bge-reranker-large',
-    'variant_generation_enabled', TRUE,
-    'rerank_enabled', TRUE,
-    'rule_variant_count', 1,
-    'llm_variant_count', 1,
-    'query_variant_total', 3,
-    'faq_exact_match_max_length', 48,
-    'follow_up_max_length', 10,
-    'recent_message_keep_count', 8,
-    'history_summary_boundary_round', 8,
-    'history_summary_max_chars', 800,
-    'faq_dense_top_k_exact', 3,
-    'faq_sparse_top_k_exact', 3,
-    'faq_fetch_k', 20,
-    'faq_k', 20,
-    'doc_fetch_k', 50,
-    'doc_k', 20,
-    'rerank_top_k', 8,
-    'faq_rerank_top_k', 3,
-    'doc_rerank_top_k', 5,
-    'final_evidence_top_k', 6,
-    'faq_dense_weight', 0.5,
-    'faq_sparse_weight', 0.5,
-    'doc_dense_weight', 0.7,
-    'doc_sparse_weight', 0.3,
-    'faq_high_conf_threshold', 0.85,
-    'faq_middle_conf_threshold', 0.65,
-    'doc_evidence_threshold', 0.55,
-    'rule_hit_priority', JSON_ARRAY('human_transfer', 'out_of_scope', 'greeting', 'faq_fast_retrieval'),
-    'faq_exact_match_policy', 'normalized_exact_match',
-    'standby_keep_days', 30,
-    'standby_min_keep_versions', 1
-  ),
-  '初始化检索参数配置',
-  id,
-  id,
-  NOW()
-FROM users WHERE username = 'admin';
