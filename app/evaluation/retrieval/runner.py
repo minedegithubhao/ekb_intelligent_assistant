@@ -16,14 +16,26 @@ import argparse
 from dataclasses import asdict
 from typing import Any
 
-from qa_core.application.factory import get_qa_service
-from qa_core.evaluation.ragas_metrics import aggregate_scores_with_ragas, score_case
-from qa_core.evaluation.retrieval_schemas import (
+from app.evaluation.common.dataset_loader import EvalCaseRuntime, load_eval_items
+from app.evaluation.retrieval.metrics import aggregate_scores_with_ragas, score_case
+from app.evaluation.retrieval.schemas import (
     RetrievalEvalCase,
     RetrievalEvalConfig,
 )
-from qa_core.evaluation.retrieval_trace_adapter import build_retrieval_trace
-from scripts.eval_common import EvalCaseRuntime, load_eval_items
+from app.evaluation.retrieval.trace_adapter import build_retrieval_trace
+
+
+def get_qa_service() -> Any:
+    """Return the project retrieval service once it is wired into this repo.
+
+    The retrieval evaluation code was imported from a reference project that
+    exposed ``qa_core.application.factory.get_qa_service``. This repository does
+    not currently have that service entry point, so keep the dependency lazy and
+    explicit until the retrieval adapter is connected in the next step.
+    """
+    raise RuntimeError(
+        "retrieval evaluation is not wired to the current project's retrieval service yet"
+    )
 
 
 def build_eval_case(item: dict[str, Any], index: int, args: argparse.Namespace) -> RetrievalEvalCase:

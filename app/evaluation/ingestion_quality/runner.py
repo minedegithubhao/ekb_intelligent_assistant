@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from app.core.exceptions import BadRequestException, NotFoundException
-from app.evaluation.evaluators.chunk_quality import (
+from app.evaluation.ingestion_quality.schemas import (
     ChunkQualityDatasetInfo,
     ChunkQualityEvaluationResult,
     ChunkQualityIssue,
@@ -18,7 +18,7 @@ from app.evaluation.evaluators.chunk_quality import (
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_DATASET_DIR = Path(__file__).resolve().parent
+DEFAULT_DATASET_DIR = PROJECT_ROOT / "resources" / "evaluation" / "datasets"
 # 临时数据集注册表。后续入库流程提供真实 chunk 数据后，只需要把这里
 # 替换成真实数据来源。
 DEFAULT_DATASETS = {
@@ -50,7 +50,13 @@ def list_chunk_quality_datasets() -> list[ChunkQualityDatasetInfo]:
     return datasets
 
 
-def evaluate_chunk_quality_dataset(dataset: str) -> ChunkQualityEvaluationResult:
+def evaluate_chunk_quality_dataset(
+    dataset: str,
+    *,
+    min_chunk_length: int | None = None,
+    max_chunk_length: int | None = None,
+    low_unique_ratio_threshold: float | None = None,
+) -> ChunkQualityEvaluationResult:
     """按数据集名称加载临时数据，并计算文档和 chunk 指标。"""
 
     dataset_key = dataset.strip().lower()
@@ -59,10 +65,23 @@ def evaluate_chunk_quality_dataset(dataset: str) -> ChunkQualityEvaluationResult
         supported = ", ".join(sorted(DEFAULT_DATASETS))
         raise NotFoundException(f"chunk quality dataset not found: {dataset}. supported: {supported}")
     payload = _load_json(path)
-    return evaluate_chunk_quality_payload(dataset_key, payload)
+    return evaluate_chunk_quality_payload(
+        dataset_key,
+        payload,
+        min_chunk_length=min_chunk_length,
+        max_chunk_length=max_chunk_length,
+        low_unique_ratio_threshold=low_unique_ratio_threshold,
+    )
 
 
-def evaluate_chunk_quality_payload(dataset: str, payload: dict[str, Any]) -> ChunkQualityEvaluationResult:
+def evaluate_chunk_quality_payload(
+    dataset: str,
+    payload: dict[str, Any],
+    *,
+    min_chunk_length: int | None = None,
+    max_chunk_length: int | None = None,
+    low_unique_ratio_threshold: float | None = None,
+) -> ChunkQualityEvaluationResult:
     """基于统一格式的 chunk 数据计算质量指标。"""
 
     chunks = payload.get("chunks")
@@ -70,7 +89,9 @@ def evaluate_chunk_quality_payload(dataset: str, payload: dict[str, Any]) -> Chu
         raise BadRequestException("chunk dataset must contain a chunks list")
 
     parent_chunk_size = _positive_int(payload.get("parent_chunk_size"), DEFAULT_PARENT_CHUNK_SIZE)
-    max_chunk_length = max(parent_chunk_size * 2, 2000)
+    min_chunk_length = _positive_int(min_chunk_length, MIN_CHUNK_LENGTH)
+    max_chunk_length = _positive_int(max_chunk_length, max(parent_chunk_size * 2, 2000))
+    low_unique_ratio_threshold = _float_value(low_unique_ratio_threshold, LOW_UNIQUE_RATIO_THRESHOLD)
     # 先统一构建重复分组，后续只标记重复组中的冗余副本，
     # 第一条保留为基准 chunk。
     duplicate_groups = _build_duplicate_groups(chunks)
@@ -112,14 +133,14 @@ def evaluate_chunk_quality_payload(dataset: str, payload: dict[str, Any]) -> Chu
             continue
 
         # 表格 chunk 即使较短，也可能承载结构化业务含义，因此不按过短处理。
-        if text_length < MIN_CHUNK_LENGTH and not is_table:
+        if text_length < min_chunk_length and not is_table:
             too_short_count += 1
             issues.append(
                 ChunkQualityIssue(
                     chunk_id=chunk_id,
                     document_id=document_id,
                     issue_type="too_short",
-                    reason=f"text length is below {MIN_CHUNK_LENGTH} and chunk is not table",
+                    reason=f"text length is below {min_chunk_length} and chunk is not table",
                     text_length=text_length,
                 )
             )
@@ -141,7 +162,7 @@ def evaluate_chunk_quality_payload(dataset: str, payload: dict[str, Any]) -> Chu
         # 唯一字符比例过低通常意味着重复字符噪声，例如 OCR 异常或解析失败。
         if (
             text_length >= LOW_UNIQUE_RATIO_MIN_LENGTH
-            and unique_ratio < LOW_UNIQUE_RATIO_THRESHOLD
+            and unique_ratio < low_unique_ratio_threshold
             and not is_table
         ):
             low_unique_count += 1
@@ -150,7 +171,7 @@ def evaluate_chunk_quality_payload(dataset: str, payload: dict[str, Any]) -> Chu
                     chunk_id=chunk_id,
                     document_id=document_id,
                     issue_type="low_unique_ratio",
-                    reason=f"unique character ratio is below {LOW_UNIQUE_RATIO_THRESHOLD}",
+                    reason=f"unique character ratio is below {low_unique_ratio_threshold}",
                     text_length=text_length,
                     unique_ratio=unique_ratio,
                 )
@@ -184,9 +205,9 @@ def evaluate_chunk_quality_payload(dataset: str, payload: dict[str, Any]) -> Chu
         user_type=str(payload.get("user_type", dataset)),
         document_metrics_mode=str(payload.get("document_metrics_mode", "simulated")),
         parent_chunk_size=parent_chunk_size,
-        min_chunk_length_threshold=MIN_CHUNK_LENGTH,
-        max_chunk_length_threshold=max_chunk_length,
-        low_unique_ratio_threshold=LOW_UNIQUE_RATIO_THRESHOLD,
+            min_chunk_length_threshold=min_chunk_length,
+            max_chunk_length_threshold=max_chunk_length,
+            low_unique_ratio_threshold=low_unique_ratio_threshold,
         document_metrics=DocumentIngestMetrics(
             expected_document_count=expected_document_count,
             actual_document_count=actual_document_count,
@@ -311,6 +332,14 @@ def _positive_int(value: Any, fallback: int) -> int:
     except (TypeError, ValueError):
         return fallback
     return parsed if parsed > 0 else fallback
+
+
+def _float_value(value: Any, fallback: float) -> float:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return fallback
+    return parsed if parsed >= 0 else fallback
 
 
 def _non_negative_int(value: Any) -> int:

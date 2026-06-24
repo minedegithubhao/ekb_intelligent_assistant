@@ -30,13 +30,13 @@ class KbVersionRepository:
             text(
                 f"""
                 SELECT
-                    id, kb_version, type, embedding_model,
+                    id, kb_version, status, embedding_model,
                     faq_collection_name, doc_collection_name,
                     created_at, created_by, description
                 FROM kb_versions
                 {where}
                 ORDER BY
-                    CASE type
+                    CASE status
                         WHEN 'active' THEN 0
                         WHEN 'staged' THEN 1
                         ELSE 2
@@ -56,7 +56,7 @@ class KbVersionRepository:
             text(
                 f"""
                 SELECT
-                    id, kb_version, type, embedding_model,
+                    id, kb_version, status, embedding_model,
                     faq_collection_name, doc_collection_name,
                     created_at, created_by, description
                 FROM kb_versions
@@ -75,11 +75,11 @@ class KbVersionRepository:
             text(
                 f"""
                 SELECT
-                    id, kb_version, type, embedding_model,
+                    id, kb_version, status, embedding_model,
                     faq_collection_name, doc_collection_name,
                     created_at, created_by, description
                 FROM kb_versions
-                WHERE type='active'
+                WHERE status='active'
                 ORDER BY created_at DESC, id DESC
                 LIMIT 1
                 {suffix}
@@ -90,7 +90,7 @@ class KbVersionRepository:
     def count_active_versions(self) -> int:
         """校验全局只能有一个 active 版本。"""
 
-        return int(self.db.execute(text("SELECT COUNT(*) FROM kb_versions WHERE type='active'")).scalar_one())
+        return int(self.db.execute(text("SELECT COUNT(*) FROM kb_versions WHERE status='active'")).scalar_one())
 
     def insert_version(
         self,
@@ -108,7 +108,7 @@ class KbVersionRepository:
             text(
                 """
                 INSERT INTO kb_versions (
-                    kb_version, type, embedding_model, faq_collection_name,
+                    kb_version, status, embedding_model, faq_collection_name,
                     doc_collection_name, created_at, created_by, description
                 )
                 VALUES (
@@ -128,10 +128,10 @@ class KbVersionRepository:
         )
 
     def update_status(self, kb_version: str, status: VersionStatus) -> None:
-        """更新指定版本的 type 状态。"""
+        """更新指定版本的 status 状态。"""
 
         self.db.execute(
-            text("UPDATE kb_versions SET type=:status WHERE kb_version=:kb_version"),
+            text("UPDATE kb_versions SET status=:status WHERE kb_version=:kb_version"),
             {"status": status.value, "kb_version": kb_version},
         )
 

@@ -21,10 +21,10 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from qa_core.evaluation.retrieval_runner import run_retrieval_eval
-from scripts.common import configure_utf8_stdio, write_json_file
+from app.evaluation.common.file_utils import configure_utf8_stdio, write_json_file
+from app.evaluation.retrieval.runner import run_retrieval_eval
 
 
 EVALUATION_REPORT_DIR = Path("reports") / "evaluation"
@@ -49,7 +49,10 @@ def build_arg_parser() -> argparse.ArgumentParser:
     参数设计尽量和参考项目的评测脚本保持一致，这样你后续切换或合并脚本时更自然。
     """
     parser = argparse.ArgumentParser(description="Evaluate retrieval metrics with Ragas.")
-    parser.add_argument("--dataset", default=str(Path("eval_sets") / "multi_scenario_smoke.json"))
+    parser.add_argument(
+        "--dataset",
+        default=str(Path("resources") / "evaluation" / "datasets" / "mock_retrieval_eval.json"),
+    )
     parser.add_argument("--limit", type=int, default=20)
     parser.add_argument("--output", default="")
     parser.add_argument("--faq-top-k", type=int, default=5)
