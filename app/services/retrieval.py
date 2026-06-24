@@ -5,6 +5,8 @@ from __future__ import annotations
 import math
 import os
 import re
+import shutil
+import logging
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, replace
 from functools import lru_cache
@@ -41,6 +43,7 @@ FAQ_FAST_RULE_CODE = "faq_fast_retrieval"
 DEFAULT_DENSE_FIELD = "dense"
 DEFAULT_SPARSE_FIELD = "sparse"
 DEFAULT_TEXT_FIELD = "text"
+logger = logging.getLogger(__name__)
 
 LLMVariantGenerator = Callable[[str, int], Sequence[str]]
 FollowUpRewriter = Callable[[str, Sequence[Mapping[str, Any]], RetrievalHotConfigValues], str | None]
@@ -789,13 +792,29 @@ def _reranker_model() -> Any:
     vocab_file = model_path / "sentencepiece.bpe.model"
     tokenizer_kwargs = {"use_fast": False}
     if vocab_file.exists():
-        tokenizer_kwargs["vocab_file"] = str(vocab_file)
+        tokenizer_kwargs["vocab_file"] = str(_cached_sentencepiece_vocab(model_path, vocab_file))
     return CrossEncoder(
         str(model_path),
         device=_device(),
         local_files_only=True,
         tokenizer_kwargs=tokenizer_kwargs,
     )
+
+
+def _cached_sentencepiece_vocab(model_path: Path, vocab_file: Path) -> Path:
+    """Copy SentencePiece vocab to an ASCII cache path for Windows Chinese-path compatibility."""
+
+    try:
+        cache_root = Path(os.getenv("KNOWFORGE_MODEL_CACHE", "D:/knowforge_model_cache"))
+        cache_dir = cache_root / model_path.name
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        cached = cache_dir / vocab_file.name
+        if not cached.exists() or cached.stat().st_mtime < vocab_file.stat().st_mtime:
+            shutil.copy2(vocab_file, cached)
+        return cached
+    except Exception as exc:  # noqa: BLE001 - fallback keeps existing local model loading behavior.
+        logger.warning("failed to cache sentencepiece vocab for reranker: %s", exc)
+        return vocab_file
 
 
 def _device() -> str:
@@ -837,9 +856,9 @@ def _rerank_and_trim(
             )
             for hit, score in zip(reranked_hits, scores, strict=False)
         ]
-    except Exception:
+    except Exception as exc:
         # If the local reranker is unavailable, preserve Milvus hybrid ranking.
-        pass
+        logger.warning("reranker unavailable, fallback to Milvus hybrid scores: %s", exc)
     reranked_hits.sort(key=lambda item: item.score, reverse=True)
     return [_hit_to_evidence(hit, confidence=_score_to_confidence(hit.score)) for hit in reranked_hits[:top_k]]
 
@@ -1015,8 +1034,8 @@ def _final_rerank(
             for item, score in zip(items, scores, strict=False)
         ]
         items.sort(key=lambda item: item.score, reverse=True)
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("final reranker unavailable, preserve evidence order: %s", exc)
     return items[:top_k]
 
 
