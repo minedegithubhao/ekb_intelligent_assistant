@@ -32,6 +32,10 @@ from app.services.retrieval_config import (
 )
 
 KNOWLEDGE_BASE_TYPES = {"enterprise", "personal"}
+KNOWLEDGE_BASE_TYPE_TO_SCOPE = {
+    "enterprise": "enterprise",
+    "personal": "personal_individual",
+}
 DIRECT_RULE_CODES = {"greeting", "out_of_scope", "human_transfer"}
 FAQ_FAST_RULE_CODE = "faq_fast_retrieval"
 DEFAULT_DENSE_FIELD = "dense"
@@ -952,9 +956,10 @@ def _base_debug(
 def _build_milvus_expr(ctx: RetrievalContext) -> str:
     if ctx.knowledge_base is None:
         raise ServiceUnavailableException("active knowledge base version is not configured")
+    scope = KNOWLEDGE_BASE_TYPE_TO_SCOPE[ctx.knowledge_base_type]
     return (
         f'kb_version == "{_escape_expr_value(ctx.knowledge_base.kb_version)}" '
-        f'and source == "{_escape_expr_value(ctx.knowledge_base_type)}"'
+        f'and scope == "{_escape_expr_value(scope)}"'
     )
 
 
