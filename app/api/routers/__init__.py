@@ -9,6 +9,7 @@ from app.api.routers import (
     auth,
     conversation,
     system,
+    vector_ingest_json,
 )
 
 api_router = APIRouter()
@@ -18,3 +19,4 @@ api_router.include_router(conversation.router, tags=["conversations"])
 api_router.include_router(admin_config.router, tags=["admin-config"])
 api_router.include_router(admin_users.router, tags=["admin-users"])
 api_router.include_router(admin_conversation.router, tags=["admin-conversations"])
+api_router.include_router(vector_ingest_json.router, tags=["vector-ingest-json"])
