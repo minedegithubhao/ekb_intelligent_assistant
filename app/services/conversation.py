@@ -3,13 +3,18 @@
 from __future__ import annotations
 
 import logging
+import time
+from collections.abc import Callable, Iterator
 from datetime import UTC, datetime
+from queue import Queue
+from threading import Thread
 from typing import Any
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import BadRequestException, NotFoundException
+from app.db.mysql import SessionLocal
 from app.db.models.conversation import Conversation, ConversationMessage
 from app.schemas.conversation import ConversationCreate, ConversationInfo, ConversationMessageInfo, ConversationQuestionAnswer
 from app.schemas.retrieval import RetrievalResult
@@ -182,6 +187,7 @@ def add_question_message(
     conversation_id: int,
     question: str,
     knowledge_base_type: str,
+    progress_callback: Callable[[dict[str, Any]], None] | None = None,
 ) -> ConversationQuestionAnswer:
     normalized_type = _normalize_knowledge_base_type(knowledge_base_type)
     cleaned_question = question.strip()
@@ -224,18 +230,37 @@ def add_question_message(
     db.flush()
     db.commit()
 
+    retrieval_started_at = time.perf_counter()
+    retrieval_flow: list[dict[str, Any]] = []
+
+    def emit_progress(payload: dict[str, Any]) -> None:
+        event = {
+            **payload,
+            "elapsed_ms": int((time.perf_counter() - retrieval_started_at) * 1000),
+        }
+        retrieval_flow.append(event)
+        if progress_callback:
+            progress_callback(event)
+
     try:
         retrieval_result = retrieve_answer(
             db,
             question=cleaned_question,
             knowledge_base_type=normalized_type,
             history_messages=history_messages,
+            progress_callback=emit_progress,
         )
-        answer, sources, metadata = _retrieval_result_to_message_payload(retrieval_result)
+        elapsed_ms = int((time.perf_counter() - retrieval_started_at) * 1000)
+        answer, sources, metadata = _retrieval_result_to_message_payload(
+            retrieval_result,
+            elapsed_ms=elapsed_ms,
+            retrieval_flow=retrieval_flow,
+        )
     except Exception as exc:  # noqa: BLE001 - user question must stay saved when retrieval fails.
+        elapsed_ms = int((time.perf_counter() - retrieval_started_at) * 1000)
         db.rollback()
         logger.exception("retrieval failed for conversation_id=%s", conversation_pk)
-        answer, sources, metadata = _retrieval_failure_payload(exc)
+        answer, sources, metadata = _retrieval_failure_payload(exc, elapsed_ms=elapsed_ms, retrieval_flow=retrieval_flow)
 
     assistant_now = datetime.now(UTC)
     assistant_message = ConversationMessage(
@@ -257,10 +282,61 @@ def add_question_message(
         answer=assistant_message.content,
         knowledge_base_type=normalized_type,
         sources=assistant_message.sources_json or [],
+        metadata=assistant_message.metadata_json or {},
         hit_type=str((assistant_message.metadata_json or {}).get("hit_type", "none")),
         need_human_transfer=bool((assistant_message.metadata_json or {}).get("need_human_transfer", False)),
         created_at=assistant_message.created_at,
     )
+
+
+def stream_question_message_events(
+    *,
+    user_id: int,
+    conversation_id: int,
+    question: str,
+    knowledge_base_type: str,
+) -> Iterator[dict[str, Any]]:
+    events: Queue[dict[str, Any]] = Queue()
+
+    def put_event(event: str, data: dict[str, Any]) -> None:
+        events.put({"event": event, "data": data})
+
+    def worker() -> None:
+        db = SessionLocal()
+        try:
+            answer = add_question_message(
+                db,
+                user_id=user_id,
+                conversation_id=conversation_id,
+                question=question,
+                knowledge_base_type=knowledge_base_type,
+                progress_callback=lambda payload: put_event("progress", payload),
+            )
+            db.commit()
+            put_event("final", answer.model_dump(mode="json"))
+        except Exception as exc:  # noqa: BLE001 - stream endpoint reports failures as SSE events.
+            db.rollback()
+            logger.exception("stream question failed for conversation_id=%s", conversation_id)
+            put_event(
+                "error",
+                {
+                    "message": getattr(exc, "message", str(exc)),
+                    "stage": "error",
+                    "elapsed_ms": 0,
+                    "error_type": exc.__class__.__name__,
+                },
+            )
+        finally:
+            db.close()
+            events.put({"event": "__done__", "data": {}})
+
+    Thread(target=worker, daemon=True).start()
+
+    while True:
+        item = events.get()
+        if item["event"] == "__done__":
+            break
+        yield item
 
 
 def _history_messages_for_retrieval(
@@ -281,23 +357,54 @@ def _history_messages_for_retrieval(
     return [{"role": str(role), "content": str(content)} for role, content in rows if str(content).strip()]
 
 
-def _retrieval_result_to_message_payload(result: RetrievalResult) -> tuple[str, list[dict[str, Any]], dict[str, Any]]:
+def _retrieval_result_to_message_payload(
+    result: RetrievalResult,
+    *,
+    elapsed_ms: int,
+    retrieval_flow: list[dict[str, Any]] | None = None,
+) -> tuple[str, list[dict[str, Any]], dict[str, Any]]:
     metadata = {
         **result.metadata,
         "hit_type": result.hit_type,
         "need_human_transfer": result.need_human_transfer,
+        "elapsed_ms": elapsed_ms,
+        "judgement": _judgement_from_hit_type(result.hit_type),
+        "retrieval_flow": retrieval_flow or [],
         "debug": result.debug.model_dump(mode="json"),
     }
     return result.answer, result.sources, metadata
 
 
-def _retrieval_failure_payload(exc: Exception) -> tuple[str, list[dict[str, Any]], dict[str, Any]]:
+def _retrieval_failure_payload(
+    exc: Exception,
+    *,
+    elapsed_ms: int,
+    retrieval_flow: list[dict[str, Any]] | None = None,
+) -> tuple[str, list[dict[str, Any]], dict[str, Any]]:
     error_message = getattr(exc, "message", str(exc))
     metadata = {
         "hit_type": "retrieval_error",
         "need_human_transfer": False,
+        "elapsed_ms": elapsed_ms,
+        "judgement": _judgement_from_hit_type("retrieval_error"),
+        "retrieval_flow": retrieval_flow or [],
         "retrieval_error": True,
         "error_type": exc.__class__.__name__,
         "error_message": error_message,
     }
     return RETRIEVAL_FAILURE_ANSWER, [], metadata
+
+
+def _judgement_from_hit_type(hit_type: str) -> str:
+    mapping = {
+        "rule_greeting": "问候语",
+        "rule_human_transfer": "请求人工",
+        "rule_out_of_scope": "越界问题",
+        "faq_fast": "FAQ快速匹配",
+        "faq_high": "FAQ高置信匹配",
+        "faq_middle_doc": "FAQ中置信+文档混合检索",
+        "doc": "文档混合检索",
+        "none": "未命中",
+        "retrieval_error": "检索异常",
+    }
+    return mapping.get(hit_type, hit_type)

@@ -48,6 +48,7 @@ logger = logging.getLogger(__name__)
 LLMVariantGenerator = Callable[[str, int], Sequence[str]]
 FollowUpRewriter = Callable[[str, Sequence[Mapping[str, Any]], RetrievalHotConfigValues], str | None]
 AnswerGenerator = Callable[[str, Sequence[RetrievalEvidence]], str]
+ProgressCallback = Callable[[dict[str, Any]], None]
 
 
 @dataclass(frozen=True)
@@ -84,6 +85,15 @@ class SearchHit:
     metadata: dict[str, Any]
 
 
+def _emit_progress(callback: ProgressCallback | None, **payload: Any) -> None:
+    if callback is None:
+        return
+    try:
+        callback(payload)
+    except Exception as exc:  # noqa: BLE001 - progress reporting must not break retrieval.
+        logger.warning("retrieval progress callback failed: %s", exc)
+
+
 def retrieve_answer(
     db: Session,
     *,
@@ -96,6 +106,7 @@ def retrieve_answer(
     follow_up_rewriter: FollowUpRewriter | None = None,
     llm_variant_generator: LLMVariantGenerator | None = None,
     answer_generator: AnswerGenerator | None = None,
+    progress_callback: ProgressCallback | None = None,
 ) -> RetrievalResult:
     """Run the retrieval pipeline and return an answer/evidence bundle.
 
@@ -123,7 +134,17 @@ def retrieve_answer(
 
     # 归一化问题用于规则匹配；standalone_question 是真正参与后续检索的问题。
     normalized_question = normalize_question(raw_question)
+    _emit_progress(progress_callback, stage="rule_match", label="规则匹配", status="running")
     rule_hit = _match_first_rule(normalized_question, ctx.keyword_rules)
+    _emit_progress(
+        progress_callback,
+        stage="rule_match",
+        label="规则匹配",
+        status="completed",
+        hit=bool(rule_hit),
+        rule_code=rule_hit.rule_code if rule_hit else None,
+        judgement=_judgement_from_hit_type(f"rule_{rule_hit.rule_code}") if rule_hit else "未命中规则",
+    )
     standalone_question = _rewrite_follow_up(
         raw_question,
         history_messages or [],
@@ -141,6 +162,17 @@ def retrieve_answer(
 
     # 打招呼、越界、转人工等规则命中后可直接返回，不要求知识库版本存在。
     if rule_hit and rule_hit.rule_code in DIRECT_RULE_CODES:
+        _emit_progress(progress_callback, stage="faq_fast_match", label="FAQ快速匹配", status="skipped", reason="规则直接命中")
+        _emit_progress(progress_callback, stage="faq_hybrid_search", label="FAQ混合检索", status="skipped", reason="规则直接命中")
+        _emit_progress(progress_callback, stage="doc_hybrid_search", label="文档混合检索", status="skipped", reason="规则直接命中")
+        _emit_progress(
+            progress_callback,
+            stage="answer_generation",
+            label="答案生成",
+            status="completed",
+            hit_type=f"rule_{rule_hit.rule_code}",
+            judgement=_judgement_from_hit_type(f"rule_{rule_hit.rule_code}"),
+        )
         return _direct_rule_result(rule_hit, debug)
 
     # 只有进入真实 FAQ / 文档检索时，才必须确定知识库版本和 collection 名称。
@@ -150,9 +182,40 @@ def retrieve_answer(
 
     # FAQ 快速检索用于短问题精确命中，命中标准 FAQ 后直接返回。
     if _should_run_fast_faq(rule_hit, normalized_question, ctx.hot):
+        _emit_progress(progress_callback, stage="faq_fast_match", label="FAQ快速匹配", status="running")
         fast_hit = _faq_fast_exact_match(ctx, standalone_question)
+        _emit_progress(
+            progress_callback,
+            stage="faq_fast_match",
+            label="FAQ快速匹配",
+            status="completed",
+            hit=bool(fast_hit),
+            candidate_count=1 if fast_hit else 0,
+        )
         if fast_hit:
             evidence = _hit_to_evidence(fast_hit, confidence=1.0)
+            _emit_progress(
+                progress_callback,
+                stage="faq_hybrid_search",
+                label="FAQ混合检索",
+                status="skipped",
+                reason="FAQ快速匹配已命中",
+            )
+            _emit_progress(
+                progress_callback,
+                stage="doc_hybrid_search",
+                label="文档混合检索",
+                status="skipped",
+                reason="FAQ快速匹配已命中",
+            )
+            _emit_progress(
+                progress_callback,
+                stage="answer_generation",
+                label="答案生成",
+                status="completed",
+                hit_type="faq_fast",
+                judgement=_judgement_from_hit_type("faq_fast"),
+            )
             return _faq_answer_result(
                 hit_type="faq_fast",
                 answer=evidence.answer or evidence.text,
@@ -161,6 +224,14 @@ def retrieve_answer(
                 debug=debug,
                 metadata={"faq_fast_exact_match": True},
             )
+    else:
+        _emit_progress(
+            progress_callback,
+            stage="faq_fast_match",
+            label="FAQ快速匹配",
+            status="skipped",
+            reason="未命中FAQ快速匹配规则或问题超过长度限制",
+        )
 
     # 生成 1 条基础问题、1 条规则变体和 N 条 LLM 变体，之后所有变体都参与混合检索。
     variants = build_query_variants(
@@ -172,6 +243,7 @@ def retrieve_answer(
     debug.query_variants = variants
 
     # 先查 FAQ collection：多 query 混合检索、合并去重、rerank，再根据置信度决定是否直接返回。
+    _emit_progress(progress_callback, stage="faq_hybrid_search", label="FAQ混合检索", status="running")
     faq_hits = _search_multi_query(
         ctx=ctx,
         source_type="faq",
@@ -188,9 +260,27 @@ def retrieve_answer(
         source_type="faq",
         top_k=ctx.hot.faq_rerank_top_k,
     )
+    _emit_progress(
+        progress_callback,
+        stage="faq_hybrid_search",
+        label="FAQ混合检索",
+        status="completed",
+        candidate_count=len(faq_hits),
+        evidence_count=len(faq_evidence),
+        best_confidence=_best_confidence(faq_evidence),
+    )
 
     best_faq = faq_evidence[0] if faq_evidence else None
     if best_faq and best_faq.confidence >= ctx.hot.faq_high_conf_threshold:
+        _emit_progress(progress_callback, stage="doc_hybrid_search", label="文档混合检索", status="skipped", reason="FAQ高置信命中")
+        _emit_progress(
+            progress_callback,
+            stage="answer_generation",
+            label="答案生成",
+            status="completed",
+            hit_type="faq_high",
+            judgement=_judgement_from_hit_type("faq_high"),
+        )
         return _faq_answer_result(
             hit_type="faq_high",
             answer=best_faq.answer or best_faq.text,
@@ -200,6 +290,7 @@ def retrieve_answer(
         )
 
     # FAQ 未达到高置信时继续查文档 collection，用文档证据支撑复杂或长尾问题回答。
+    _emit_progress(progress_callback, stage="doc_hybrid_search", label="文档混合检索", status="running")
     doc_hits = _search_multi_query(
         ctx=ctx,
         source_type="doc",
@@ -220,11 +311,21 @@ def retrieve_answer(
         )
         if item.confidence >= ctx.hot.doc_evidence_threshold
     ]
+    _emit_progress(
+        progress_callback,
+        stage="doc_hybrid_search",
+        label="文档混合检索",
+        status="completed",
+        candidate_count=len(doc_hits),
+        evidence_count=len(doc_evidence),
+        best_confidence=_best_confidence(doc_evidence),
+    )
 
     # FAQ 中置信时保留 FAQ 证据，并与文档证据一起进入最终生成。
     if best_faq and best_faq.confidence >= ctx.hot.faq_middle_conf_threshold:
         evidence_for_answer = [best_faq, *doc_evidence]
-        return _evidence_answer_result(
+        _emit_progress(progress_callback, stage="answer_generation", label="答案生成", status="running")
+        result = _evidence_answer_result(
             hit_type="faq_middle_doc",
             question=standalone_question,
             faq_evidence=faq_evidence,
@@ -234,10 +335,21 @@ def retrieve_answer(
             final_top_k=ctx.hot.final_evidence_top_k,
             evidence_for_answer=evidence_for_answer,
         )
+        _emit_progress(
+            progress_callback,
+            stage="answer_generation",
+            label="答案生成",
+            status="completed",
+            hit_type=result.hit_type,
+            judgement=_judgement_from_hit_type(result.hit_type),
+            source_count=len(result.sources),
+        )
+        return result
 
     # FAQ 低置信时丢弃 FAQ 证据，仅用文档证据生成回答。
     if doc_evidence:
-        return _evidence_answer_result(
+        _emit_progress(progress_callback, stage="answer_generation", label="答案生成", status="running")
+        result = _evidence_answer_result(
             hit_type="doc",
             question=standalone_question,
             faq_evidence=[],
@@ -247,8 +359,26 @@ def retrieve_answer(
             final_top_k=ctx.hot.final_evidence_top_k,
             evidence_for_answer=doc_evidence,
         )
+        _emit_progress(
+            progress_callback,
+            stage="answer_generation",
+            label="答案生成",
+            status="completed",
+            hit_type=result.hit_type,
+            judgement=_judgement_from_hit_type(result.hit_type),
+            source_count=len(result.sources),
+        )
+        return result
 
     # FAQ 和文档都没有可靠证据时，返回无命中结果。
+    _emit_progress(
+        progress_callback,
+        stage="answer_generation",
+        label="答案生成",
+        status="skipped",
+        hit_type="none",
+        judgement=_judgement_from_hit_type("none"),
+    )
     return RetrievalResult(
         answer="未检索到足够相关的知识库内容，请换一种说法再试。",
         hit_type="none",
@@ -921,6 +1051,27 @@ def _score_to_confidence(score: float) -> float:
     if 0 <= score <= 1:
         return score
     return 1 / (1 + math.exp(-score))
+
+
+def _best_confidence(evidence: Sequence[RetrievalEvidence]) -> float | None:
+    if not evidence:
+        return None
+    return max(float(item.confidence) for item in evidence)
+
+
+def _judgement_from_hit_type(hit_type: str) -> str:
+    mapping = {
+        "rule_greeting": "问候语",
+        "rule_human_transfer": "请求人工",
+        "rule_out_of_scope": "越界问题",
+        "faq_fast": "FAQ快速匹配",
+        "faq_high": "FAQ高置信匹配",
+        "faq_middle_doc": "FAQ中置信+文档混合检索",
+        "doc": "文档混合检索",
+        "none": "未命中",
+        "retrieval_error": "检索异常",
+    }
+    return mapping.get(hit_type, hit_type)
 
 
 def _direct_rule_result(rule: KeywordRule, debug: RetrievalDebugInfo) -> RetrievalResult:

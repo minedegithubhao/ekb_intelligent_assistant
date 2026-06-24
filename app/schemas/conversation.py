@@ -43,6 +43,7 @@ class ConversationQuestionAnswer(BaseModel):
     answer: str
     knowledge_base_type: str
     sources: list[dict[str, Any]] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
     hit_type: str = "none"
     need_human_transfer: bool = False
     created_at: datetime

@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import json
+
 from fastapi import APIRouter, Depends, Query
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from app.api.deps import CurrentUser, get_current_user
@@ -15,6 +18,7 @@ from app.services.conversation import (
     delete_conversation,
     list_conversation_messages,
     list_conversations,
+    stream_question_message_events,
 )
 
 router = APIRouter(prefix="/conversations")
@@ -71,6 +75,32 @@ def create_conversation_message(
         knowledge_base_type=payload.knowledge_base_type,
     )
     return success_response(answer.model_dump(mode="json"))
+
+
+@router.post("/{conversation_id}/messages/stream")
+def create_conversation_message_stream(
+    conversation_id: int,
+    payload: ConversationQuestionCreate,
+    current_user: CurrentUser = Depends(get_current_user),
+) -> StreamingResponse:
+    def encode_events():
+        for item in stream_question_message_events(
+            user_id=current_user.id,
+            conversation_id=conversation_id,
+            question=payload.question,
+            knowledge_base_type=payload.knowledge_base_type,
+        ):
+            data = json.dumps(item["data"], ensure_ascii=False)
+            yield f"event: {item['event']}\ndata: {data}\n\n"
+
+    return StreamingResponse(
+        encode_events(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 
 @router.delete("/{conversation_id}")
