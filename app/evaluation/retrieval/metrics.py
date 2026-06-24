@@ -38,7 +38,7 @@ except ImportError:
     evaluate = None
     numeric_metric = None
 
-from qa_core.evaluation.retrieval_schemas import (
+from app.evaluation.retrieval.schemas import (
     RetrievalCaseScore,
     RetrievalEvalCase,
     RetrievalEvalConfig,

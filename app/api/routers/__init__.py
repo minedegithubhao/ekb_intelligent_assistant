@@ -5,6 +5,7 @@ from fastapi import APIRouter
 from app.api.routers import (
     admin_config,
     admin_conversation,
+    admin_evaluation,
     admin_users,
     auth,
     conversation,
@@ -18,3 +19,4 @@ api_router.include_router(conversation.router, tags=["conversations"])
 api_router.include_router(admin_config.router, tags=["admin-config"])
 api_router.include_router(admin_users.router, tags=["admin-users"])
 api_router.include_router(admin_conversation.router, tags=["admin-conversations"])
+api_router.include_router(admin_evaluation.router, tags=["admin-evaluations"])

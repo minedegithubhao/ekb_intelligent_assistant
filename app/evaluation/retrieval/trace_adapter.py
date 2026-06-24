@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from qa_core.evaluation.retrieval_schemas import FAQHit, KBHit, RetrievalTrace
+from app.evaluation.retrieval.schemas import FAQHit, KBHit, RetrievalTrace
 
 
 def _safe_rank(index: int, item: dict[str, Any]) -> int:
