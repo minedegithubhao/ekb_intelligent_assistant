@@ -52,6 +52,11 @@ backups/
 *.tar
 *.tar.gz
 
+# Offline ingestion generated exports
+source_data/offline_chunk_json_exports/
+!source_data/offline_chunk_json_exports/faq_enterprise.json
+!source_data/offline_chunk_json_exports/faq_personal_individual.json
+
 # Keep migration/initialization SQL scripts versioned.
 !scripts/
 !scripts/sql/

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from datetime import UTC, datetime
 from typing import Any
 
@@ -11,11 +12,16 @@ from sqlalchemy.orm import Session
 from app.core.exceptions import BadRequestException, NotFoundException
 from app.db.models.conversation import Conversation, ConversationMessage
 from app.schemas.conversation import ConversationCreate, ConversationInfo, ConversationMessageInfo, ConversationQuestionAnswer
+from app.schemas.retrieval import RetrievalResult
+from app.services.retrieval import retrieve_answer
 
 
 KNOWLEDGE_BASE_TYPES = {"enterprise", "personal"}
 DEFAULT_CONVERSATION_TITLE = "新会话"
 TITLE_MAX_LENGTH = 30
+RETRIEVAL_FAILURE_ANSWER = "抱歉，当前知识库检索暂时不可用，你的问题已保存，请稍后再试。"
+
+logger = logging.getLogger(__name__)
 
 
 def _normalize_knowledge_base_type(knowledge_base_type: str) -> str:
@@ -187,17 +193,23 @@ def add_question_message(
         user_id=user_id,
         knowledge_base_type=normalized_type,
     )
+    conversation_pk = conversation.id
     existing_user_message_count = db.execute(
         select(func.count(ConversationMessage.id)).where(
-            ConversationMessage.conversation_id == conversation.id,
+            ConversationMessage.conversation_id == conversation_pk,
             ConversationMessage.user_id == user_id,
             ConversationMessage.role == "user",
             ConversationMessage.is_deleted.is_(False),
         )
     ).scalar_one()
+    history_messages = _history_messages_for_retrieval(
+        db,
+        conversation_id=conversation_pk,
+        user_id=user_id,
+    )
     now = datetime.now(UTC)
     user_message = ConversationMessage(
-        conversation_id=conversation.id,
+        conversation_id=conversation_pk,
         user_id=user_id,
         role="user",
         content=cleaned_question,
@@ -206,9 +218,28 @@ def add_question_message(
     )
     db.add(user_message)
 
-    answer, sources, metadata = _mock_rag_answer(cleaned_question)
+    if existing_user_message_count == 0:
+        conversation.title = _title_from_question(cleaned_question)
+    conversation.last_message_at = now
+    db.flush()
+    db.commit()
+
+    try:
+        retrieval_result = retrieve_answer(
+            db,
+            question=cleaned_question,
+            knowledge_base_type=normalized_type,
+            history_messages=history_messages,
+        )
+        answer, sources, metadata = _retrieval_result_to_message_payload(retrieval_result)
+    except Exception as exc:  # noqa: BLE001 - user question must stay saved when retrieval fails.
+        db.rollback()
+        logger.exception("retrieval failed for conversation_id=%s", conversation_pk)
+        answer, sources, metadata = _retrieval_failure_payload(exc)
+
+    assistant_now = datetime.now(UTC)
     assistant_message = ConversationMessage(
-        conversation_id=conversation.id,
+        conversation_id=conversation_pk,
         user_id=user_id,
         role="assistant",
         content=answer,
@@ -217,14 +248,12 @@ def add_question_message(
     )
     db.add(assistant_message)
 
-    if existing_user_message_count == 0:
-        conversation.title = _title_from_question(cleaned_question)
-    conversation.last_message_at = now
+    conversation.last_message_at = assistant_now
     db.flush()
     db.refresh(assistant_message)
     return ConversationQuestionAnswer(
         message_id=assistant_message.id,
-        conversation_id=conversation.id,
+        conversation_id=conversation_pk,
         answer=assistant_message.content,
         knowledge_base_type=normalized_type,
         sources=assistant_message.sources_json or [],
@@ -234,12 +263,41 @@ def add_question_message(
     )
 
 
-def _mock_rag_answer(question: str) -> tuple[str, list[dict[str, Any]], dict[str, Any]]:
-    answer = "当前 RAGService 尚未接入，已先保存你的问题。后续接入检索服务后会返回正式回答。"
+def _history_messages_for_retrieval(
+    db: Session,
+    *,
+    conversation_id: int,
+    user_id: int,
+) -> list[dict[str, str]]:
+    rows = db.execute(
+        select(ConversationMessage.role, ConversationMessage.content)
+        .where(
+            ConversationMessage.conversation_id == conversation_id,
+            ConversationMessage.user_id == user_id,
+            ConversationMessage.is_deleted.is_(False),
+        )
+        .order_by(ConversationMessage.created_at.asc(), ConversationMessage.id.asc())
+    ).all()
+    return [{"role": str(role), "content": str(content)} for role, content in rows if str(content).strip()]
+
+
+def _retrieval_result_to_message_payload(result: RetrievalResult) -> tuple[str, list[dict[str, Any]], dict[str, Any]]:
     metadata = {
-        "hit_type": "none",
-        "need_human_transfer": False,
-        "mock": True,
-        "question_preview": question.strip()[:80],
+        **result.metadata,
+        "hit_type": result.hit_type,
+        "need_human_transfer": result.need_human_transfer,
+        "debug": result.debug.model_dump(mode="json"),
     }
-    return answer, [], metadata
+    return result.answer, result.sources, metadata
+
+
+def _retrieval_failure_payload(exc: Exception) -> tuple[str, list[dict[str, Any]], dict[str, Any]]:
+    error_message = getattr(exc, "message", str(exc))
+    metadata = {
+        "hit_type": "retrieval_error",
+        "need_human_transfer": False,
+        "retrieval_error": True,
+        "error_type": exc.__class__.__name__,
+        "error_message": error_message,
+    }
+    return RETRIEVAL_FAILURE_ANSWER, [], metadata

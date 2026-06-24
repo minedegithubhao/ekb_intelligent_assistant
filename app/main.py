@@ -60,7 +60,7 @@ def register_startup_hooks(app: FastAPI) -> None:
     def load_effective_config() -> None:
         try:
             from app.db.mysql import SessionLocal
-            from app.services.config_versions import refresh_effective_retrieval_cache
+            from app.services.retrieval_config import refresh_effective_retrieval_cache
 
             with SessionLocal() as db:
                 refresh_effective_retrieval_cache(db)

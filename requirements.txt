@@ -8,4 +8,11 @@ PyMySQL==1.1.1
 redis==7.1.0
 pymilvus==2.5.18
 langchain==1.2.13
+langchain-huggingface==1.2.2
 langchain-milvus==0.2.2
+sentence-transformers==4.1.0
+FlagEmbedding
+torch
+transformers
+sentencepiece
+python-multipart==0.0.20
