@@ -258,6 +258,114 @@ def retrieve_answer(
     )
 
 
+def inspect_retrieval_candidates(
+    db: Session,
+    *,
+    question: str,
+    knowledge_base_type: str,
+    hot_config_overrides: Mapping[str, Any] | RetrievalHotConfigValues | None = None,
+    kb_version: str | None = None,
+) -> dict[str, Any]:
+    """Return reranked FAQ/Doc candidates before confidence-threshold filtering."""
+
+    raw_question = question.strip()
+    if not raw_question:
+        raise BadRequestException("question cannot be empty")
+    normalized_type = _normalize_knowledge_base_type(knowledge_base_type)
+    ctx = load_retrieval_context(
+        db,
+        knowledge_base_type=normalized_type,
+        require_knowledge_base=False,
+        hot_config_overrides=hot_config_overrides,
+        kb_version=kb_version,
+    )
+    normalized_question = normalize_question(raw_question)
+    rule_hit = _match_first_rule(normalized_question, ctx.keyword_rules)
+    standalone_question = _rewrite_follow_up(raw_question, [], ctx.hot, follow_up_rewriter=None)
+
+    base = {
+        "normalized_question": normalized_question,
+        "standalone_question": standalone_question,
+        "rule_hit_type": rule_hit.rule_code if rule_hit else None,
+        "knowledge_base_type": normalized_type,
+        "thresholds": {
+            "faq_high_conf_threshold": ctx.hot.faq_high_conf_threshold,
+            "faq_middle_conf_threshold": ctx.hot.faq_middle_conf_threshold,
+            "doc_evidence_threshold": ctx.hot.doc_evidence_threshold,
+        },
+        "hot_config": ctx.hot.model_dump(),
+        "knowledge_base": None,
+        "query_variants": {
+            "base_question": standalone_question,
+            "rule_variant_question": standalone_question,
+            "llm_variant_questions": [],
+            "query_variants": [standalone_question],
+        },
+        "faq_candidates": [],
+        "doc_candidates": [],
+    }
+    if rule_hit and rule_hit.rule_code in DIRECT_RULE_CODES:
+        return base
+
+    ctx = _ensure_knowledge_base(db, ctx)
+    if ctx.knowledge_base is not None:
+        base["knowledge_base"] = ctx.knowledge_base.model_dump(mode="json")
+
+    variants = build_query_variants(standalone_question, ctx.term_normalizations, ctx.hot)
+    base["query_variants"] = variants.model_dump(mode="json")
+
+    faq_hits = _search_multi_query(
+        ctx=ctx,
+        source_type="faq",
+        collection_name=ctx.knowledge_base.faq_collection_name,
+        queries=variants.query_variants,
+        per_query_limit=ctx.hot.faq_candidate_limit_per_query,
+        fusion_top_k=ctx.hot.faq_fusion_top_k,
+        dense_weight=ctx.hot.faq_dense_weight,
+        sparse_weight=ctx.hot.faq_sparse_weight,
+    )
+    faq_candidates = _rerank_and_trim(
+        standalone_question,
+        faq_hits,
+        source_type="faq",
+        top_k=ctx.hot.faq_rerank_top_k,
+    )
+
+    doc_hits = _search_multi_query(
+        ctx=ctx,
+        source_type="doc",
+        collection_name=ctx.knowledge_base.doc_collection_name,
+        queries=variants.query_variants,
+        per_query_limit=ctx.hot.doc_candidate_limit_per_query,
+        fusion_top_k=ctx.hot.doc_fusion_top_k,
+        dense_weight=ctx.hot.doc_dense_weight,
+        sparse_weight=ctx.hot.doc_sparse_weight,
+    )
+    doc_candidates = _rerank_and_trim(
+        standalone_question,
+        doc_hits,
+        source_type="doc",
+        top_k=ctx.hot.doc_rerank_top_k,
+    )
+
+    base["faq_candidates"] = [
+        {
+            **item.model_dump(mode="json"),
+            "passed_high_threshold": item.confidence >= ctx.hot.faq_high_conf_threshold,
+            "passed_middle_threshold": item.confidence >= ctx.hot.faq_middle_conf_threshold,
+        }
+        for item in faq_candidates
+    ]
+    base["doc_candidates"] = [
+        {
+            **item.model_dump(mode="json"),
+            "passed_threshold": item.confidence >= ctx.hot.doc_evidence_threshold,
+        }
+        for item in doc_candidates
+    ]
+    return base
+
+
 def load_retrieval_context(
     db: Session,
     *,
@@ -661,7 +769,7 @@ def _embedding_model() -> Any:
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
     from langchain_huggingface import HuggingFaceEmbeddings
 
-    model_path = _require_path(get_runtime_config().app.models.embedding_model_path, "embedding model")
+    model_path = _require_path(get_runtime_config().retrieval.embedding_model_path, "embedding model")
     return HuggingFaceEmbeddings(
         model_name=str(model_path),
         model_kwargs={"device": _device(), "local_files_only": True},
@@ -677,7 +785,7 @@ def embed_query(query: str) -> list[float]:
 def _reranker_model() -> Any:
     from sentence_transformers import CrossEncoder
 
-    model_path = _require_path(get_runtime_config().app.models.rerank_model_path, "reranker model")
+    model_path = _require_path(get_runtime_config().retrieval.rerank_model_path, "reranker model")
     vocab_file = model_path / "sentencepiece.bpe.model"
     tokenizer_kwargs = {"use_fast": False}
     if vocab_file.exists():
