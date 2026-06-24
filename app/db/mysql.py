@@ -6,7 +6,6 @@ import logging
 from collections.abc import Generator
 
 from sqlalchemy import create_engine, text
-from sqlalchemy import event
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.core.config import get_runtime_config
@@ -25,18 +24,6 @@ engine = create_engine(
     max_overflow=mysql_config.max_overflow,
     pool_recycle=mysql_config.pool_recycle_seconds,
 )
-
-
-@event.listens_for(engine, "connect")
-def _set_mysql_session_options(dbapi_connection, connection_record) -> None:
-    cursor = dbapi_connection.cursor()
-    try:
-        cursor.execute("SET time_zone = '+08:00'")
-        cursor.execute("SET NAMES utf8mb4")
-    finally:
-        cursor.close()
-
-
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False, expire_on_commit=False)
 
 

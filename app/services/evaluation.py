@@ -4,11 +4,12 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from datetime import datetime
+from time import perf_counter
 from zoneinfo import ZoneInfo
 from typing import Any
 from uuid import uuid4
 
-from sqlalchemy import delete, func, or_, select
+from sqlalchemy import delete, func, or_, select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -16,6 +17,10 @@ from app.core.exceptions import BadRequestException, NotFoundException
 from app.db.models.evaluation import EvaluationCase, EvaluationCaseResult, EvaluationDataset, EvaluationRun
 from app.evaluation.ingestion_quality.runner import evaluate_chunk_quality_dataset
 from app.evaluation.retrieval.metrics import score_case
+from app.evaluation.retrieval.real_adapter import (
+    build_retrieval_debug_payload,
+    build_trace_from_retrieval_result,
+)
 from app.evaluation.retrieval.schemas import FAQHit, KBHit, RetrievalEvalCase, RetrievalEvalConfig, RetrievalTrace
 from app.schemas.evaluation import (
     EVALUATION_TYPES,
@@ -25,6 +30,8 @@ from app.schemas.evaluation import (
     IngestionQualityRunCreate,
     RetrievalRunCreate,
 )
+from app.schemas.retrieval import ActiveKnowledgeVersion
+from app.services.retrieval import retrieve_answer
 
 LOCAL_TZ = ZoneInfo("Asia/Singapore")
 
@@ -59,11 +66,13 @@ def list_datasets(
 
 def create_dataset(db: Session, payload: EvaluationDatasetCreate) -> dict[str, Any]:
     _validate_evaluation_type(payload.evaluation_type)
+    now = _now()
     row = EvaluationDataset(
         dataset_id=payload.dataset_id.strip(),
         name=payload.name.strip(),
         evaluation_type=payload.evaluation_type,
         description=payload.description,
+        created_at=now,
     )
     db.add(row)
     try:
@@ -85,6 +94,7 @@ def list_cases(db: Session, dataset_id: str) -> list[dict[str, Any]]:
 
 def import_cases(db: Session, dataset_id: str, payload: EvaluationCasesImport) -> dict[str, Any]:
     _get_dataset(db, dataset_id)
+    now = _now()
     created = 0
     updated = 0
     for item in payload.items:
@@ -107,6 +117,7 @@ def import_cases(db: Session, dataset_id: str, payload: EvaluationCasesImport) -
                     question=item.question.strip(),
                     expected_json=item.expected_json or {},
                     category=item.category,
+                    created_at=now,
                 )
             )
             created += 1
@@ -120,6 +131,7 @@ def run_ingestion_quality_evaluation(
 ) -> dict[str, Any]:
     run_id = _new_run_id("ingest")
     config = payload.model_dump()
+    now = _now()
     row = EvaluationRun(
         run_id=run_id,
         dataset_id=None,
@@ -127,6 +139,7 @@ def run_ingestion_quality_evaluation(
         knowledge_base_version=payload.knowledge_base_version,
         config_json=config,
         status="running",
+        created_at=now,
     )
     db.add(row)
     db.flush()
@@ -177,8 +190,19 @@ def run_retrieval_evaluation(
     )
     if not cases:
         raise BadRequestException("evaluation dataset has no cases")
+    if not payload.mock_mode and not payload.knowledge_base_version:
+        raise BadRequestException("knowledge_base_version is required when mock_mode is false")
 
-    config = RetrievalEvalConfig(faq_top_k=payload.faq_top_k, kb_top_k=payload.kb_top_k)
+    config = RetrievalEvalConfig(
+        faq_top_k=payload.faq_top_k,
+        kb_top_k=payload.kb_top_k,
+        kb_version=payload.knowledge_base_version,
+    )
+    knowledge_base = (
+        _get_evaluation_knowledge_version(db, payload.knowledge_base_version)
+        if payload.knowledge_base_version and not payload.mock_mode
+        else None
+    )
     run = EvaluationRun(
         run_id=_new_run_id("retrieval"),
         dataset_id=payload.dataset_id,
@@ -186,6 +210,7 @@ def run_retrieval_evaluation(
         knowledge_base_version=payload.knowledge_base_version,
         config_json=payload.model_dump(),
         status="running",
+        created_at=_now(),
     )
     db.add(run)
     db.flush()
@@ -193,7 +218,13 @@ def run_retrieval_evaluation(
     case_scores = []
     for index, row in enumerate(cases, start=1):
         eval_case = _to_retrieval_case(row, payload.knowledge_base_version)
-        trace = _build_mock_trace(eval_case, index, payload)
+        trace, retrieved_items, actual_answer, latency = _run_retrieval_case(
+            db=db,
+            eval_case=eval_case,
+            index=index,
+            payload=payload,
+            knowledge_base=knowledge_base,
+        )
         score = score_case(eval_case, trace, config)
         score_dict = asdict(score)
         case_scores.append(score_dict)
@@ -201,23 +232,16 @@ def run_retrieval_evaluation(
             EvaluationCaseResult(
                 run_id=run.run_id,
                 case_id=row.case_id,
-                retrieved_items_json={
-                    "question": trace.question,
-                    "rewritten_query": trace.rewritten_query,
-                    "faq_hits": [asdict(item) for item in trace.faq_hits],
-                    "kb_hits": [asdict(item) for item in trace.kb_hits],
-                    "mock_mode": payload.mock_mode,
-                },
+                retrieved_items_json=retrieved_items,
                 metric_results_json={
                     "faq_hit_at_k": score.faq_hit_at_k,
                     "kb_recall_at_k": score.kb_recall_at_k,
                     "kb_rr": score.kb_rr,
                     "error": score.error,
                 },
-                latency_json={
-                    "total_ms": 0,
-                    "mock_mode": payload.mock_mode,
-                },
+                actual_answer=actual_answer,
+                latency_json=latency,
+                created_at=_now(),
             )
         )
 
@@ -228,6 +252,100 @@ def run_retrieval_evaluation(
     run.finished_at = _now()
     db.flush()
     return run_to_info(run)
+
+
+def _run_retrieval_case(
+    *,
+    db: Session,
+    eval_case: RetrievalEvalCase,
+    index: int,
+    payload: RetrievalRunCreate,
+    knowledge_base: Any | None,
+) -> tuple[RetrievalTrace, dict[str, Any], str | None, dict[str, Any]]:
+    started = perf_counter()
+    if payload.mock_mode:
+        trace = _build_mock_trace(eval_case, index, payload)
+        latency = {"total_ms": 0, "mock_mode": True}
+        return trace, _retrieved_items_from_trace(trace, mock_mode=True), None, latency
+
+    try:
+        result = retrieve_answer(
+            db,
+            question=eval_case.question,
+            knowledge_base_type="enterprise",
+            kb_version=payload.knowledge_base_version if knowledge_base is None else None,
+            knowledge_base=knowledge_base,
+            hot_config_overrides=_retrieval_hot_overrides(payload),
+        )
+        trace = build_trace_from_retrieval_result(
+            case_id=eval_case.case_id,
+            question=eval_case.question,
+            result=result,
+        )
+        latency = {"total_ms": round((perf_counter() - started) * 1000, 2), "mock_mode": False}
+        return (
+            trace,
+            {
+                "question": trace.question,
+                "rewritten_query": trace.rewritten_query,
+                "faq_hits": [asdict(item) for item in trace.faq_hits],
+                "kb_hits": [asdict(item) for item in trace.kb_hits],
+                "mock_mode": False,
+                **build_retrieval_debug_payload(result),
+            },
+            result.answer,
+            latency,
+        )
+    except Exception as exc:
+        trace = RetrievalTrace(
+            case_id=eval_case.case_id,
+            question=eval_case.question,
+            rewritten_query="",
+            raw_debug_payload={"mock_mode": False, "error": str(exc)},
+            error=str(exc),
+        )
+        latency = {"total_ms": round((perf_counter() - started) * 1000, 2), "mock_mode": False}
+        return trace, _retrieved_items_from_trace(trace, mock_mode=False), None, latency
+
+
+def _get_evaluation_knowledge_version(db: Session, kb_version: str) -> ActiveKnowledgeVersion:
+    row = db.execute(
+        text(
+            """
+            SELECT kb_version, faq_collection_name, doc_collection_name, status
+            FROM kb_versions
+            WHERE kb_version = :kb_version
+              AND faq_collection_name IS NOT NULL
+              AND doc_collection_name IS NOT NULL
+            LIMIT 1
+            """
+        ),
+        {"kb_version": kb_version.strip()},
+    ).mappings().first()
+    if row is None:
+        raise BadRequestException("knowledge base version not found or missing collections")
+    return ActiveKnowledgeVersion.model_validate(dict(row))
+
+
+def _retrieval_hot_overrides(payload: RetrievalRunCreate) -> dict[str, int]:
+    return {
+        "faq_fusion_top_k": payload.faq_top_k,
+        "faq_rerank_top_k": payload.faq_top_k,
+        "doc_fusion_top_k": payload.kb_top_k,
+        "doc_rerank_top_k": payload.kb_top_k,
+        "final_evidence_top_k": payload.kb_top_k,
+    }
+
+
+def _retrieved_items_from_trace(trace: RetrievalTrace, *, mock_mode: bool) -> dict[str, Any]:
+    return {
+        "question": trace.question,
+        "rewritten_query": trace.rewritten_query,
+        "faq_hits": [asdict(item) for item in trace.faq_hits],
+        "kb_hits": [asdict(item) for item in trace.kb_hits],
+        "mock_mode": mock_mode,
+        "error": trace.error,
+    }
 
 
 def list_runs(
