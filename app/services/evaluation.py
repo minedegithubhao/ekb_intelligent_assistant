@@ -15,7 +15,8 @@ from sqlalchemy.orm import Session
 
 from app.core.exceptions import BadRequestException, NotFoundException
 from app.db.models.evaluation import EvaluationCase, EvaluationCaseResult, EvaluationDataset, EvaluationRun
-from app.evaluation.ingestion_quality.runner import evaluate_chunk_quality_dataset
+from app.evaluation.ingestion_quality.milvus_source import build_chunk_quality_payload_from_milvus
+from app.evaluation.ingestion_quality.runner import evaluate_chunk_quality_dataset, evaluate_chunk_quality_payload
 from app.evaluation.retrieval.metrics import score_case
 from app.evaluation.retrieval.real_adapter import (
     build_retrieval_debug_payload,
@@ -92,6 +93,46 @@ def list_cases(db: Session, dataset_id: str) -> list[dict[str, Any]]:
     return [_case_to_info(row) for row in rows]
 
 
+def list_all_cases(
+    db: Session,
+    *,
+    dataset_id: str | None = None,
+    category: str | None = None,
+    keyword: str | None = None,
+    page: int = 1,
+    page_size: int = 50,
+) -> tuple[list[dict[str, Any]], int]:
+    filters = []
+    if dataset_id:
+        filters.append(EvaluationCase.dataset_id == dataset_id)
+    if category:
+        filters.append(EvaluationCase.category == category)
+    if keyword:
+        pattern = f"%{keyword.strip()}%"
+        filters.append(
+            or_(
+                EvaluationCase.case_id.like(pattern),
+                EvaluationCase.dataset_id.like(pattern),
+                EvaluationCase.question.like(pattern),
+            )
+        )
+
+    count_stmt = select(func.count(EvaluationCase.id))
+    stmt = (
+        select(EvaluationCase, EvaluationDataset)
+        .join(EvaluationDataset, EvaluationDataset.dataset_id == EvaluationCase.dataset_id)
+        .order_by(EvaluationCase.created_at.desc(), EvaluationCase.id.desc())
+    )
+    if filters:
+        count_stmt = count_stmt.where(*filters)
+        stmt = stmt.where(*filters)
+
+    total = int(db.execute(count_stmt).scalar_one() or 0)
+    offset = (page - 1) * page_size
+    rows = db.execute(stmt.offset(offset).limit(page_size)).all()
+    return [_case_to_info(case, dataset) for case, dataset in rows], total
+
+
 def import_cases(db: Session, dataset_id: str, payload: EvaluationCasesImport) -> dict[str, Any]:
     _get_dataset(db, dataset_id)
     now = _now()
@@ -145,11 +186,23 @@ def run_ingestion_quality_evaluation(
     db.flush()
 
     try:
-        result = evaluate_chunk_quality_dataset(
-            payload.dataset,
-            min_chunk_length=payload.min_length,
-            max_chunk_length=payload.max_length,
-        )
+        if payload.knowledge_base_version:
+            chunk_payload = build_chunk_quality_payload_from_milvus(
+                db,
+                kb_version=payload.knowledge_base_version,
+            )
+            result = evaluate_chunk_quality_payload(
+                payload.knowledge_base_version,
+                chunk_payload,
+                min_chunk_length=payload.min_length,
+                max_chunk_length=payload.max_length,
+            )
+        else:
+            result = evaluate_chunk_quality_dataset(
+                payload.dataset,
+                min_chunk_length=payload.min_length,
+                max_chunk_length=payload.max_length,
+            )
         result_dict = result.model_dump()
         chunk_metrics = result_dict.get("chunk_metrics", {})
         summary = {
@@ -413,6 +466,24 @@ def delete_dataset(db: Session, dataset_id: str) -> dict[str, Any]:
     return {"dataset_id": dataset_id, "deleted_cases": int(case_count)}
 
 
+def delete_case(db: Session, dataset_id: str, case_id: str) -> dict[str, Any]:
+    _get_dataset(db, dataset_id)
+    run_count = db.execute(select(func.count(EvaluationRun.id)).where(EvaluationRun.dataset_id == dataset_id)).scalar_one()
+    if run_count:
+        raise BadRequestException("样本所属评估集已有评估记录，不能删除样本")
+
+    row = db.execute(
+        select(EvaluationCase).where(
+            EvaluationCase.dataset_id == dataset_id,
+            EvaluationCase.case_id == case_id,
+        )
+    ).scalar_one_or_none()
+    if not row:
+        raise NotFoundException("evaluation case not found")
+    db.delete(row)
+    return {"dataset_id": dataset_id, "case_id": case_id}
+
+
 def _dataset_to_info(row: EvaluationDataset, sample_count: int) -> dict[str, Any]:
     return {
         "id": row.id,
@@ -424,12 +495,13 @@ def _dataset_to_info(row: EvaluationDataset, sample_count: int) -> dict[str, Any
         "created_at": row.created_at,
     }
 
-
-def _case_to_info(row: EvaluationCase) -> dict[str, Any]:
+def _case_to_info(row: EvaluationCase, dataset: EvaluationDataset | None = None) -> dict[str, Any]:
     return {
         "id": row.id,
         "case_id": row.case_id,
         "dataset_id": row.dataset_id,
+        "dataset_name": dataset.name if dataset else None,
+        "evaluation_type": dataset.evaluation_type if dataset else None,
         "question": row.question,
         "expected_json": row.expected_json or {},
         "category": row.category,

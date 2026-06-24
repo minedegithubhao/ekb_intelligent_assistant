@@ -2,7 +2,7 @@
 # so they stay in YAML instead of the hot-update MySQL table.
 model: qwen-plus
 embedding_model: bge-m3
-embedding_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-m3
+embedding_model_path: E:/HMProject/knowforge-rag-platform/models/bge-m3
 sparse_retrieval: Milvus BM25
 rerank_model: bge-reranker-v2-m3
 rerank_model_path: E:/Heima-AI/knowforge-rag-platform/models/bge-reranker-large

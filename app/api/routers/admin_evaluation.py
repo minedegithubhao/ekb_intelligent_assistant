@@ -20,9 +20,11 @@ from app.schemas.evaluation import (
 )
 from app.services.evaluation import (
     create_dataset,
+    delete_case,
     delete_dataset,
     get_run,
     import_cases,
+    list_all_cases,
     list_case_results,
     list_cases,
     list_datasets,
@@ -57,6 +59,26 @@ def remove_evaluation_dataset(dataset_id: str, db: Session = Depends(get_db)) ->
     return success_response(delete_dataset(db, dataset_id))
 
 
+@router.get("/cases")
+def get_all_evaluation_cases(
+    dataset_id: str | None = None,
+    category: str | None = None,
+    keyword: str | None = None,
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=50, ge=1, le=200),
+    db: Session = Depends(get_db),
+) -> dict:
+    items, total = list_all_cases(
+        db,
+        dataset_id=dataset_id,
+        category=category,
+        keyword=keyword,
+        page=page,
+        page_size=page_size,
+    )
+    return page_response(items, total, page, page_size)
+
+
 @router.get("/datasets/{dataset_id}/cases")
 def get_evaluation_cases(dataset_id: str, db: Session = Depends(get_db)) -> dict:
     items = list_cases(db, dataset_id)
@@ -70,6 +92,11 @@ def import_evaluation_cases(
     db: Session = Depends(get_db),
 ) -> dict:
     return success_response(import_cases(db, dataset_id, payload))
+
+
+@router.delete("/datasets/{dataset_id}/cases/{case_id}")
+def remove_evaluation_case(dataset_id: str, case_id: str, db: Session = Depends(get_db)) -> dict:
+    return success_response(delete_case(db, dataset_id, case_id))
 
 
 @router.post("/ingestion-quality/runs")
