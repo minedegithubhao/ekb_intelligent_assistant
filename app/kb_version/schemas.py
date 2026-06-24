@@ -33,7 +33,7 @@ class KbVersionItem(BaseModel):
 
     id: int
     kb_version: str
-    type: VersionStatus
+    status: VersionStatus
     embedding_model: str
     faq_collection_name: str
     doc_collection_name: str
@@ -50,7 +50,7 @@ class KbVersionDetail(BaseModel):
 
     id: int
     kb_version: str
-    type: VersionStatus
+    status: VersionStatus
     embedding_model: str
     faq_collection_name: str
     doc_collection_name: str

@@ -9,7 +9,7 @@
 CREATE TABLE IF NOT EXISTS kb_versions (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
     kb_version VARCHAR(128) NOT NULL COMMENT '知识库版本号，格式为 kb_时间戳，例如 kb_20260623153045',
-    type VARCHAR(16) NOT NULL DEFAULT 'staged' COMMENT '版本状态：staged / active / archived',
+    status VARCHAR(16) NOT NULL DEFAULT 'staged' COMMENT '版本状态：staged / active / archived',
     embedding_model VARCHAR(64) NOT NULL DEFAULT 'bge-m3' COMMENT '向量化模型',
     faq_collection_name VARCHAR(191) NOT NULL DEFAULT 'faq_collection' COMMENT '固定 faq collection 名称',
     doc_collection_name VARCHAR(191) NOT NULL DEFAULT 'doc_collection' COMMENT '固定 doc collection 名称',
@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS kb_versions (
     description VARCHAR(255) DEFAULT NULL COMMENT '版本说明',
     PRIMARY KEY (id),
     UNIQUE KEY uk_kb_versions_kb_version (kb_version),
-    KEY idx_kb_versions_type (type),
+    KEY idx_kb_versions_type (status),
     KEY idx_kb_versions_created_at (created_at),
-    CONSTRAINT chk_kb_versions_type CHECK (type IN ('staged', 'active', 'archived'))
+    CONSTRAINT chk_kb_versions_type CHECK (status IN ('staged', 'active', 'archived'))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='知识库版本表';
 
 CREATE TABLE IF NOT EXISTS kb_version_pointers (
