@@ -62,8 +62,8 @@ class KbVersionService:
             active_version=pointer["kb_active_version"] if pointer else None,
             previous_version=pointer["kb_previous_version"] if pointer else None,
             total=len(items),
-            staged_count=sum(1 for item in items if item.type == VersionStatus.STAGED),
-            archived_count=sum(1 for item in items if item.type == VersionStatus.ARCHIVED),
+            staged_count=sum(1 for item in items if item.status == VersionStatus.STAGED),
+            archived_count=sum(1 for item in items if item.status == VersionStatus.ARCHIVED),
             items=items,
         )
 
@@ -116,7 +116,7 @@ class KbVersionService:
         target = self.repo.get_version(target_kb_version, for_update=True)
         if not target:
             raise KbVersionNotFound(target_kb_version)
-        if target["type"] != VersionStatus.STAGED.value:
+        if target["status"] != VersionStatus.STAGED.value:
             raise KbVersionStateError("only staged version can be published")
 
         active = self.repo.get_active_version(for_update=True)
@@ -171,7 +171,7 @@ class KbVersionService:
         target = self.repo.get_version(target_version, for_update=True)
         if not target:
             raise KbVersionNotFound(target_version)
-        if target["type"] != VersionStatus.ARCHIVED.value:
+        if target["status"] != VersionStatus.ARCHIVED.value:
             raise KbVersionStateError("rollback target must be archived")
 
         self.repo.update_status(active["kb_version"], VersionStatus.ARCHIVED)
@@ -210,11 +210,11 @@ class KbVersionService:
     def _build_list_item(self, row) -> KbVersionItem:
         """将数据库 row 转成列表响应项。"""
 
-        status = VersionStatus(row["type"])
+        status = VersionStatus(row["status"])
         return KbVersionItem(
             id=int(row["id"]),
             kb_version=row["kb_version"],
-            type=status,
+            status=status,
             embedding_model=row["embedding_model"],
             faq_collection_name=row["faq_collection_name"],
             doc_collection_name=row["doc_collection_name"],
@@ -241,7 +241,7 @@ class KbVersionService:
         return KbVersionDetail(
             id=int(row["id"]),
             kb_version=row["kb_version"],
-            type=VersionStatus(row["type"]),
+            status=VersionStatus(row["status"]),
             embedding_model=row["embedding_model"],
             faq_collection_name=row["faq_collection_name"],
             doc_collection_name=row["doc_collection_name"],
