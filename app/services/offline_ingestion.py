@@ -286,7 +286,7 @@ def _validate_target_staged_version(db: Session, kb_version: str) -> None:
     row = KbVersionService(db).repo.get_version(kb_version)
     if not row:
         raise NotFoundException("kb version not found")
-    if row["type"] != "staged":
+    if row["status"] != "staged":
         raise BadRequestException("offline ingestion can only write to staged kb version")
 
 
@@ -473,7 +473,7 @@ def _ensure_staged_version_baseline(
     target = service.repo.get_version(task.kb_version, for_update=True)
     if not target:
         raise NotFoundException("kb version not found")
-    if target["type"] != "staged":
+    if target["status"] != "staged":
         raise BadRequestException("offline ingestion can only write to staged kb version")
 
     active = service.repo.get_active_version()

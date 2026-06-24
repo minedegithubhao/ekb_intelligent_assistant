@@ -41,21 +41,74 @@ class MilvusIngestionWriter:
         collection = self._ensure_collection(self.settings.faq_collection_name, self._faq_fields())
         self._insert_in_batches(collection, [self._faq_to_entity(row) for row in rows])
 
-    def delete_documents_by_source_doc_ids(self, source_doc_ids: list[str]) -> None:
-        """删除指定 source_doc_id 的旧文档数据。"""
+    def delete_documents_by_source_doc_ids(self, source_doc_ids: list[str], *, kb_version: str | None = None) -> None:
+        """删除指定版本内、指定 source_doc_id 的旧文档数据。"""
 
         if not source_doc_ids:
             return
         collection = self._ensure_collection(self.settings.doc_collection_name, self._doc_fields())
-        self._delete_by_values(collection, "source_doc_id", source_doc_ids)
+        self._delete_by_values(collection, "source_doc_id", source_doc_ids, kb_version=kb_version)
 
-    def delete_faq_by_ids(self, faq_ids: list[str]) -> None:
-        """删除指定 faq_id 的旧 FAQ 数据。"""
+    def delete_faq_by_ids(self, faq_ids: list[str], *, kb_version: str | None = None) -> None:
+        """删除指定版本内、指定 faq_id 的旧 FAQ 数据。"""
 
         if not faq_ids:
             return
         collection = self._ensure_collection(self.settings.faq_collection_name, self._faq_fields())
-        self._delete_by_values(collection, "pk", faq_ids)
+        self._delete_by_values(collection, "faq_id", faq_ids, kb_version=kb_version)
+
+    def copy_documents_between_versions(self, source_kb_version: str, target_kb_version: str) -> int:
+        """把一个版本的全部文档向量复制到另一个版本。"""
+
+        collection = self._ensure_collection(self.settings.doc_collection_name, self._doc_fields())
+        self.delete_documents_by_kb_version(target_kb_version)
+        rows = self._query_by_kb_version(collection, source_kb_version)
+        entities = [self._copy_entity_to_version(row, target_kb_version, record_id_field="child_chunk_id") for row in rows]
+        if entities:
+            self._insert_in_batches(collection, entities)
+        return len(entities)
+
+    def copy_faq_between_versions(self, source_kb_version: str, target_kb_version: str) -> int:
+        """把一个版本的全部 FAQ 向量复制到另一个版本。"""
+
+        collection = self._ensure_collection(self.settings.faq_collection_name, self._faq_fields())
+        self.delete_faq_by_kb_version(target_kb_version)
+        rows = self._query_by_kb_version(collection, source_kb_version)
+        entities = [self._copy_entity_to_version(row, target_kb_version, record_id_field="faq_id") for row in rows]
+        if entities:
+            self._insert_in_batches(collection, entities)
+        return len(entities)
+
+    def delete_documents_by_kb_version(self, kb_version: str) -> None:
+        """删除目标版本内全部文档向量。"""
+
+        collection = self._ensure_collection(self.settings.doc_collection_name, self._doc_fields())
+        self._delete_by_expr(collection, self._kb_version_expr(kb_version))
+
+    def delete_faq_by_kb_version(self, kb_version: str) -> None:
+        """删除目标版本内全部 FAQ 向量。"""
+
+        collection = self._ensure_collection(self.settings.faq_collection_name, self._faq_fields())
+        self._delete_by_expr(collection, self._kb_version_expr(kb_version))
+
+    def count_documents_by_version(self, kb_version: str) -> int:
+        """统计指定版本的文档 child chunk 数。"""
+
+        collection = self._ensure_collection(self.settings.doc_collection_name, self._doc_fields())
+        return self._count_by_kb_version(collection, kb_version)
+
+    def count_document_sources_by_version(self, kb_version: str) -> int:
+        """统计指定版本的文档 source_doc_id 去重数量。"""
+
+        collection = self._ensure_collection(self.settings.doc_collection_name, self._doc_fields())
+        rows = self._query_by_kb_version(collection, kb_version, output_fields=["source_doc_id"])
+        return len({str(row.get("source_doc_id", "")).strip() for row in rows if str(row.get("source_doc_id", "")).strip()})
+
+    def count_faq_by_version(self, kb_version: str) -> int:
+        """统计指定版本的 FAQ 数。"""
+
+        collection = self._ensure_collection(self.settings.faq_collection_name, self._faq_fields())
+        return self._count_by_kb_version(collection, kb_version)
 
     def _ensure_collection(self, name: str, fields: list[object]) -> object:
         """确保 collection 存在；不存在时按字段定义创建。"""
@@ -142,14 +195,71 @@ class MilvusIngestionWriter:
             collection.insert(batch)
         collection.flush()
 
-    def _delete_by_values(self, collection: object, field_name: str, values: list[str]) -> None:
+    def _delete_by_values(
+        self,
+        collection: object,
+        field_name: str,
+        values: list[str],
+        *,
+        kb_version: str | None = None,
+    ) -> None:
         """按字段值分批删除旧数据。"""
 
         collection.load()
         for batch in self._batches(values, self.settings.milvus_insert_batch_size):
             expr = f'{field_name} in {json.dumps(batch, ensure_ascii=False)}'
+            if kb_version:
+                expr = f"({expr}) and {self._kb_version_expr(kb_version)}"
             collection.delete(expr)
         collection.flush()
+
+    @staticmethod
+    def _delete_by_expr(collection: object, expr: str) -> None:
+        """按表达式删除数据。"""
+
+        collection.load()
+        collection.delete(expr)
+        collection.flush()
+
+    def _query_by_kb_version(
+        self,
+        collection: object,
+        kb_version: str,
+        *,
+        output_fields: list[str] | None = None,
+    ) -> list[dict[str, Any]]:
+        """查询指定版本数据；当前开发集规模下用单次大 limit 足够。"""
+
+        collection.load()
+        return collection.query(
+            expr=self._kb_version_expr(kb_version),
+            output_fields=output_fields or ["*"],
+            limit=100000,
+        )
+
+    def _count_by_kb_version(self, collection: object, kb_version: str) -> int:
+        return len(self._query_by_kb_version(collection, kb_version, output_fields=["pk"]))
+
+    @staticmethod
+    def _kb_version_expr(kb_version: str) -> str:
+        escaped = kb_version.replace("\\", "\\\\").replace('"', '\\"')
+        return f'kb_version == "{escaped}"'
+
+    @staticmethod
+    def _versioned_pk(kb_version: str, record_id: str) -> str:
+        return f"{kb_version}:{record_id}"
+
+    def _copy_entity_to_version(self, row: dict[str, Any], target_kb_version: str, *, record_id_field: str) -> dict[str, Any]:
+        """复制 Milvus row 时替换 kb_version 和版本化主键。"""
+
+        entity = dict(row)
+        entity.pop("sparse", None)
+        record_id = str(entity.get(record_id_field) or entity.get("pk") or "")
+        if ":" in record_id:
+            record_id = record_id.rsplit(":", 1)[-1]
+        entity["kb_version"] = target_kb_version
+        entity["pk"] = self._versioned_pk(target_kb_version, record_id)
+        return self._normalize_json_value(entity)
 
     @staticmethod
     def _batches(items: list[object], size: int) -> Iterable[list[object]]:
@@ -298,7 +408,9 @@ class MilvusIngestionWriter:
             }
         )
         entity: dict[str, object] = {
-            "pk": row.child_chunk_id,
+            "pk": self._versioned_pk(str(metadata.get("kb_version", "")), row.child_chunk_id)
+            if metadata.get("kb_version")
+            else row.child_chunk_id,
             "text": row.child_content,
             "dense": row.dense_vector,
         }
@@ -318,7 +430,9 @@ class MilvusIngestionWriter:
             }
         )
         entity: dict[str, object] = {
-            "pk": row.faq_id,
+            "pk": self._versioned_pk(str(metadata.get("kb_version", "")), row.faq_id)
+            if metadata.get("kb_version")
+            else row.faq_id,
             "text": row.question,
             "dense": row.dense_vector,
         }

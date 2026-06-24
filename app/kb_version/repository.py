@@ -32,7 +32,8 @@ class KbVersionRepository:
                 SELECT
                     id, kb_version, status, embedding_model,
                     faq_collection_name, doc_collection_name,
-                    created_at, created_by, description
+                    created_at, created_by, description,
+                    doc_ready, faq_ready, document_count, child_chunk_count, faq_count
                 FROM kb_versions
                 {where}
                 ORDER BY
@@ -58,7 +59,8 @@ class KbVersionRepository:
                 SELECT
                     id, kb_version, status, embedding_model,
                     faq_collection_name, doc_collection_name,
-                    created_at, created_by, description
+                    created_at, created_by, description,
+                    doc_ready, faq_ready, document_count, child_chunk_count, faq_count
                 FROM kb_versions
                 WHERE kb_version=:kb_version
                 {suffix}
@@ -77,7 +79,8 @@ class KbVersionRepository:
                 SELECT
                     id, kb_version, status, embedding_model,
                     faq_collection_name, doc_collection_name,
-                    created_at, created_by, description
+                    created_at, created_by, description,
+                    doc_ready, faq_ready, document_count, child_chunk_count, faq_count
                 FROM kb_versions
                 WHERE status='active'
                 ORDER BY created_at DESC, id DESC
@@ -133,6 +136,38 @@ class KbVersionRepository:
         self.db.execute(
             text("UPDATE kb_versions SET status=:status WHERE kb_version=:kb_version"),
             {"status": status.value, "kb_version": kb_version},
+        )
+
+    def update_content_state(
+        self,
+        kb_version: str,
+        *,
+        doc_ready: bool | None = None,
+        faq_ready: bool | None = None,
+        document_count: int | None = None,
+        child_chunk_count: int | None = None,
+        faq_count: int | None = None,
+    ) -> None:
+        """更新版本内 Doc/FAQ 准备状态和统计数量。"""
+
+        values: dict[str, Any] = {}
+        if doc_ready is not None:
+            values["doc_ready"] = int(doc_ready)
+        if faq_ready is not None:
+            values["faq_ready"] = int(faq_ready)
+        if document_count is not None:
+            values["document_count"] = document_count
+        if child_chunk_count is not None:
+            values["child_chunk_count"] = child_chunk_count
+        if faq_count is not None:
+            values["faq_count"] = faq_count
+        if not values:
+            return
+
+        assignments = ", ".join(f"{field}=:{field}" for field in values)
+        self.db.execute(
+            text(f"UPDATE kb_versions SET {assignments} WHERE kb_version=:kb_version"),
+            {**values, "kb_version": kb_version},
         )
 
     def get_pointer(self, *, for_update: bool = False) -> Any | None:

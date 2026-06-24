@@ -116,8 +116,8 @@ class OfflineIngestionPipeline:
         if hasattr(self.writer, "delete_documents_by_source_doc_ids"):
             source_doc_ids = sorted({str(document.metadata["source_doc_id"]) for document in batch.documents})
             if source_doc_ids:
-                self.writer.delete_documents_by_source_doc_ids(source_doc_ids)
+                self.writer.delete_documents_by_source_doc_ids(source_doc_ids, kb_version=self.kb_version)
         if hasattr(self.writer, "delete_faq_by_ids"):
             faq_ids = sorted({record.faq_id for record in batch.faq_records})
             if faq_ids:
-                self.writer.delete_faq_by_ids(faq_ids)
+                self.writer.delete_faq_by_ids(faq_ids, kb_version=self.kb_version)
