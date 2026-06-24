@@ -40,6 +40,11 @@ class KbVersionItem(BaseModel):
     created_at: datetime
     created_by: str | None
     description: str | None
+    doc_ready: bool = False
+    faq_ready: bool = False
+    document_count: int = 0
+    child_chunk_count: int = 0
+    faq_count: int = 0
     operation: str
 
     model_config = ConfigDict(from_attributes=True)
@@ -57,6 +62,11 @@ class KbVersionDetail(BaseModel):
     created_at: datetime
     created_by: str | None
     description: str | None
+    doc_ready: bool = False
+    faq_ready: bool = False
+    document_count: int = 0
+    child_chunk_count: int = 0
+    faq_count: int = 0
 
     model_config = ConfigDict(from_attributes=True)
 

@@ -1,0 +1,32 @@
+USE knowforge_rag;
+
+CREATE TABLE IF NOT EXISTS offline_ingestion_tasks (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  task_id VARCHAR(64) NOT NULL COMMENT '离线入库任务ID',
+  status VARCHAR(24) NOT NULL DEFAULT 'pending' COMMENT 'pending/running/completed/failed',
+  progress_percent INT NOT NULL DEFAULT 0 COMMENT '任务进度百分比',
+  current_stage VARCHAR(128) DEFAULT NULL COMMENT '当前阶段',
+  kb_version VARCHAR(128) DEFAULT NULL COMMENT '本次入库生成的知识库版本',
+  config_id BIGINT NOT NULL COMMENT 'offline_ingestion_configs.id',
+  source_data_root VARCHAR(512) NOT NULL COMMENT '源数据根目录',
+  clean_markdown_dir VARCHAR(128) NOT NULL COMMENT '清洗后 Markdown 目录名',
+  index_csv_name VARCHAR(128) NOT NULL COMMENT '索引文件名',
+  faq_csv_dir VARCHAR(128) NOT NULL COMMENT 'FAQ 目录名',
+  auto_publish TINYINT(1) NOT NULL DEFAULT 0 COMMENT '完成后是否自动发布',
+  version_description VARCHAR(255) DEFAULT NULL COMMENT '版本说明',
+  document_count INT NOT NULL DEFAULT 0 COMMENT '文档数量',
+  parent_chunk_count INT NOT NULL DEFAULT 0 COMMENT 'parent chunk 数量',
+  child_chunk_count INT NOT NULL DEFAULT 0 COMMENT 'child chunk 数量',
+  faq_count INT NOT NULL DEFAULT 0 COMMENT 'FAQ 数量',
+  error_message TEXT DEFAULT NULL COMMENT '失败原因',
+  created_by BIGINT DEFAULT NULL COMMENT '创建人 users.id',
+  started_at DATETIME DEFAULT NULL COMMENT '开始时间',
+  finished_at DATETIME DEFAULT NULL COMMENT '结束时间',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_offline_ingestion_tasks_task_id (task_id),
+  KEY idx_offline_ingestion_tasks_status_created (status, created_at),
+  KEY idx_offline_ingestion_tasks_kb_version (kb_version),
+  KEY idx_offline_ingestion_tasks_config_id (config_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='离线文档入库任务表';

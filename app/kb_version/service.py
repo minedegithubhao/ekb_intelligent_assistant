@@ -118,6 +118,13 @@ class KbVersionService:
             raise KbVersionNotFound(target_kb_version)
         if target["type"] != VersionStatus.STAGED.value:
             raise KbVersionStateError("only staged version can be published")
+        if not target["doc_ready"] or not target["faq_ready"]:
+            missing = []
+            if not target["doc_ready"]:
+                missing.append("Doc")
+            if not target["faq_ready"]:
+                missing.append("FAQ")
+            raise KbVersionStateError(f"version content is incomplete: missing {', '.join(missing)}")
 
         active = self.repo.get_active_version(for_update=True)
         if active and active["kb_version"] == target_kb_version:
@@ -221,6 +228,11 @@ class KbVersionService:
             created_at=row["created_at"],
             created_by=row["created_by"],
             description=row["description"],
+            doc_ready=bool(row["doc_ready"]),
+            faq_ready=bool(row["faq_ready"]),
+            document_count=int(row["document_count"] or 0),
+            child_chunk_count=int(row["child_chunk_count"] or 0),
+            faq_count=int(row["faq_count"] or 0),
             operation=self._operation_for_status(status),
         )
 
@@ -248,4 +260,9 @@ class KbVersionService:
             created_at=row["created_at"],
             created_by=row["created_by"],
             description=row["description"],
+            doc_ready=bool(row["doc_ready"]),
+            faq_ready=bool(row["faq_ready"]),
+            document_count=int(row["document_count"] or 0),
+            child_chunk_count=int(row["child_chunk_count"] or 0),
+            faq_count=int(row["faq_count"] or 0),
         )

@@ -97,15 +97,74 @@ class MarkdownSplitter:
         current_len = 0
 
         for paragraph in paragraphs:
-            if current and current_len + len(paragraph) > self.settings.doc_parent_chunk_size:
+            if len(paragraph) > self.settings.doc_parent_chunk_size:
+                if current:
+                    result.append("\n\n".join(current))
+                    current = []
+                    current_len = 0
+                result.extend(self._split_long_parent_paragraph(paragraph))
+                continue
+
+            next_len = current_len + len(paragraph) + (2 if current else 0)
+            if current and next_len > self.settings.doc_parent_chunk_size:
                 result.append("\n\n".join(current))
                 current = []
                 current_len = 0
             current.append(paragraph)
-            current_len += len(paragraph)
+            current_len += len(paragraph) + (2 if current_len else 0)
         if current:
             result.append("\n\n".join(current))
         return result
+
+    def _split_long_parent_paragraph(self, paragraph: str) -> list[str]:
+        """兜底拆分单个超长段落，避免 parent_content 超过 Milvus 字段上限。
+
+        这里优先按行聚合，适合长表格、长列表等没有空行的内容；如果单行
+        本身仍然超长，再按固定窗口切开。
+        """
+
+        max_size = self.settings.doc_parent_chunk_size
+        result: list[str] = []
+        current: list[str] = []
+        current_len = 0
+
+        def flush_current() -> None:
+            nonlocal current, current_len
+            if current:
+                result.append("\n".join(current).strip())
+                current = []
+                current_len = 0
+
+        for line in paragraph.splitlines() or [paragraph]:
+            line = line.strip()
+            if not line:
+                continue
+            if len(line) > max_size:
+                flush_current()
+                result.extend(self._split_by_window(line, max_size))
+                continue
+            next_len = current_len + len(line) + (1 if current else 0)
+            if current and next_len > max_size:
+                flush_current()
+            current.append(line)
+            current_len += len(line) + (1 if current_len else 0)
+
+        flush_current()
+        return [item for item in result if item]
+
+    @staticmethod
+    def _split_by_window(text: str, size: int) -> list[str]:
+        """按固定长度窗口切分极端长行。"""
+
+        chunks: list[str] = []
+        start = 0
+        while start < len(text):
+            end = min(len(text), start + size)
+            chunk = text[start:end].strip()
+            if chunk:
+                chunks.append(chunk)
+            start = end
+        return chunks
 
     def _split_children(self, parent: ParentChunk) -> list[ChildChunk]:
         """把父块进一步拆成子块。
