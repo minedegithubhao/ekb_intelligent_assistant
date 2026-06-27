@@ -27,9 +27,15 @@ class OfflineIngestionPipeline:
         vectorization_service: VectorizationService | None = None,
         writer: object | None = None,
         kb_version: str | None = None,
+        db_session: object | None = None,
+        version_created_by: str | None = None,
+        version_description: str | None = None,
     ) -> None:
         settings.validate()
         self.settings = settings
+        self.db_session = db_session
+        self.version_created_by = version_created_by
+        self.version_description = version_description
         self.index_repository = IndexRepository(settings)
         self.markdown_cleaner = MarkdownCleaner(settings)
         self.faq_cleaner = FAQCleaner(reference_required=settings.faq_reference_required)
@@ -54,7 +60,7 @@ class OfflineIngestionPipeline:
         4. 读取 FAQ
         """
 
-        index_records = self.index_repository.load(index_csv_path)
+        index_records = self.index_repository.load(index_csv_path) if markdown_paths else {}
         documents = []
         parents = []
         children = []

@@ -228,14 +228,29 @@ class MilvusIngestionWriter:
         *,
         output_fields: list[str] | None = None,
     ) -> list[dict[str, Any]]:
-        """查询指定版本数据；当前开发集规模下用单次大 limit 足够。"""
+        """查询指定版本数据。
+
+        Milvus 普通 query 的 offset+limit 不能超过 16384；版本复制和统计可能超过这个量级，
+        因此这里使用 query_iterator 分批读取，避免触发 max query result window 限制。
+        """
 
         collection.load()
-        return collection.query(
+        iterator = collection.query_iterator(
             expr=self._kb_version_expr(kb_version),
             output_fields=output_fields or ["*"],
-            limit=100000,
+            batch_size=min(max(self.settings.milvus_insert_batch_size, 1), 16384),
+            limit=-1,
         )
+        rows: list[dict[str, Any]] = []
+        try:
+            while True:
+                batch = iterator.next()
+                if not batch:
+                    break
+                rows.extend(batch)
+        finally:
+            iterator.close()
+        return rows
 
     def _count_by_kb_version(self, collection: object, kb_version: str) -> int:
         return len(self._query_by_kb_version(collection, kb_version, output_fields=["pk"]))

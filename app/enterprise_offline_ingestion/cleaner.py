@@ -162,7 +162,7 @@ class FAQCleaner:
     每一行 FAQ 都保持为完整逻辑块，不做长文本切分。
     """
 
-    REQUIRED_FIELDS = {"question", "answer", "source", "reference_source"}
+    REQUIRED_FIELDS = {"question", "answer"}
 
     def __init__(self, reference_required: bool = True) -> None:
         self.reference_required = reference_required
@@ -200,6 +200,7 @@ class FAQCleaner:
                             "file_name": path.name,
                             "row_number": row_number,
                             "kb_version": kb_version,
+                            "scope": self._clean_cell(row.get("scope", "")),
                         },
                     )
                 )

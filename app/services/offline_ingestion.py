@@ -36,6 +36,14 @@ INGEST_TYPE_MIXED = "mixed"
 INGEST_TYPE_DOCUMENT = "document"
 INGEST_TYPE_FAQ = "faq"
 UPLOAD_ROOT = PROJECT_ROOT / "data" / "offline_uploads"
+FAQ_UPLOAD_REQUIRED_FIELDS = {"question", "answer"}
+FAQ_CANONICAL_FIELDNAMES = [
+    "question",
+    "answer",
+    "source",
+    "reference_source",
+    "scope",
+]
 
 
 def list_configs(db: Session, config_name: str = DEFAULT_CONFIG_NAME) -> list[dict]:
@@ -838,10 +846,11 @@ def _build_rule_source_url(rule_id: str) -> str:
 
 def _rewrite_faq_csv_with_scope(path: Path, *, scope: str) -> None:
     fieldnames, rows = _read_faq_csv_raw(path)
-    field_map = FAQCleaner._build_field_map(fieldnames)
+    field_map = _build_faq_field_map(fieldnames)
     normalized_fieldnames = _normalize_faq_fieldnames(fieldnames, field_map)
-    if "scope" not in normalized_fieldnames:
-        normalized_fieldnames.append("scope")
+    for field in FAQ_CANONICAL_FIELDNAMES:
+        if field not in normalized_fieldnames:
+            normalized_fieldnames.append(field)
 
     normalized_rows = []
     for row in rows:
@@ -849,8 +858,8 @@ def _rewrite_faq_csv_with_scope(path: Path, *, scope: str) -> None:
         for field in normalized_fieldnames:
             source_field = field_map.get(field, field)
             normalized[field] = row.get(source_field, "") or ""
-        if not normalized.get("scope", "").strip():
-            normalized["scope"] = scope
+        # FAQ 上传时以页面选择的知识库范围为准，避免 CSV 中遗留的错误 scope 污染新版本。
+        normalized["scope"] = scope
         normalized_rows.append(normalized)
 
     with path.open("w", encoding="utf-8-sig", newline="") as file:
@@ -861,6 +870,7 @@ def _rewrite_faq_csv_with_scope(path: Path, *, scope: str) -> None:
 
 def _read_faq_csv_raw(path: Path) -> tuple[list[str], list[dict[str, str]]]:
     last_error: Exception | None = None
+    missing_required: set[str] | None = None
     for encoding in ("utf-8-sig", "utf-8", "gb18030", "gbk"):
         try:
             with path.open("r", encoding=encoding, newline="") as file:
@@ -868,15 +878,45 @@ def _read_faq_csv_raw(path: Path) -> tuple[list[str], list[dict[str, str]]]:
                 if reader.fieldnames is None:
                     raise BadRequestException(f"faq csv has no header: {path.name}")
                 fieldnames = list(reader.fieldnames)
-                field_map = FAQCleaner._build_field_map(fieldnames)
-                if not (FAQCleaner.REQUIRED_FIELDS <= set(field_map)):
+                field_map = _build_faq_field_map(fieldnames)
+                found_fields = set(field_map)
+                if not (FAQ_UPLOAD_REQUIRED_FIELDS <= found_fields):
+                    missing_required = FAQ_UPLOAD_REQUIRED_FIELDS - found_fields
                     last_error = ValueError(f"FAQ CSV required fields not found with encoding {encoding}")
                     continue
                 return fieldnames, [dict(row) for row in reader]
         except UnicodeDecodeError as exc:
             last_error = exc
             continue
+    if missing_required:
+        raise BadRequestException(
+            f"FAQ CSV 缺少必要字段: {sorted(missing_required)}，至少需要 question/answer，"
+            f"也支持中文表头：问题/答案: {path.name}"
+        ) from last_error
     raise BadRequestException(f"FAQ CSV 编码无法识别，请保存为 UTF-8 或 GBK: {path.name}") from last_error
+
+
+def _build_faq_field_map(fieldnames: list[str]) -> dict[str, str]:
+    aliases = {
+        "question": {"question", "问题", "用户问题", "标准问题", "用户可能问的问题"},
+        "answer": {"answer", "答案", "回复", "标准答案", "命中后返回的答案"},
+        "source": {"source", "来源"},
+        "reference_source": {"reference_source", "reference", "链接", "来源链接", "参考来源"},
+        "faq_id": {"faq_id", "id", "FAQID"},
+        "category": {"category", "分类"},
+        "tags": {"tags", "标签"},
+        "doc_refs": {"doc_refs", "关联文档", "文档引用"},
+        "scope": {"scope", "知识库范围"},
+    }
+    normalized = {str(field).strip().lower(): field for field in fieldnames}
+    field_map: dict[str, str] = {}
+    for canonical, names in aliases.items():
+        for name in names:
+            source = normalized.get(name.lower())
+            if source:
+                field_map[canonical] = source
+                break
+    return field_map
 
 
 def _normalize_faq_fieldnames(fieldnames: list[str], field_map: dict[str, str]) -> list[str]:
